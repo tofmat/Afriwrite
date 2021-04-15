@@ -1,0 +1,11 @@
+.noDesktop{
+    display: none !important;
+}
+@media(max-width: 800px){
+    .mobileDisplay {
+        display: block !important;
+    }
+    .noMobile {
+        display: none !important;
+    }
+}
