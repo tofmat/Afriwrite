@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app flat absolute height="inherit">
-      <img src="../assets/images/logo.png" height="100%" class="logoImage"/>
+    <v-app-bar flat fixed height="inherit" class="headNav" style="position: relative;">
+      <img src="../assets/images/logo.png" class="logoImage"/>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
         <v-container>
@@ -22,7 +22,8 @@
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary >
+    <v-navigation-drawer v-model="drawer" absolute temporary class="pad-10 noDesktop mobileDisplay">
+       <img src="../assets/images/logo.png" class="logoImage mobileLogo"/>
       <v-list
         nav
         dense
@@ -31,19 +32,20 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
+          <v-list-item
+          v-for="(nav, i) in navItems"
+          :key="i"
+          :to="nav.to"
+          router
+          exact
+        >
+          <!-- <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action> -->
+          <v-list-item-content>
+            <v-list-item-title v-text="nav.title" />
+          </v-list-item-content>
+        </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -116,9 +118,25 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
 }
+.pad-10 {
+  padding: 10px;
+}
+.mobileLogo {
+  padding-left: 8px;
+  width: 60% !important;
+}
+.headNav{
+  padding: 0 20px;
+}
+.headNav {
+  flex: none !important;
+}
 @media(max-width: 600px){
     .logoImage {
         width: 50%;
+    }
+    .headNav{
+      padding: 5px 10px;
     }
 }
 </style>
