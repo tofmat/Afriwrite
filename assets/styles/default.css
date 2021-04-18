@@ -1,0 +1,14 @@
+.flex{
+    display: flex;
+}
+.centerflex{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.marginy-20{
+    margin: 20px 0;
+}
+.columnFlex {
+    flex-direction: column;
+}
