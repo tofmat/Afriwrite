@@ -12,3 +12,9 @@
 .columnFlex {
     flex-direction: column;
 }
+.blueColor {
+    color: blue !important;
+}
+/* input {
+    border: solid 1px black;
+} */

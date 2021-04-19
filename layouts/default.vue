@@ -9,6 +9,7 @@
             <v-col
               v-for="nav in navItems"
               :key="nav"
+              :to="nav.to"
               class="navheader px-5"
             >
               <v-item v-slot="{ active }">
@@ -81,7 +82,7 @@ export default {
         },
         {
           title: 'Sign In',
-          to: '/'
+          to: 'signup'
         }
       ],
       items: [
