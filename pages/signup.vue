@@ -10,12 +10,16 @@
               <div class="signupForm">
                   <div>
                     <h2 style="color: #434343;">Sign up to Afriwrites</h2>
-                    <p style="padding-top: 10px;">Already have an account? <span class="blueColor">Log in</span></p>
-                    <div class="">
-                      <v-btn>Sign up with Google</v-btn>
-                      <v-btn>Facebok</v-btn>
+                    <p style="padding: 15px 0;">Already have an account? <span class="blueColor">Log in</span></p>
+                    <div class="otherSignUp">
+                      <v-btn> <i class="fab fa-google googleIcon"></i> Sign up with Google</v-btn>
+                      <v-btn><i class="fab fa-facebook-f facebookIcon"></i></v-btn>
                     </div>
-                    <p style="padding-top: 15px;"> -- or -- </p>
+                    <div class="flex centerflex orDiv">
+                      <hr>
+                      <p>or</p>
+                      <hr>
+                    </div>
 
                     <form action="" class="signupInput">
                       <div class="formInput flex columnFlex">
@@ -64,7 +68,7 @@ export default {
   min-height: 100vh;
 }
 .signupField{
-  padding: 100px 100px;
+  padding: 60px 100px;
 }
 .formInput label {
   margin-bottom: 10px;
@@ -73,8 +77,21 @@ export default {
   margin-bottom: 20px;
   color: #8B8B8B;
 }
+.googleIcon{
+  margin-right: 10px;
+  color: red;
+}
+.facebookIcon {
+  color: blue;
+}
 .checkboxDiv {
   color: #8B8B8B;
+}
+.orDiv p{
+  margin: 0 10px;
+}
+.orDiv{
+  margin: 15px;
 }
 .checkboxDiv .checkbox {
   margin-right: 15px;

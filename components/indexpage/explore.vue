@@ -55,9 +55,7 @@ export default {
 .exploreSection{
     padding: 40px 10px;
 }
-.textCenter {
-    text-align: center;
-}
+
 .divider {
     width: 100px;
     height: 10px;

@@ -15,6 +15,13 @@
 .blueColor {
     color: blue !important;
 }
+.textCenter {
+    text-align: center;
+}
+hr {
+    height: 1px;
+    width: 30px;
+}
 /* input {
     border: solid 1px black;
 } */
