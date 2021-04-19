@@ -3,7 +3,7 @@
       <v-container>
           <div>
               <v-row>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" sm="5">
                         <div>
                             <h1>
                                 Africa's Writers <br> Marketplace
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </v-col>
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" sm="7">
                         <img src="../../assets/images/twoImage.png" alt="image">
                     </v-col>
               </v-row>
