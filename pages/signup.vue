@@ -40,8 +40,8 @@
                         <p>By creating account, you agree to accept our <span class="blueColor"> Private Policy,</span> <span class="blueColor">Term of Service </span> and <span class="blueColor"> Notification Setting </span></p>
                       </div>
                       <div class="flex loginBtns">
-                        <v-btn>Continue as Client</v-btn>
-                        <v-btn>Continue as Freelancer</v-btn>
+                        <v-btn class="myBtn findBtn">Continue as Client</v-btn>
+                        <v-btn class="myBtn findBtn">Continue as Freelancer</v-btn>
                       </div>
                     </form>
 
@@ -63,6 +63,13 @@ export default {
 <style>
 .signUp{
   background-color: #F5F6FA;
+}
+.findBtn{
+    padding: 20px !important;
+    background-color: #00E68A !important;
+    color: white !important;
+    box-shadow: none !important;
+    margin-right: 10px;
 }
 .gooBtn{
   padding: 20px !important;
@@ -144,6 +151,9 @@ export default {
   .loginBtns{
     flex-direction: column;
   }
+  .findBtn{
+    margin: 5px 0;
+  }
 }
 @media(max-width: 1000px){
     /* .signupField {
@@ -158,10 +168,13 @@ export default {
   .signupForm {
     width: 70%;
   }
+  
+}
   @media(max-width: 700px){
   .signupForm {
     width: 100%;
   }
+  
   }
   @media(max-width: 400px){
     .signupImage{
@@ -177,5 +190,4 @@ export default {
       display: block;
     }
   }
-}
 </style>
