@@ -3,17 +3,18 @@
     <div class="fullHeight">
 			<div class="signupField">
         <v-container>
-          <div class="flex centerflex">
+          <div class="flex centerflex signupEvery">
               <div class="signupImage">
                 <img src="../assets/images/typwriter.svg" alt="">
               </div>
               <div class="signupForm">
                   <div>
-                    <h2 style="color: #434343;">Sign up to Afriwrites</h2>
-                    <p style="padding: 15px 0;">Already have an account? <span class="blueColor">Log in</span></p>
+                    <p style="color: #434343;" class="signUpHead">Sign up to Afriwrites</p>
+                    <p>Already have an account? <span class="blueColor">Log in</span></p>
+                    <p class="onlyShowSmall">Sign up with</p>
                     <div class="otherSignUp">
-                      <v-btn> <i class="fab fa-google googleIcon"></i> Sign up with Google</v-btn>
-                      <v-btn><i class="fab fa-facebook-f facebookIcon"></i></v-btn>
+                      <v-btn class="gooBtn myBtn"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
+                      <v-btn class="faceBtn myBtn"><i class="fab fa-facebook-f fa-2x facebookIcon"></i></v-btn>
                     </div>
                     <div class="flex centerflex orDiv">
                       <hr>
@@ -38,7 +39,7 @@
                         <input type="checkbox" class="checkbox"/>
                         <p>By creating account, you agree to accept our <span class="blueColor"> Private Policy,</span> <span class="blueColor">Term of Service </span> and <span class="blueColor"> Notification Setting </span></p>
                       </div>
-                      <div class="flex">
+                      <div class="flex loginBtns">
                         <v-btn>Continue as Client</v-btn>
                         <v-btn>Continue as Freelancer</v-btn>
                       </div>
@@ -63,12 +64,18 @@ export default {
 .signUp{
   background-color: #F5F6FA;
 }
-
+.gooBtn{
+  padding: 20px !important;
+  background-color: transparent !important;
+  border: #8B8B8B solid 1px;
+  color: #8B8B8B !important;
+  margin-right: 10px;
+}
 .fullHeight{
   min-height: 100vh;
 }
 .signupField{
-  padding: 60px 100px;
+  padding: 60px 0;
 }
 .formInput label {
   margin-bottom: 10px;
@@ -83,6 +90,9 @@ export default {
 }
 .facebookIcon {
   color: blue;
+}
+.otherSignUp{
+  display: flex;
 }
 .checkboxDiv {
   color: #8B8B8B;
@@ -103,8 +113,14 @@ export default {
   padding: 0 50px;
   color: #8B8B8B;
 }
+.onlyShowSmall{
+    display: none;
+  }
 .signupImage{
   padding: 0 50px;
+}
+.signupImage img{
+  width: 100%;
 }
 .signupInput input {
   border: solid 1px #8B8B8B;
@@ -112,6 +128,54 @@ export default {
   height: 36px;
   padding: 10px;
 }
-
-
+.signUpHead {
+  font-size: 25px;
+  font-weight: 500;
+}
+.faceBtn{
+  padding: 21px !important;
+  background-color: #E2E2E4 !important;
+  color: #8B8B8B !important;
+}
+@media(max-width: 1300px){
+    /* .signupField {
+      padding: 60px 50px;
+    } */
+  .loginBtns{
+    flex-direction: column;
+  }
+}
+@media(max-width: 1000px){
+    /* .signupField {
+      padding: 60px 50px;
+    } */
+  .loginBtns{
+    flex-direction: column;
+  }
+  .signupEvery{
+    flex-direction: column;
+  }
+  .signupForm {
+    width: 70%;
+  }
+  @media(max-width: 700px){
+  .signupForm {
+    width: 100%;
+  }
+  }
+  @media(max-width: 400px){
+    .signupImage{
+      padding: 0 10px;
+    }
+    .signupForm{
+      padding: 0 10px;
+    }
+    .noShowSmall{
+      display: none;
+    }
+    .onlyShowSmall{
+      display: block;
+    }
+  }
+}
 </style>

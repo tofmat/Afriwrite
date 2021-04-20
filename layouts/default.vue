@@ -19,7 +19,7 @@
           </v-row>
         </v-container>
       </v-item-group>
-      <v-btn class="px-5 noMobile">Join Now</v-btn>
+      <v-btn class="px-5 noMobile navBtn">Join Now</v-btn>
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -129,6 +129,12 @@ export default {
 }
 .headNav {
   flex: none !important;
+}
+.navBtn {
+  padding: 20px !important;
+  background-color: white !important;
+  color: #00E68A !important;
+  box-shadow: none !important;
 }
 @media(max-width: 600px){
     .logoImage {
