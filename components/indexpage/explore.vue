@@ -65,7 +65,7 @@ export default {
     width: 150px;
     height: 5px;
     margin: auto;
-    background-color: blue;
+    background-color: #00E68A;
 }
 .tile{
     padding: 20px 0 !important;

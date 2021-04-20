@@ -53,6 +53,76 @@
     <v-main>
         <nuxt />
     </v-main>
+
+    <v-footer dark class="mainFooter">
+        <v-container>
+          <v-row>
+            <v-col cols="12" sm="3">
+              <div class="footerList">
+                <ul>
+                  <li>Resources</li>
+                  <li>Blog</li>
+                  <li>Freelancers</li>
+                  <li>Clients</li>
+                  <li>FAQs</li>
+                  <li>Marketplace</li>
+                </ul>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <div class="footerList">
+                <ul>
+                  <li>Support</li>
+                  <li>Why Afriwrite</li>
+                  <li>Work with us</li>
+                  <li>Help & Support</li>
+                  <li>Trust & Safety</li>
+                </ul>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <div class="footerList">
+                <ul>
+                  <li>About</li>
+                  <li>Careers</li>
+                  <li>Press & News</li>
+                  <li>Partnerships</li>
+                  <li>Privacy Policy</li>
+                  <li>Terms of Service</li>
+                  <li>Intellectual Property Claims</li>
+                  <li>Investor Relations</li>
+                </ul>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <div class="footerList">
+                <ul>
+                  <li>Community</li>
+                  <li>Events</li>
+                  <li>Blog</li>
+                  <li>Forums</li>
+                  <li>Community Standards</li>
+                  <li>Podcasts</li>
+                  <li>Affiliates</li>
+                  <li>Invite a Friend</li>
+                </ul>
+              </div>
+            </v-col>
+          </v-row>
+          <hr>
+          <div class="flex justifyBetween alignCenter">
+            <div>
+              <img src="../assets/images/footerLogo.svg" alt="footerLogo">
+            </div>
+            <div class="footerSocials">
+              <img src="../assets/images/feather-facebook.svg" alt="footerLogo">
+              <img src="../assets/images/feather-instagram.svg" alt="footerLogo">
+              <img src="../assets/images/feather-twitter.svg" alt="footerLogo">
+              <img src="../assets/images/feather-linkedin.svg" alt="footerLogo">
+            </div>
+          </div>
+        </v-container>
+    </v-footer>
   </v-app>
 </template>
 
@@ -107,6 +177,18 @@ export default {
 </script>
 
 <style>
+.footerSocials img{
+margin: 0 5px;
+}
+.mainFooter{
+  background-color: #263238 !important;
+  padding: 30px 0;
+}
+.mainFooter hr {
+  width: 100%;
+  margin: 20px 0;
+  border-color: #00E68A;
+}
 .navheader{
   white-space: nowrap;
 }
@@ -129,6 +211,10 @@ export default {
 }
 .headNav {
   flex: none !important;
+}
+.footerList li{
+  list-style: none;
+  padding: 5px 0;
 }
 .navBtn {
   padding: 20px !important;

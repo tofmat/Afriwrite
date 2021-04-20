@@ -31,6 +31,9 @@ hr {
 .myBtn {
     box-shadow: none !important;
 }
+.justifyBetween{
+    justify-content: space-between;
+}
 /* input {
     border: solid 1px black;
 } */

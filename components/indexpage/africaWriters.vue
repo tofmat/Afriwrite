@@ -52,7 +52,7 @@ export default {
 .divider2 {
     width: 150px;
     height: 5px;
-    background-color: blue;
+    background-color: #00E68A;
 }
 .africaButton{
     margin: 30px 0;
