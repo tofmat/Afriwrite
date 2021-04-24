@@ -18,6 +18,9 @@
 .columnFlex {
     flex-direction: column;
 }
+.noMargin{
+    margin: 0 !important;
+}
 .blueColor {
     color: blue !important;
 }

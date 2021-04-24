@@ -12,17 +12,16 @@
                             <v-col cols="12" sm="5">
                                 <div class="nameAndLocation">
                                     <h1>Christian Johnson</h1>
-                                    <div class="flex alignCenter mb-3 lca"><i class="fas fa-map-marker-alt"></i><p>Accra, Ghana</p></div>
-                                    
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam. More</p>
+                                    <div class="flex alignCenter mb-3 lca"><i class="fas fa-map-marker-alt textMainColor"></i><p class="noMargin textMainColor">Accra, Ghana</p></div>
+                                    <p class="textMainColor">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam. More</p>
                                 </div>
                             </v-col>
                             <v-col cols="12" sm="4">
-                                <div>
+                                <div class="jobStat">
                                     <h2>82%</h2>
-
-                                    <p class="mt-2">Job Success</p>
-                                    <div class="flex alignCenter mt-3 lca"><i class="fas fa-award"></i><p>TOP RATED</p></div>
+                                    <div class="percent"></div>
+                                    <p class="mt-2 textMainColor">Job Success</p>
+                                    <div class="flex alignCenter mt-3 lca"><i class="fas fa-award colorBlue"></i><p class="noMargin colorBlue">TOP RATED</p></div>
                                 </div>
                             </v-col>
                         </div>
@@ -31,19 +30,19 @@
                         <div class="row textCenter">
                             <v-col cols="12" sm="3">
                                 <h3 class="mb-2">$50.00</h3>
-                                <p>Hourly Rate</p>
+                                <p class="textMainColor">Hourly Rate</p>
                             </v-col>
                             <v-col cols="12" sm="3">
                                 <h3 class="mb-2">$50k+</h3>
-                                <p>Total Earned</p>
+                                <p class="textMainColor">Total Earned</p>
                             </v-col>
                             <v-col cols="12" sm="3">
                                 <h3 class="mb-2">37</h3>
-                                <p>Jobs</p>
+                                <p class="textMainColor">Jobs</p>
                             </v-col>
                             <v-col cols="12" sm="3">
                                 <h3 class="mb-2">5,188</h3>
-                                <p>Hours Worked</p>
+                                <p class="textMainColor">Hours Worked</p>
                             </v-col>
                         </div>
                     </div>
@@ -69,7 +68,7 @@
                                 <div>
                                     <v-row>
                                         <v-col cols="12" sm="8">
-                                            <h3>Storytelling expert with narrative skills and an eye for design</h3>
+                                            <h3 class="mainColor">Storytelling expert with narrative skills and an eye for design</h3>
                                             <div class="flex alignCenter my-3 lca"><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><h3>5.0</h3></div>
                                             <p class="textItalics">As always, great work and working with you</p>
                                         </v-col>
@@ -118,6 +117,19 @@ export default {
 </script>
 
 <style>
+.textMainColor{
+    color: #707070;
+}
+.jobStat .percent {
+    width: 70%;
+    height: 10px;
+    background-color: #00E68A;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.colorBlue{
+    color: blue;
+}
 .rightSideDash{
     background-color: white;
     padding: 50px 30px;
