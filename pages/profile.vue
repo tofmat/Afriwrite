@@ -100,8 +100,30 @@
                   </div>
               </v-col>
               <v-col cols="12" sm="3" class="rightSideDash">
-                  <div >
-                      Helo
+                  <div>
+                        <v-btn class="myBtn findBtn fullWidth">
+                            Edit Profile
+                        </v-btn>
+                        <p class="mainColor mt-4 textCenter">View my profile as others see it</p>
+                  </div>
+                  <hr class="fullWidth my-5"> 
+                  <div>
+                      <h3 class="mb-3">Availability</h3>
+                      <p>Available as needed</p>
+                  </div>
+                  <hr class="fullWidth my-5"> 
+                  <div>
+                    <h3>Profile Link</h3>
+                    <v-btn class="workBtn fullWidth my-3">
+                        https://www.upwork
+                    </v-btn>
+                    <p class="mainColor">Copy link</p>
+                  </div>
+                  <hr class="fullWidth my-5"> 
+                  <div>
+                      <h3 class="mb-3">Languages</h3>
+                      <p>English - Native</p>
+                      <p>Spanish - Fluent</p>
                   </div>
               </v-col>
           </div>
@@ -160,5 +182,11 @@ export default {
     color: #00E68A !important;
     box-shadow: none !important;
 }
-
+.findBtn{
+    padding: 20px !important;
+    background-color: #00E68A !important;
+    color: white !important;
+    box-shadow: none !important;
+    margin-right: 10px;
+}
 </style>
