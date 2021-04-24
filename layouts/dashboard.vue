@@ -118,7 +118,7 @@
     </div>
 
     <v-main class="dashContent">
-        <div class="dashMainContent">
+        <div class="">
             <nuxt />
         </div>
     </v-main>
@@ -191,9 +191,7 @@ body {
 .dashNav .v-navigation-drawer__border {
     display: none;
 }
-.dashMainContent{
-    margin: 50px 90px;
-}
+
 .navheader{
   white-space: nowrap;
 }

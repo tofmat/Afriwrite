@@ -34,6 +34,18 @@ hr {
 .justifyBetween{
     justify-content: space-between;
 }
+.fullWidth{
+    width: 100%;
+}
+.rightAlign{
+    text-align: right;
+}
+.mainColor {
+    color: #00E68A;
+}
+.textItalics{
+    font-style: italic;
+}
 /* input {
     border: solid 1px black;
 } */
