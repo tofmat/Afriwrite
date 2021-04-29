@@ -106,6 +106,7 @@ layout: 'dashboard'
 }
 .jobFav i{
   margin-right: 20px;
+  color: #00E68A;
 }
 .jobClientPrice{
   margin-right: 20px;
