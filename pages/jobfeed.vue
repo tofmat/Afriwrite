@@ -1,7 +1,7 @@
 <template>
   <div class="dashDefaultContent">
      <div class="row">
-        <v-col cols="12" sm="4" class="">
+        <v-col cols="12" sm="12" lg="4" class="dashDef">
           <div class="dashSlate">
             <div class="dashSearch">
               <h3>Start Your Search</h3>
@@ -74,7 +74,7 @@
             </div>
           </div>
         </v-col>
-        <v-col cols="12" sm="8" class="">
+        <v-col cols="12" sm="12" lg="8" class="">
           <div class="jobInfo">
             <div class="row">
               <v-col cols="12" sm="8" class="jobDesc">
@@ -83,23 +83,23 @@
               </v-col>
               <v-col cols="12" sm="4" class="jobControls">
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-dollar-sign mainColor"></i>
                     <p>Basic Level</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-folder blueColor"></i>
                     <p>Type Fixed</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-clock redColor"></i>
                     <p>Less than a week</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-heart ashColor"></i>
                     <p>Click to save</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <v-btn class="findBtn mt-5">View Job</v-btn>  
+                    <v-btn class="findBtn mt-5" to="job">View Job</v-btn>  
                   </div>
               </v-col>
             </div>
@@ -112,23 +112,23 @@
               </v-col>
               <v-col cols="12" sm="4" class="jobControls">
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-dollar-sign mainColor"></i>
                     <p>Basic Level</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-folder blueColor"></i>
                     <p>Type Fixed</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-clock redColor"></i>
                     <p>Less than a week</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-heart ashColor"></i>
                     <p>Click to save</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <v-btn class="findBtn mt-5">View Job</v-btn>  
+                    <v-btn class="findBtn mt-5" to="job">View Job</v-btn>  
                   </div>
               </v-col>
             </div>
@@ -141,23 +141,23 @@
               </v-col>
               <v-col cols="12" sm="4" class="jobControls">
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-dollar-sign mainColor"></i>
                     <p>Basic Level</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-folder blueColor"></i>
                     <p>Type Fixed</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="far fa-clock redColor"></i>
                     <p>Less than a week</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <i class="fab fa-facebook-f"></i>
+                    <i class="fas fa-heart ashColor"></i>
                     <p>Click to save</p>
                   </div>
                   <div class="flex alignCenter jobControl">
-                    <v-btn class="findBtn mt-5">View Job</v-btn>  
+                    <v-btn class="findBtn mt-5" to="job">View Job</v-btn>  
                   </div>
               </v-col>
             </div>
@@ -176,6 +176,9 @@ export default {
 </script>
 
 <style>
+.dashDef {
+  padding-top: 0 !important;
+}
 .dashSlate {
   background-color: white;
   padding: 2em;
@@ -209,6 +212,7 @@ export default {
 }
 .jobControls i {
   margin-right: 10px;
+  /* color: #00E68A; */
 }
 .jobControl{
   margin-bottom: 10px;
@@ -225,5 +229,10 @@ export default {
 .jobInfo{
   background-color: white;
   margin-bottom: 30px;
+}
+@media(max-width: 1000px){
+  .dashDefaultContent{
+      margin: 50px 10px 20px 10px;
+  }
 }
 </style>

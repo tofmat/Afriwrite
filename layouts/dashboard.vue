@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar flat fixed height="inherit" class="headNav" style="position: relative;">
+    <v-app-bar light flat fixed height="inherit" class="headNav whiteBack" style="position: relative;">
       <a href="/"><img src="../assets/images/logo.png" class="logoImage"/></a>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
@@ -14,7 +14,7 @@
               class="theItem"
               >
                 <v-item v-slot="{ active }" class="navheader px-2">
-                  <v-title :class="active ? 'navActive' : ''">{{nav.title}}</v-title>
+                  <v-title :class="active ? '' : ''">{{nav.title}}</v-title>
                 </v-item>
             </v-list-item>
         </div>
@@ -58,17 +58,19 @@
             dense
             class="openNavFull"
             >
-                <v-list-item link class="sideLinkCon">
+                <v-list-item link class="sideLinkCon" to="jobfeed" router exact active-class="navActive">
+                  <!-- <v-item v-slot="{ active }"> -->
                     <v-list-item-icon>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.088 15.58"><g transform="translate(1 1)"><path d="M4.509,10.5H16.58a1.509,1.509,0,0,1,1.509,1.509v7.544a1.509,1.509,0,0,1-1.509,1.509H4.509A1.509,1.509,0,0,1,3,19.553V12.009A1.509,1.509,0,0,1,4.509,10.5Z" transform="translate(-3 -7.482)"/><path class="a" d="M18.035,18.08V6.009A1.509,1.509,0,0,0,16.527,4.5H13.509A1.509,1.509,0,0,0,12,6.009V18.08" transform="translate(-7.473 -4.5)"/></g></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17.088 15.58" class="anana"><g transform="translate(1 1)"><path d="M4.509,10.5H16.58a1.509,1.509,0,0,1,1.509,1.509v7.544a1.509,1.509,0,0,1-1.509,1.509H4.509A1.509,1.509,0,0,1,3,19.553V12.009A1.509,1.509,0,0,1,4.509,10.5Z" transform="translate(-3 -7.482)"/><path class="a" d="M18.035,18.08V6.009A1.509,1.509,0,0,0,16.527,4.5H13.509A1.509,1.509,0,0,0,12,6.009V18.08" transform="translate(-7.473 -4.5)"/></g></svg>
                     </v-list-item-icon>
                     <v-list-item-title>My Job Feed</v-list-item-title>
+                  <!-- </v-item> -->
                 </v-list-item>
                 <v-list-item link class="sideLinkCon">
                     <v-list-item-icon class="iconSpace">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.088 21.399"><g transform="translate(1 1)"><path d="M22.588,23.9l-7.544-5.389L7.5,23.9V6.655A2.155,2.155,0,0,1,9.655,4.5H20.433a2.155,2.155,0,0,1,2.155,2.155Z" transform="translate(-7.5 -4.5)"/></g></svg>
                     </v-list-item-icon>
-                    <v-list-item-title>Saved Jobs</v-list-item-title>
+                    <v-list-item-title :class="active ? 'navActive' : ''">Saved Jobs</v-list-item-title>
                 </v-list-item>
                 <v-list-item link class="sideLinkCon">
                     <v-list-item-icon>
@@ -150,18 +152,6 @@ export default {
           to: '/'
         }
       ],
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
@@ -174,6 +164,9 @@ export default {
 <style>
 body {
    background-color: #F6F6F6; 
+}
+.whiteBack {
+  background-color: white !important;
 }
 .sideLinkCon{
   margin: 7px 0;
@@ -237,6 +230,7 @@ body {
   stroke-linejoin:round;
   stroke-width:1px;
 }
+
 @media(max-width: 600px){
     .logoImage {
         width: 50%;

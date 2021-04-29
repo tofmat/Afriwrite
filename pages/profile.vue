@@ -2,21 +2,21 @@
   <div>
       <div>
           <div class="row">
-              <v-col cols="12" sm="9" class="">
+              <v-col cols="12" sm="12" lg="9" class="">
                   <div class="dashMainContent">
                     <div>
                         <div class="row">
-                            <v-col cols="12" sm="3" class="profilePicture">
+                            <v-col cols="12" sm="4" lg="3" class="profilePicture">
                                 <img src="../assets/images/Profil.png" alt="ProfilePic">
                             </v-col>
-                            <v-col cols="12" sm="5">
+                            <v-col cols="12" sm="8" lg="5">
                                 <div class="nameAndLocation">
                                     <h1>Christian Johnson</h1>
                                     <div class="flex alignCenter mb-3 lca"><i class="fas fa-map-marker-alt textMainColor"></i><p class="noMargin textMainColor">Accra, Ghana</p></div>
                                     <p class="textMainColor">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam. More</p>
                                 </div>
                             </v-col>
-                            <v-col cols="12" sm="4">
+                            <v-col cols="12" sm="4" lg="4">
                                 <div class="jobStat">
                                     <h2>82%</h2>
                                     <div class="percent"></div>
@@ -28,19 +28,19 @@
                     </div>
                     <div class="mt-10">
                         <div class="row textCenter">
-                            <v-col cols="12" sm="3">
+                            <v-col cols="6" sm="3">
                                 <h3 class="mb-2">$50.00</h3>
                                 <p class="textMainColor">Hourly Rate</p>
                             </v-col>
-                            <v-col cols="12" sm="3">
+                            <v-col cols="6" sm="3">
                                 <h3 class="mb-2">$50k+</h3>
                                 <p class="textMainColor">Total Earned</p>
                             </v-col>
-                            <v-col cols="12" sm="3">
+                            <v-col cols="6" sm="3">
                                 <h3 class="mb-2">37</h3>
                                 <p class="textMainColor">Jobs</p>
                             </v-col>
-                            <v-col cols="12" sm="3">
+                            <v-col cols="6" sm="3">
                                 <h3 class="mb-2">5,188</h3>
                                 <p class="textMainColor">Hours Worked</p>
                             </v-col>
@@ -99,7 +99,7 @@
                     </div>
                   </div>
               </v-col>
-              <v-col cols="12" sm="3" class="rightSideDash">
+              <v-col cols="12" sm="12" lg="3" class="rightSideDash">
                   <div>
                         <v-btn class="myBtn findBtn fullWidth">
                             Edit Profile
@@ -188,5 +188,10 @@ export default {
     color: white !important;
     box-shadow: none !important;
     margin-right: 10px;
+}
+@media(max-width: 1000px){
+  .dashMainContent{
+      margin: 50px 15px 20px 15px;
+  }
 }
 </style>

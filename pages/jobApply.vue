@@ -11,15 +11,15 @@
               </div>
               <div class="row alignCenter jobTips mt-5">
                 <v-col cols="12" sm="4" class="flex alignCenter">
-                  <i class="fab fa-facebook-f"></i>
+                  <i class="far fa-clock"></i>
                   <p>Less than 30 weeks</p>
                 </v-col>
                 <v-col cols="12" sm="4" class="flex alignCenter">
-                  <i class="fab fa-facebook-f"></i>
+                  <i class="far fa-calendar-minus"></i>
                   <p>Less than a month</p>
                 </v-col>
                 <v-col cols="12" sm="4" class="flex alignCenter">
-                  <i class="fab fa-facebook-f"></i>
+                  <i class="fas fa-dollar-sign"></i>
                   <p>$15 - $30 /hr</p>
                 </v-col>
               </div>
@@ -29,7 +29,7 @@
         <div class="mt-10">
           <textarea name="apply" id="apply" cols="30" rows="10" class="textArea"></textarea>
           <div class="flex alignCenter attachFile mt-5">
-            <i class="fab fa-facebook-f"></i>
+            <i class="fas fa-paperclip"></i>
             <p>Attach Files</p>
           </div>
           <div class="mt-10">
@@ -84,5 +84,10 @@ layout: 'dashboard'
 .attachFile i {
   margin-right: 10px;
   color: #00E68A;
+}
+@media(max-width: 1000px){
+  .dashDefaultContent{
+      margin: 50px 15px 20px 15px;
+  }
 }
 </style>
