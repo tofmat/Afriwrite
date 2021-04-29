@@ -6,7 +6,7 @@
       <v-item-group mandatory class="noMobile">
         <div class="flex">
             <v-list-item 
-              v-for="nav in navItems"
+              v-for="nav in upNavItems"
               :key="nav"
               :to="nav.to"
               router
@@ -19,7 +19,8 @@
             </v-list-item>
         </div>
       </v-item-group>
-      <v-btn class="px-5 noMobile navBtn">Join Now</v-btn>
+      <i class="far fa-bell fa-2x mx-8"></i>
+      <img src="../assets/images/Profil.png" alt="avatar" height="50px">
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -39,10 +40,8 @@
           :to="nav.to"
           router
           exact
+          active-class="navActive"
         >
-          <!-- <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action> -->
           <v-list-item-content>
             <v-list-item-title v-text="nav.title" />
           </v-list-item-content>
@@ -136,7 +135,45 @@ export default {
       fixed: false,
       navItems: [
         {
-          title: 'Why Afriwrites',
+          title: 'My Job Feed',
+          to: 'jobfeed'
+        },
+        {
+          title: 'Saved Jobs',
+          to: '/'
+        },
+        {
+          title: 'Messages',
+          to: '/'
+        },
+        {
+          title: 'Proposals',
+          to: '/'
+        },
+        {
+          title: 'All Contracts',
+          to: '/'
+        },
+        {
+          title: 'Profile',
+          to: '/'
+        },
+        {
+          title: 'Transaction',
+          to: '/'
+        },
+        {
+          title: 'Reports',
+          to: '/'
+        },
+        {
+          title: 'Settings',
+          to: '/'
+        }
+      ],
+      upNavItems: [
+        {
+          title: 'Why Us',
           to: '/'
         },
         {
@@ -144,13 +181,13 @@ export default {
           to: '/'
         },
         {
-          title: 'View Freelancers',
+          title: 'Freelancers',
           to: '/'
         },
         {
           title: 'Learn',
           to: '/'
-        }
+        },
       ],
       miniVariant: false,
       right: true,
@@ -233,7 +270,7 @@ body {
 
 @media(max-width: 600px){
     .logoImage {
-        width: 50%;
+        width: 60%;
     }
     .headNav{
       padding: 5px 10px;
