@@ -1,27 +1,26 @@
 <template>
   <v-app>
-    <v-app-bar flat fixed height="inherit" class="headNav" style="position: relative;" color="white">
-        <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
-      <img src="../assets/images/logo.png" class="logoImage noMobile"/>
+    <v-app-bar flat fixed height="inherit" class="headNav" style="position: relative;">
+      <a href="/"><img src="../assets/images/logo.png" class="logoImage"/></a>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
-        <v-container>
-          <v-row>
-            <v-col
+        <div class="flex">
+            <v-list-item 
               v-for="nav in navItems"
               :key="nav"
               :to="nav.to"
-              class="navheader px-5"
-            >
-              <v-item v-slot="{ active }">
-                <v-title :color="active ? 'primary' : ''">{{nav.title}}</v-title>
-              </v-item>
-            </v-col>
-          </v-row>
-        </v-container>
+              router
+              exact
+              class="theItem"
+              >
+                <v-item v-slot="{ active }" class="navheader px-2">
+                  <v-title :class="active ? 'navActive' : ''">{{nav.title}}</v-title>
+                </v-item>
+            </v-list-item>
+        </div>
       </v-item-group>
       <v-btn class="px-5 noMobile navBtn">Join Now</v-btn>
-      
+      <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary class="pad-10 noDesktop mobileDisplay">
@@ -32,7 +31,7 @@
       >
         <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="navActive"
         >
           <v-list-item
           v-for="(nav, i) in navItems"

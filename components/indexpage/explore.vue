@@ -86,4 +86,13 @@ export default {
 /* .curvedBorder{
     border-radius: 10% !important;
 } */
+@media(max-width: 600px){
+  .exploreText h1 {
+    font-size: 40px;
+    line-height: 42px;
+  }
+  .exploreSection{
+        padding: 40px 0px 30px;
+    }
+}
 </style>

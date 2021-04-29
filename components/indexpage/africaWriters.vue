@@ -74,4 +74,14 @@ export default {
     color: #00E68A !important;
     box-shadow: none !important;
 }
+@media(max-width: 600px){
+  .africaWritersPlay{
+     margin: 10px 0;
+    }
+    .africaWriters h1 {
+    font-size: 40px;
+    line-height: 45px;
+    
+}
+}
 </style>

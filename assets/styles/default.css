@@ -63,6 +63,16 @@ hr {
     color: #00E68A !important;
     box-shadow: none !important;
 }
+.navActive{
+    color: #00E68A !important;
+}
+.v-list-item--active {
+    color: #00E68A !important;
+    background-color: none;
+}
+.v-list-item--link:before {
+    background-color: transparent !important;
+}
 /* input {
     border: solid 1px black;
 } */

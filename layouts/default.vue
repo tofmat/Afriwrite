@@ -1,25 +1,25 @@
 <template>
   <v-app>
     <v-app-bar flat fixed height="inherit" class="headNav" style="position: relative;">
-      <img src="../assets/images/logo.png" class="logoImage"/>
+      <a href="/"><img src="../assets/images/logo.png" class="logoImage"/></a> 
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
-        <v-container>
-          <v-row>
-            <v-col
+        <div class="flex">
+            <v-list-item 
               v-for="nav in navItems"
               :key="nav"
               :to="nav.to"
-              class="navheader px-5"
-            >
-              <v-item v-slot="{ active }">
-                <v-title :color="active ? 'primary' : ''">{{nav.title}}</v-title>
-              </v-item>
-            </v-col>
-          </v-row>
-        </v-container>
+              router
+              exact
+              class="theItem"
+              >
+                <v-item v-slot="{ active }" class="navheader px-2">
+                  <v-title :class="active ? '' : ''">{{nav.title}}</v-title>
+                </v-item>
+            </v-list-item>
+        </div>
       </v-item-group>
-      <v-btn class="px-5 noMobile navBtn">Join Now</v-btn>
+      <v-btn class="px-5 noMobile navBtn" to="jobfeed"> Join Now</v-btn>
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
@@ -31,7 +31,7 @@
       >
         <v-list-item-group
           v-model="group"
-          active-class="deep-purple--text text--accent-4"
+          active-class="navActive"
         >
           <v-list-item
           v-for="(nav, i) in navItems"
@@ -140,31 +140,19 @@ export default {
         },
         {
           title: 'Browse Jobs',
-          to: '/'
+          to: '/browse'
         },
         {
           title: 'View Freelancers',
-          to: '/'
+          to: '/view'
         },
         {
           title: 'Blog',
-          to: '/'
+          to: '/blog'
         },
         {
           title: 'Sign In',
           to: 'signup'
-        }
-      ],
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
         }
       ],
       miniVariant: false,
@@ -221,6 +209,9 @@ margin: 0 5px;
   background-color: white !important;
   color: #00E68A !important;
   box-shadow: none !important;
+}
+.theItem {
+  padding: 0 10px !important;
 }
 @media(max-width: 600px){
     .logoImage {

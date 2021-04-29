@@ -52,4 +52,16 @@ export default {
 .firstHead img {
   width: 100%;
 }
+@media(max-width: 600px){
+  .firstHead{
+    padding: 10px 10px;
+    background-color: #F5F5F5;
+  }
+  .firstHead h1 {
+    font-size: 40px;
+    line-height: 42px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+  }
+}
 </style>

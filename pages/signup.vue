@@ -40,8 +40,8 @@
                         <p>By creating account, you agree to accept our <span class="blueColor"> Private Policy,</span> <span class="blueColor">Term of Service </span> and <span class="blueColor"> Notification Setting </span></p>
                       </div>
                       <div class="flex loginBtns">
-                        <v-btn class="myBtn findBtn">Continue as Client</v-btn>
-                        <v-btn class="myBtn findBtn">Continue as Freelancer</v-btn>
+                        <v-btn class="myBtn findBtn" to="jobfeed">Continue as Client</v-btn>
+                        <v-btn class="myBtn findBtn" to="jobfeed">Continue as Freelancer</v-btn>
                       </div>
                     </form>
 
