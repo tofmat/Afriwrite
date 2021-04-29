@@ -49,6 +49,20 @@ hr {
 .textItalics{
     font-style: italic;
 }
+.findBtn{
+    padding: 20px !important;
+    background-color: #00E68A !important;
+    color: white !important;
+    box-shadow: none !important;
+    margin-right: 10px;
+}
+.workBtn{
+    padding: 20px !important;
+    background-color: transparent !important;
+    border: #00E68A solid 1px;
+    color: #00E68A !important;
+    box-shadow: none !important;
+}
 /* input {
     border: solid 1px black;
 } */
