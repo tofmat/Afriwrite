@@ -19,7 +19,7 @@
             </v-list-item>
         </div>
       </v-item-group>
-      <i class="far fa-bell fa-2x mx-8"></i>
+      <i class="far fa-bell fa-2x mx-5"></i>
       <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px"></a>
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>

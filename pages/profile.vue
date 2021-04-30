@@ -159,7 +159,7 @@ export default {
 .dashMainContent{
     margin: 50px 10px 20px 120px;
 }
-.profilePicture{
+.profilePicture img{
     width: 200px;
 }
 .nameAndLocation{
@@ -192,6 +192,11 @@ export default {
 @media(max-width: 1000px){
   .dashMainContent{
       margin: 30px 15px 20px 15px;
+  }
+}
+@media(max-width: 600px){
+  .profilePicture img {
+      width: 150px;
   }
 }
 </style>
