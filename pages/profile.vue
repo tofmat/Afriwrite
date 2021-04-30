@@ -1,7 +1,7 @@
 <template>
   <div>
       <div>
-          <div class="row">
+          <div class="row noMargin">
               <v-col cols="12" sm="12" lg="9" class="">
                   <div class="dashMainContent">
                     <div>
@@ -191,7 +191,7 @@ export default {
 }
 @media(max-width: 1000px){
   .dashMainContent{
-      margin: 30px 15px 20px 15px;
+      margin: 1px 1px 20px 1px;
   }
 }
 @media(max-width: 600px){

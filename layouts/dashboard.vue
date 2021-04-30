@@ -89,7 +89,7 @@
                     </v-list-item-icon>
                     <v-list-item-title>All Contracts</v-list-item-title>
                 </v-list-item>
-                <v-list-item link class="sideLinkCon">
+                <v-list-item link class="sideLinkCon" to="profile" router exact active-class="navActive">
                     <v-list-item-icon>
                       <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.871 28.729"><g transform="translate(1.5 1.5)"><path d="M28.871,31.076V28.218A5.718,5.718,0,0,0,23.153,22.5H11.718A5.718,5.718,0,0,0,6,28.218v2.859" transform="translate(-6 -5.347)"/><path class="a" d="M23.435,10.218A5.718,5.718,0,1,1,17.718,4.5,5.718,5.718,0,0,1,23.435,10.218Z" transform="translate(-6.282 -4.5)"/></g></svg>
                     </v-list-item-icon>
@@ -163,7 +163,7 @@ export default {
         },
         {
           title: 'Profile',
-          to: '/'
+          to: '/profile'
         },
         {
           title: 'Transaction',
@@ -221,7 +221,7 @@ body {
   fill: blue !important;
 }
 .dashRealContent {
-  margin-top: 130px;
+  margin-top: 120px;
 }
 .hoverNav{
     margin-top: 78px;
@@ -292,7 +292,17 @@ body {
       height: 40px !important;
     }
     .dashRealContent {
-    margin-top: 100px;
+    margin-top: 60px;
   }
+}
+@media(max-width: 500px){
+    .dashRealContent {
+      margin-top: 70px;
+    }
+}
+@media(max-width: 900px){
+    .dashRealContent {
+      margin-top: 90px;
+    }
 }
 </style>
