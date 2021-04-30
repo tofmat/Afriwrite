@@ -281,6 +281,10 @@ body {
   stroke-width:1px;
 }
 
+.v-list-item--active svg {
+  stroke:#00E68A !important;
+}
+
 @media(max-width: 600px){
     .logoImage {
         width: 60%;
