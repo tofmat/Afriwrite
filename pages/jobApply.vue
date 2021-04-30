@@ -33,10 +33,10 @@
             <p>Attach Files</p>
           </div>
           <div class="mt-10">
-            <v-btn class="findBtn fullWidth Drag and Drop File/Select">Drag and Drop File/Select</v-btn>
+            <v-btn class="findBtn fullWidth Drag and Drop File/Select" to="#">Drag and Drop File/Select</v-btn>
           </div>
           <div class="mt-10 centerflex ">
-            <v-btn class="findBtn">Apply Now</v-btn>
+            <v-btn class="findBtn" to="#">Apply Now</v-btn>
           </div>
           
         </div>
@@ -87,7 +87,7 @@ layout: 'dashboard'
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 50px 15px 20px 15px;
+      margin: 30px 15px 20px 15px;
   }
 }
 </style>

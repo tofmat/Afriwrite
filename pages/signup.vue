@@ -13,8 +13,8 @@
                     <p>Already have an account? <span class="blueColor">Log in</span></p>
                     <p class="onlyShowSmall">Sign up with</p>
                     <div class="otherSignUp">
-                      <v-btn class="gooBtn myBtn"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
-                      <v-btn class="faceBtn myBtn"><i class="fab fa-facebook-f fa-2x facebookIcon"></i></v-btn>
+                      <v-btn class="gooBtn myBtn" to="#"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
+                      <v-btn class="faceBtn myBtn" to="#"><i class="fab fa-facebook-f fa-2x facebookIcon"></i></v-btn>
                     </div>
                     <div class="flex centerflex orDiv">
                       <hr>
@@ -174,9 +174,14 @@ export default {
   .signupForm {
     width: 100%;
   }
-  
+  .signupImage img{
+      width: 200px;
+    }
+    .signupField{
+      padding: 30px 0;
+    }
   }
-  @media(max-width: 400px){
+  @media(max-width: 500px){
     .signupImage{
       padding: 0 10px;
     }

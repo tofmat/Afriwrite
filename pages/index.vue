@@ -63,5 +63,8 @@ export default {
     padding-bottom: 20px;
     margin-top: 20px;
   }
+  .firstHead img {
+    height: 250px;
+  }
 }
 </style>

@@ -87,10 +87,10 @@
                             <hr class="fullWidth">
                             <div class="mt-4"> 
                                 <div class="flex">
-                                    <v-btn class="workBtn mr-2">
+                                    <v-btn class="workBtn mr-2" to="#">
                                         Blog Post
                                     </v-btn>
-                                    <v-btn class="workBtn">
+                                    <v-btn class="workBtn" to="#">
                                         Blog Post
                                     </v-btn>
                                 </div>
@@ -101,7 +101,7 @@
               </v-col>
               <v-col cols="12" sm="12" lg="3" class="rightSideDash">
                   <div>
-                        <v-btn class="myBtn findBtn fullWidth">
+                        <v-btn class="myBtn findBtn fullWidth" to="#">
                             Edit Profile
                         </v-btn>
                         <p class="mainColor mt-4 textCenter">View my profile as others see it</p>
@@ -114,7 +114,7 @@
                   <hr class="fullWidth my-5"> 
                   <div>
                     <h3>Profile Link</h3>
-                    <v-btn class="workBtn fullWidth my-3">
+                    <v-btn class="workBtn fullWidth my-3" to="#">
                         https://www.upwork
                     </v-btn>
                     <p class="mainColor">Copy link</p>
@@ -191,7 +191,7 @@ export default {
 }
 @media(max-width: 1000px){
   .dashMainContent{
-      margin: 50px 15px 20px 15px;
+      margin: 30px 15px 20px 15px;
   }
 }
 </style>

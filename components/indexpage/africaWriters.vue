@@ -13,10 +13,10 @@
                             </div>
                             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus tempore nemo sequi, recusandae unde molestiae adipisci dolores suscipit cupiditate consequatur debitis dicta nisi voluptas rem eveniet fuga? Nam, rem quia!</p>
                             <div class="centerFlex africaButton">
-                                <v-btn class="myBtn findBtn">
+                                <v-btn class="myBtn findBtn" to="#">
                                     Find Talent
                                 </v-btn>
-                                <v-btn class="workBtn">
+                                <v-btn class="workBtn" to="#">
                                     Find Work
                                 </v-btn>
                             </div>

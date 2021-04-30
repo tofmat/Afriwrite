@@ -70,7 +70,7 @@
           <div class="dashSlate">
             <div class="dashSearch">
               <p class="">Click "Apply Filter" to apply latest changes made by you</p>
-              <v-btn class="findBtn">Apply Filters</v-btn>              
+              <v-btn class="findBtn" to="#">Apply Filters</v-btn>              
             </div>
           </div>
         </v-col>
@@ -232,7 +232,7 @@ export default {
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 50px 10px 20px 10px;
+      margin: 30px 10px 20px 10px;
   }
 }
 </style>

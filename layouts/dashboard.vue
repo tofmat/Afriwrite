@@ -20,11 +20,12 @@
         </div>
       </v-item-group>
       <i class="far fa-bell fa-2x mx-8"></i>
-      <img src="../assets/images/Profil.png" alt="avatar" height="50px">
+      <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px"></a>
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary class="pad-10 noDesktop mobileDisplay">
+      
        <img src="../assets/images/logo.png" class="logoImage mobileLogo"/>
       <v-list
         nav

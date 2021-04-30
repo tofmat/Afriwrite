@@ -88,11 +88,14 @@ export default {
 } */
 @media(max-width: 600px){
   .exploreText h1 {
-    font-size: 40px;
+    font-size: 30px;
     line-height: 42px;
   }
   .exploreSection{
         padding: 40px 0px 30px;
+    }
+    .fourCards img {
+        width: 70px;
     }
 }
 </style>

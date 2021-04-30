@@ -57,7 +57,7 @@
     <v-footer dark class="mainFooter">
         <v-container>
           <v-row>
-            <v-col cols="12" sm="3">
+            <v-col cols="6" sm="3">
               <div class="footerList">
                 <ul>
                   <li>Resources</li>
@@ -69,7 +69,7 @@
                 </ul>
               </div>
             </v-col>
-            <v-col cols="12" sm="3">
+            <v-col cols="6" sm="3">
               <div class="footerList">
                 <ul>
                   <li>Support</li>
@@ -80,7 +80,7 @@
                 </ul>
               </div>
             </v-col>
-            <v-col cols="12" sm="3">
+            <v-col cols="6" sm="3">
               <div class="footerList">
                 <ul>
                   <li>About</li>
@@ -94,7 +94,7 @@
                 </ul>
               </div>
             </v-col>
-            <v-col cols="12" sm="3">
+            <v-col cols="6" sm="3">
               <div class="footerList">
                 <ul>
                   <li>Community</li>
@@ -111,7 +111,7 @@
           </v-row>
           <hr>
           <div class="flex justifyBetween alignCenter">
-            <div>
+            <div class="footLogo">
               <img src="../assets/images/footerLogo.svg" alt="footerLogo">
             </div>
             <div class="footerSocials">
@@ -219,6 +219,9 @@ margin: 0 5px;
     }
     .headNav{
       padding: 5px 10px;
+    }
+    .footLogo img{
+      width: 100px;
     }
 }
 </style>

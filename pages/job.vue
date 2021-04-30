@@ -46,7 +46,7 @@
                 </v-col>
               </div>
             </v-col>
-            <v-col cols="12" sm="12" lg="3" class="flex">
+            <v-col cols="12" sm="12" lg="3" class="flex alignOnMobile">
               <div class="jobFav">
                 <i class="fas fa-heart fa-2x ashColor"></i>
               </div>
@@ -126,7 +126,10 @@ layout: 'dashboard'
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 50px 15px 20px 15px;
+      margin: 30px 15px 20px 15px;
+  }
+  .alignOnMobile {
+    align-items: center;
   }
 }
 </style>
