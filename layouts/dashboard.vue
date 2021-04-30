@@ -1,7 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar light flat fixed height="inherit" class="headNav whiteBack" style="position: relative;">
-      <a href="/"><img src="../assets/images/logo.png" class="logoImage"/></a>
+    <v-app-bar light flat elevate-on-scroll scroll-target="#scrolling-techniques-7" height="inherit" class="headNav whiteBack" absolute>
+      <a href="/"><img src="../assets/images/logo.png" class="logoImage noMobile"/></a>
+      <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
         <div class="flex">
@@ -20,13 +21,11 @@
         </div>
       </v-item-group>
       <i class="far fa-bell fa-2x mx-5"></i>
-      <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px"></a>
-      <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
+      <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px" class="dashProfilePic"></a>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary class="pad-10 noDesktop mobileDisplay">
-      
-       <img src="../assets/images/logo.png" class="logoImage mobileLogo"/>
+        <a href="/"><img src="../assets/images/logo.png" class="logoImage mobileLogo"/></a>
       <v-list
         nav
         dense
@@ -118,11 +117,18 @@
         </v-navigation-drawer>
     </div>
 
-    <v-main class="dashContent">
-        <div class="">
-            <nuxt />
-        </div>
-    </v-main>
+    <v-sheet
+      id="scrolling-techniques-7"
+      class="overflow-y-auto"
+      max-height="100vh"
+    >
+        <v-main class="dashContent">
+          <div class="dashRealContent">
+              <nuxt />
+          </div>
+      </v-main>
+    </v-sheet>
+    
         
   </v-app>
 </template>
@@ -137,7 +143,7 @@ export default {
       navItems: [
         {
           title: 'My Job Feed',
-          to: 'jobfeed'
+          to: '/jobfeed'
         },
         {
           title: 'Saved Jobs',
@@ -169,7 +175,7 @@ export default {
         },
         {
           title: 'Settings',
-          to: '/'
+          to: '/profile'
         }
       ],
       upNavItems: [
@@ -214,6 +220,9 @@ body {
 .svgNav{
   fill: blue !important;
 }
+.dashRealContent {
+  margin-top: 130px;
+}
 .hoverNav{
     margin-top: 78px;
     border: none;
@@ -255,6 +264,9 @@ body {
   box-shadow: none !important;
 }
 .openNavFull{
+  position: static;
+  overflow: scroll;
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -276,5 +288,11 @@ body {
     .headNav{
       padding: 5px 10px;
     }
+    .dashProfilePic {
+      height: 40px !important;
+    }
+    .dashRealContent {
+    margin-top: 100px;
+  }
 }
 </style>
