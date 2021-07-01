@@ -1,6 +1,6 @@
 <template>
   <div class="dashDefaultContent">
-    <h2 class="mainColor mb-5">Job Feeds</h2>
+    <h2 class="mainColor mb-5">Saved Jobs</h2>
     <input type="text" placeholder="search for Jobs" class="mb-10 mainSearch">
      <div class="row">
         <v-col cols="12" sm="12" lg="4" class="dashDef">
@@ -32,7 +32,7 @@
               <v-col cols="12" sm="8" class="jobDesc">
                 <div class="flex alignCenter jobControl justifyBetween">
                   <h2 class="mainColor noMargin">Job Title</h2>
-                  <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
+                  <span class="saveJob"><i class="fas fa-bookmark mr-2"></i> Saved <i class="far fa-trash-alt ml-2 mainColor iconBack"></i></span>
                 </div>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
                 <div class="flex alignCenter">
@@ -104,6 +104,9 @@ export default {
   background-color: #008952;
   border-radius: 0 20px 20px 0;
 }
+.saveJob{
+  color: #AAAAAA;
+}
 .jobControls {
   margin: 0;
 }
@@ -111,6 +114,7 @@ export default {
   margin-right: 10px;
   color: #fff;
 }
+
 .jobControl{
   margin-bottom: 10px;
 }

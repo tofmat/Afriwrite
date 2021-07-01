@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar light flat elevate-on-scroll scroll-target="#scrolling-techniques-7" height="inherit" class="headNav whiteBack" absolute>
+    <v-app-bar light flat elevate-on-scroll scroll-target="#scrolling-techniques-7" height="inherit" class="headNav greenBack" absolute>
       <a href="/"><img src="../assets/images/logo.png" class="logoImage noMobile"/></a>
       <v-app-bar-nav-icon @click="drawer = true" class="noDesktop mobileDisplay"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
@@ -65,11 +65,11 @@
                     <v-list-item-title>My Job Feed</v-list-item-title>
                   <!-- </v-item> -->
                 </v-list-item>
-                <v-list-item link class="sideLinkCon">
+                <v-list-item link class="sideLinkCon" to="saved" router exact active-class="navActive">
                     <v-list-item-icon class="iconSpace">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.088 21.399"><g transform="translate(1 1)"><path d="M22.588,23.9l-7.544-5.389L7.5,23.9V6.655A2.155,2.155,0,0,1,9.655,4.5H20.433a2.155,2.155,0,0,1,2.155,2.155Z" transform="translate(-7.5 -4.5)"/></g></svg>
                     </v-list-item-icon>
-                    <v-list-item-title :class="active ? 'navActive' : ''">Saved Jobs</v-list-item-title>
+                    <v-list-item-title>Saved Jobs</v-list-item-title>
                 </v-list-item>
                 <v-list-item link class="sideLinkCon">
                     <v-list-item-icon>
@@ -147,7 +147,7 @@ export default {
         },
         {
           title: 'Saved Jobs',
-          to: '/'
+          to: '/saved'
         },
         {
           title: 'Messages',
@@ -207,10 +207,10 @@ export default {
 
 <style>
 body {
-   background-color: #F6F6F6; 
+   background-color: white; 
 }
-.whiteBack {
-  background-color: white !important;
+.greenBack {
+  background-color: #008952 !important;
 }
 .sideLinkCon{
   margin: 7px 0;
@@ -224,8 +224,8 @@ body {
   margin-top: 120px;
 }
 .hoverNav{
-    margin-top: 78px;
-    border: none;
+    margin-top: 89px;
+    border-right: solid 1px #F9F9F9;
 }
 .dashNav .v-navigation-drawer__border {
     display: none;
@@ -245,7 +245,7 @@ body {
   padding: 10px;
 }
 .dashContent{
-    background-color: #F6F6F6;
+    background-color: white;
 }
 .mobileLogo {
   padding-left: 8px;
@@ -260,7 +260,7 @@ body {
 .navBtn {
   padding: 20px !important;
   background-color: white !important;
-  color: #00E68A !important;
+  color: #008952 !important;
   box-shadow: none !important;
 }
 .openNavFull{
@@ -282,7 +282,7 @@ body {
 }
 
 .v-list-item--active svg {
-  stroke:#00E68A !important;
+  stroke:#008952 !important;
 }
 
 @media(max-width: 600px){

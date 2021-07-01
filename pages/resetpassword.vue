@@ -9,38 +9,15 @@
               </div>
               <div class="signupForm">
                   <div class="centerflex columnFlex">
-                    <p class="signUpHead">Sign up to Afriwrites</p>
-                    <p class="textCenter">Already have an account? <span class="mainColor">Log in</span>
-                    <p class="onlyShowSmall">Sign up with</p>
-                    <div class="otherSignUp">
-                      <v-btn class="gooBtn myBtn" to="#"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
-                      <v-btn class="faceBtn myBtn" to="#"><i class="fab fa-facebook-f facebookIcon"></i> <span class="noShowSmall">Sign up with Facebook</span> </v-btn>
-                    </div>
-                    <div class="flex centerflex orDiv">
-                      <hr>
-                      <p>or</p>
-                      <hr>
-                    </div>
+                    <p class="signUpHead">Reset Password</p>
 
                     <form action="" class="signupInput">
-                      <div class="formInput flex centerflex twoColumnsInput">
-                        <input type="text" placeholder="First Name" />
-                        <input type="text" placeholder="Last Name" />
-                      </div>
                       <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Email Address" />
+                        <input type="text" placeholder="Enter your Email Address" />
                       </div>
-                      <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Set a Password" />
-                      </div>
-                      <div class="formInput flex centerflex">
-                        <v-btn class="myBtn jobBtn" to="jobfeed">Work as a freelancer</v-btn>
-                        <v-btn class="myBtn jobBtn" to="jobfeed">Hire for a project</v-btn>
-                      </div>
-                      
                     </form>
                     <div class="flex loginBtns">
-                      <v-btn class="myBtn findBtn" to="jobfeed">CREATE MY ACCOUNT</v-btn>
+                      <v-btn class="myBtn findBtn" to="jobfeed">PROCEED</v-btn>
                     </div>
                   </div>
               </div>
@@ -102,6 +79,10 @@ export default {
 .checkboxDiv {
   color: #8B8B8B;
 }
+.checkboxDiv p {
+  color: #8B8B8B;
+  margin-bottom: 0 !important;
+}
 .orDiv p{
   margin: 0 10px;
 }
@@ -109,8 +90,9 @@ export default {
   margin: 15px;
 }
 .checkboxDiv .checkbox {
-  margin-right: 15px;
-  width: 30px;
+  height: auto;
+  margin-right: 5px;
+  width: 15px;
   color: #8B8B8B;
 }
 .twoColumnsInput :first-child{

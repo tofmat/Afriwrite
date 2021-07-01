@@ -1,6 +1,13 @@
 * {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+p {
+    font-weight: 400;
+    color: #787878;
+}
+h2 {
+    font-weight: 500;
+}
 .flex{
     display: flex;
 }
@@ -9,6 +16,24 @@
     align-items: center !important;
     justify-content: center !important;
 }
+.justifyCenter {
+    justify-content: center;
+}
+.yellowColor{
+    color: #FFC107;
+}
+.boldText {
+    font-weight: 600;
+}
+.darkGreyColor {
+    color: #555555 !important;
+    font-weight: 500;
+}
+.iconBack{
+    background-color: #0089521f;
+    padding: 9px;
+    border-radius: 2px;
+  }
 .alignCenter{
     align-items: center;
 }
@@ -32,7 +57,9 @@
 }
 hr {
     height: 1px;
-    width: 30px;
+    color: #E9E9E9;
+    /* width: 30px; */
+    border-color: #E9E9E9;
 }
 .myBtn {
     box-shadow: none !important;
@@ -43,11 +70,23 @@ hr {
 .fullWidth{
     width: 100%;
 }
+
+.tagBtn{
+    letter-spacing: normal !important;
+    background-color: #F1F1F1;
+    color: #787878 !important;
+    border-radius: 20px !important;
+    text-transform: none !important;
+    box-shadow: none !important;
+    margin-right: 5px;
+    font-size: 12px !important;
+}
+
 .rightAlign{
     text-align: right;
 }
 .mainColor {
-    color: #00E68A;
+    color: #008952;
 }
 .redColor{
     color: #FF5656;
@@ -58,24 +97,45 @@ hr {
 }
 .findBtn{
     padding: 20px !important;
-    background-color: #00E68A !important;
+    background-color:#008952 !important;
     color: white !important;
     box-shadow: none !important;
-    margin-right: 10px;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    /* margin-right: 10px; */
+    border-radius: 2px !important;
+}
+.greyBtn{
+    letter-spacing: normal !important;
+    padding: 20px !important;
+    background-color:#E5E5E5 !important;
+    color: #008952 !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+    /* margin-right: 10px; */
+    border-radius: 2px !important;
+}
+.jobBtn{
+    padding: 20px !important;
+    background-color: transparent !important;
+    border: #8B8B8B solid 1px;
+    color: #8B8B8B !important;
+    box-shadow: none !important;
+    border-radius: 2px !important;
 }
 .workBtn{
     padding: 20px !important;
     background-color: transparent !important;
-    border: #00E68A solid 1px;
-    color: #00E68A !important;
+    border: #008952 solid 1px;
+    color: #008952 !important;
     box-shadow: none !important;
 }
 .navActive{
-    color: #00E68A !important;
-    stroke:#00E68A !important;
+    color: #008952 !important;
+    stroke:#008952 !important;
 }
 .v-list-item--active {
-    color: #00E68A !important;
+    color: #008952 !important;
     background-color: none;
 }
 .v-list-item--link:before {
@@ -84,3 +144,10 @@ hr {
 /* input {
     border: solid 1px black;
 } */
+.v-application--wrap {
+    background: white;
+  }
+
+  .blackColor {
+      color: black !important;
+  }
