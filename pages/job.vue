@@ -81,7 +81,6 @@
               </div>
             </v-col>
 
-
             <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
               <v-btn class="findBtn mb-4 fullWidth" to="submit">Submit a Proposal</v-btn>
               <v-btn class="greyBtn fullWidth"> <i class="fas fa-bookmark mr-2 mt-1"></i> Save Job</v-btn>
@@ -134,7 +133,7 @@ layout: 'dashboard'
 
 }
 .jobI {
-  padding: 2em;
+  padding: 1em;
   background-color: white;
   border-radius: 10px;
 }
@@ -180,7 +179,7 @@ layout: 'dashboard'
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 30px 15px 20px 15px;
+      margin: 30px 7x 20px 7px;
   }
   .alignOnMobile {
     align-items: center;

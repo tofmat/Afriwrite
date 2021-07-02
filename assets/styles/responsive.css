@@ -8,4 +8,14 @@
     .noMobile {
         display: none !important;
     }
+    .width70 {
+        width: auto !important;
+    }
+    .width40{
+        width: 40% !important;
+    }
+    .breakToColumn{
+        flex-direction: column;
+        align-items: normal !important;
+    }
 }

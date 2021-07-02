@@ -7,6 +7,10 @@ p {
 }
 h2 {
     font-weight: 500;
+    /* color: #555555; */
+}
+h3 {
+    color: #555555;
 }
 .flex{
     display: flex;
@@ -28,6 +32,12 @@ h2 {
 .darkGreyColor {
     color: #555555 !important;
     font-weight: 500;
+}
+.width70 {
+    width: 70%;
+}
+td {
+    /* padding: 0 !important; */
 }
 .iconBack{
     background-color: #0089521f;
@@ -53,13 +63,13 @@ h2 {
     color: #9F9F9F;
 }
 .textCenter {
-    text-align: center;
+    text-align: center !important;
 }
 hr {
     height: 1px;
     color: #E9E9E9;
     /* width: 30px; */
-    border-color: #E9E9E9;
+    border-top: 1px #E9E9E9;
 }
 .myBtn {
     box-shadow: none !important;
@@ -144,6 +154,12 @@ hr {
 /* input {
     border: solid 1px black;
 } */
+.normalInput{
+    border: solid 1px #C5C5C5 !important;
+    padding: 5px 20px;
+    height: 30px;
+    border-radius: 5px;
+}
 .v-application--wrap {
     background: white;
   }
