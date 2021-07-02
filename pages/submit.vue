@@ -296,7 +296,7 @@ export default {
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 30px 7px 20px 7px;
+      margin: 30px 8px 20px 8px;
   }
 }
 </style>

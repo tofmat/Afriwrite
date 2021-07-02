@@ -179,7 +179,7 @@ layout: 'dashboard'
 }
 @media(max-width: 1000px){
   .dashDefaultContent{
-      margin: 30px 7x 20px 7px;
+      margin: 30px 10px 20px 10px;
   }
   .alignOnMobile {
     align-items: center;

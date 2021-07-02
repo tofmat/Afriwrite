@@ -167,3 +167,10 @@ hr {
   .blackColor {
       color: black !important;
   }
+
+.dashDefaultContent{
+    margin: 50px 50px 20px 120px;
+}
+.dashRealContent {
+    margin-top: 120px;
+  }

@@ -18,4 +18,35 @@
         flex-direction: column;
         align-items: normal !important;
     }
+    .dashDefaultContent{
+        margin: 30px 10px 20px 10px !important;
+    }
+    .alignOnMobile {
+      align-items: center;
+    }
+}
+@media(max-width: 600px){
+    .logoImage {
+        width: 60%;
+    }
+    .headNav{
+      padding: 5px 10px;
+    }
+    .dashProfilePic {
+      height: 40px !important;
+    }
+    .dashRealContent {
+    margin-top: 60px;
+  }
+}
+@media(max-width: 500px){
+    .dashRealContent {
+      margin-top: 70px;
+    }
+}
+@media(max-width: 900px){
+    .dashRealContent {
+      margin-top: 90px;
+      margin-bottom: 50px;
+    }
 }
