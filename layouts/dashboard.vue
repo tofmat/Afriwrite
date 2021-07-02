@@ -307,6 +307,7 @@ body {
 @media(max-width: 900px){
     .dashRealContent {
       margin-top: 90px;
+      margin-bottom: 50px;
     }
 }
 </style>

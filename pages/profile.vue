@@ -11,17 +11,14 @@
                             </v-col>
                             <v-col cols="12" sm="8" lg="5">
                                 <div class="nameAndLocation">
-                                    <h1>Christian Johnson</h1>
-                                    <div class="flex alignCenter mb-3 lca"><i class="fas fa-map-marker-alt textMainColor"></i><p class="noMargin textMainColor">Accra, Ghana</p></div>
+                                    <h1 class="darkGreyColor">Christian Johnson</h1>
+                                    <div class="flex alignCenter mb-3 lca"><i class="fas fa-map-marker-alt"></i><p class="noMargin">Accra, Ghana</p></div>
                                     <p class="textMainColor">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam. More</p>
                                 </div>
                             </v-col>
                             <v-col cols="12" sm="4" lg="4">
                                 <div class="jobStat">
-                                    <h2>82%</h2>
-                                    <div class="percent"></div>
-                                    <p class="mt-2 textMainColor">Job Success</p>
-                                    <div class="flex alignCenter mt-3 lca"><i class="fas fa-award colorBlue"></i><p class="noMargin colorBlue">TOP RATED</p></div>
+                                    <span class="flex alignCenter mt-3 lca darkGreyColor"><i class="fas fa-ribbon"></i><p class="noMargin">TOP RATED</p></span>
                                 </div>
                             </v-col>
                         </div>
@@ -29,20 +26,28 @@
                     <div class="mt-10">
                         <div class="row textCenter">
                             <v-col cols="6" sm="3">
-                                <h3 class="mb-2">$50.00</h3>
-                                <p class="textMainColor">Hourly Rate</p>
+                                <div class="mx-2 infoCards">
+                                    <h3 class="mb-2 mainColor">$50.00</h3>
+                                    <p class="darkGreyColor">Hourly Rate</p>
+                                </div>
                             </v-col>
-                            <v-col cols="6" sm="3">
-                                <h3 class="mb-2">$50k+</h3>
-                                <p class="textMainColor">Total Earned</p>
+                            <v-col cols="6" sm="3" class="">
+                                <div class="mx-2 infoCards">
+                                    <h3 class="mb-2 mainColor">$50k+</h3>
+                                    <p class="darkGreyColor">Total Earned</p>
+                                </div>
                             </v-col>
-                            <v-col cols="6" sm="3">
-                                <h3 class="mb-2">37</h3>
-                                <p class="textMainColor">Jobs</p>
+                            <v-col cols="6" sm="3" class="">
+                                <div class="mx-2 infoCards">
+                                    <h3 class="mb-2 mainColor">37</h3>
+                                    <p class="darkGreyColor">Jobs</p>
+                                </div>
                             </v-col>
-                            <v-col cols="6" sm="3">
-                                <h3 class="mb-2">5,188</h3>
-                                <p class="textMainColor">Hours Worked</p>
+                            <v-col cols="6" sm="3" class="">
+                                <div class="mx-2 infoCards">
+                                    <h3 class="mb-2 mainColor">5,188</h3>
+                                    <p class="darkGreyColor">Hours Worked</p>
+                                </div>
                             </v-col>
                         </div>
                     </div>
@@ -55,7 +60,7 @@
                                     <v-row>
                                         <v-col cols="12" sm="8">
                                             <h3 class="mainColor">Storytelling expert with narrative skills and an eye for design</h3>
-                                            <div class="flex alignCenter my-3 lca"><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><h3>5.0</h3></div>
+                                            <div class="flex alignCenter my-3 lca"><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><h3>5.0</h3></div>
                                             <p class="textItalics">As always, great work and working with you</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" class="rightAlign">
@@ -69,7 +74,7 @@
                                     <v-row>
                                         <v-col cols="12" sm="8">
                                             <h3 class="mainColor">Storytelling expert with narrative skills and an eye for design</h3>
-                                            <div class="flex alignCenter my-3 lca"><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><i class="fas fa-star mainColor"></i><h3>5.0</h3></div>
+                                            <div class="flex alignCenter my-3 lca"><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><i class="fas fa-star yellowColor"></i><h3>5.0</h3></div>
                                             <p class="textItalics">As always, great work and working with you</p>
                                         </v-col>
                                         <v-col cols="12" sm="4" class="rightAlign">
@@ -81,50 +86,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-10">
-                        <div class="backWhite workHis">
-                            <h2 class="mb-4">Skills</h2>
-                            <hr class="fullWidth">
-                            <div class="mt-4"> 
-                                <div class="flex">
-                                    <v-btn class="workBtn mr-2" to="#">
-                                        Blog Post
-                                    </v-btn>
-                                    <v-btn class="workBtn" to="#">
-                                        Blog Post
-                                    </v-btn>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                   </div>
               </v-col>
-              <v-col cols="12" sm="12" lg="3" class="rightSideDash">
-                  <div>
+              <v-col cols="12" sm="12" lg="3">
+                  <div class="sideB rightSideDash">
+                      <div>
                         <v-btn class="myBtn findBtn fullWidth" to="#">
                             Edit Profile
                         </v-btn>
-                        <p class="mainColor mt-4 textCenter">View my profile as others see it</p>
+                      </div>
+                      <hr class="fullWidth my-5"> 
+                      <div class="profileInfoHolder">
+                          <p class="darkGreyColor noMargin mb-2"><span><img src="../assets/images/24hrs.svg" alt="availableicon" class="mr-2">AVAILABILITY</span></p>
+                          <h3 class="mainColor">Currently Available</h3>
+                      </div>
+                      <hr class="fullWidth my-5"> 
+                      <div class="profileInfoHolder">
+                          <p class="darkGreyColor noMargin mb-2"><span><img src="../assets/images/link.svg" alt="availableicon" class="mr-2">PROFILE LINK</span></p>
+                          <p class="mainColor noMargin">https://www.johnson.com</p>
+                      </div>
+                      <hr class="fullWidth my-5"> 
+                      <div class="profileInfoHolder">
+                          <p class="darkGreyColor noMargin mb-2"><span><img src="../assets/images/translate.svg" alt="availableicon" class="mr-2">LANGUAGES</span></p>
+                          <p class="mainColor noMargin">English - Native</p>
+                          <p class="mainColor noMargin">Spanish - Fluent</p>
+                      </div>
                   </div>
-                  <hr class="fullWidth my-5"> 
-                  <div>
-                      <h3 class="mb-3">Availability</h3>
-                      <p>Available as needed</p>
-                  </div>
-                  <hr class="fullWidth my-5"> 
-                  <div>
-                    <h3>Profile Link</h3>
-                    <v-btn class="workBtn fullWidth my-3" to="#">
-                        https://www.upwork
-                    </v-btn>
-                    <p class="mainColor">Copy link</p>
-                  </div>
-                  <hr class="fullWidth my-5"> 
-                  <div>
-                      <h3 class="mb-3">Languages</h3>
-                      <p>English - Native</p>
-                      <p>Spanish - Fluent</p>
-                  </div>
+
               </v-col>
           </div>
       </div>
@@ -142,6 +130,12 @@ export default {
 .textMainColor{
     color: #707070;
 }
+.jobStat span {
+    width: fit-content;
+    background-color: rgba(0, 137, 82, 0.05);;
+    padding: 5px;
+    border-radius: 2px;
+}
 .jobStat .percent {
     width: 70%;
     height: 10px;
@@ -149,11 +143,13 @@ export default {
     border-radius: 20px;
     margin-top: 10px;
 }
+.jobStat i {
+    color: #FFDE00;
+}
 .colorBlue{
     color: blue;
 }
 .rightSideDash{
-    background-color: white;
     padding: 50px 30px;
 }
 .dashMainContent{
@@ -162,11 +158,30 @@ export default {
 .profilePicture img{
     width: 200px;
 }
+.profileInfoHolder{
+    padding: 15px 15px;
+    border-radius: 15px;
+    border-left: #008952 15px solid;
+    background-color: white;
+}
 .nameAndLocation{
     margin: 0 !important;
 }
 .lca i {
     margin-right: 10px;
+}
+.infoCards {
+    background-color: rgba(0, 137, 82, 0.05);
+    border-radius: 15px;
+    padding: 15px;
+}
+.infoCards h3 {
+    background-color: rgba(0, 137, 82, 0.2);
+    width: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    margin: auto;
 }
 .backWhite{
     background-color: white;
@@ -174,24 +189,16 @@ export default {
 .workHis{
     padding: 30px;
     border-radius: 20px;
+    background-color: rgba(248, 248, 248, 1);
 }
-.workBtn{
-    padding: 20px !important;
-    background-color: transparent !important;
-    border: #00E68A solid 1px;
-    color: #00E68A !important;
-    box-shadow: none !important;
-}
-.findBtn{
-    padding: 20px !important;
-    background-color: #00E68A !important;
-    color: white !important;
-    box-shadow: none !important;
-    margin-right: 10px;
+.sideB {
+    background-color: #F8F8F8;
+    border-radius: 25px 0 0 25px;
+
 }
 @media(max-width: 1000px){
   .dashMainContent{
-      margin: 1px 1px 20px 1px;
+      margin: 1px 5px 20px 5px;
   }
 }
 @media(max-width: 600px){
