@@ -28,8 +28,8 @@
         </v-col>
         <v-col cols="12" sm="12" lg="8" class="">
           <div class="jobInfo">
-            <div class="row">
-              <v-col cols="12" sm="8" class="jobDesc">
+            <div class="row noMargin">
+              <v-col cols="12" sm="9" class="jobDesc">
                 <div class="flex alignCenter jobControl justifyBetween">
                   <h2 class="mainColor noMargin">Job Title</h2>
                   <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
@@ -41,7 +41,7 @@
                   <v-btn class="tagBtn">Proof reading</v-btn>
                 </div>
               </v-col>
-              <v-col cols="12" sm="4" class="jobControls">
+              <v-col cols="12" sm="3" class="jobControls">
                   <div class="jobControl">
                     <p>Budget</p>
                     <h2>$5-10</h2>
@@ -71,7 +71,7 @@ export default {
 
 <style>
 .dashDef {
-  padding-top: 0 !important;
+  /* padding-top: 0 !important; */
 }
 .dashSlate {
   padding: 2em;

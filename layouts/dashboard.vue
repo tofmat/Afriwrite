@@ -120,7 +120,6 @@
     <v-sheet
       id="scrolling-techniques-7"
       class="overflow-y-auto"
-      max-height="100vh"
     >
         <v-main class="dashContent">
           <div class="dashRealContent">

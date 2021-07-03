@@ -12,6 +12,9 @@ h2 {
 h3 {
     color: #555555;
 }
+.v-sheet {
+    max-height: 100vh;
+}
 .flex{
     display: flex;
 }
@@ -20,6 +23,12 @@ h3 {
     align-items: center !important;
     justify-content: center !important;
 }
+.mainSearch{
+    border: #C5C5C5 1px solid;
+    border-radius: 15px;
+    width: 100%;
+    padding: 10px 15px;
+  }
 .justifyCenter {
     justify-content: center;
 }
@@ -80,7 +89,10 @@ hr {
 .fullWidth{
     width: 100%;
 }
-
+.sectionTitle {
+    background-color: #E8E8E8;
+    padding: 5px;
+}
 .tagBtn{
     letter-spacing: normal !important;
     background-color: #F1F1F1;
@@ -173,4 +185,7 @@ hr {
 }
 .dashRealContent {
     margin-top: 120px;
-  }
+}
+.flexColumn {
+    flex-direction: column;
+}

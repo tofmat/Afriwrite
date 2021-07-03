@@ -49,4 +49,10 @@
       margin-top: 90px;
       margin-bottom: 50px;
     }
+    .jobDesc {
+      padding: 1em !important;
+    }
+    .jobControls {
+      padding: 1em !important;
+    }
 }

@@ -237,9 +237,9 @@ export default {
   background-color: rgba(0, 137, 82, 0.13) !important;;
 }
 .jobI {
-  padding: 1em;
+  /* padding: 1em; */
   background-color: white;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 .radioTerms p {
   margin: 0;

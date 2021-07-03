@@ -123,6 +123,7 @@ layout: 'dashboard'
 
 <style>
 .clientInfo {
+  border-radius: 20px;
   background-color: #F8F8F8;
   padding: 20px;
   color: #4D4D4D;
@@ -133,9 +134,9 @@ layout: 'dashboard'
 
 }
 .jobI {
-  padding: 1em;
+  /* padding: 1em; */
   background-color: white;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 .dashDefaultContent{
     margin: 50px 50px 20px 120px;
