@@ -4,8 +4,9 @@
       <h2 class="mainColor">Proposals</h2>
       <input type="text" placeholder="Search proposals" class="my-5 mainSearch">
       <div class="proposalOffers">
-        <div class="sectionTitle mb-5">
+        <div class="sectionTitle mb-5 px-3 flex justifyBetween">
           <h4 class="ml-1">OFFERS (2)</h4>
+          <p class="mainColor noMargin">View all</p>
         </div>
         <div class="jobInfo">
           <div class="row noMargin">
@@ -34,8 +35,9 @@
       </div>
 
       <div class="proposalOffers">
-        <div class="sectionTitle mb-5">
+        <div class="sectionTitle mb-5 px-3 flex justifyBetween">
           <h4 class="ml-1">SUBMITTED PROPOSALS (5)</h4>
+          <p class="mainColor noMargin">View all</p>
         </div>
         <div class="jobInfo">
           <div class="row noMargin">
@@ -91,7 +93,7 @@ export default {
 
 
 .jobControls{
-  padding: 2em;
+  padding: 1em;
   background-color: #008952;
   border-radius: 0 20px 20px 0;
 }

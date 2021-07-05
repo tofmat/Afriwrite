@@ -53,7 +53,7 @@
                     </div>
                     <div class="mt-10">
                         <div class="backWhite workHis">
-                            <h2 class="mb-4">Work history and feedback</h2>
+                            <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
                             <hr class="fullWidth">
                             <div class="mt-4"> 
                                 <div>

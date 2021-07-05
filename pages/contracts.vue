@@ -60,7 +60,7 @@ export default {
 
 
 .jobControls{
-  padding: 2em;
+  padding: 1em;
   background-color: #008952;
   border-radius: 0 20px 20px 0;
 }

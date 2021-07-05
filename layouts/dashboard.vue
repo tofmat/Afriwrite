@@ -20,7 +20,8 @@
             </v-list-item>
         </div>
       </v-item-group>
-      <i class="far fa-bell fa-2x mx-5"></i>
+      <img src="../assets/images/bell.svg" class="mx-5" alt="notification">
+      <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
       <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px" class="dashProfilePic"></a>
     </v-app-bar>
 
@@ -205,6 +206,7 @@ export default {
 </script>
 
 <style>
+
 body {
    background-color: white; 
 }
@@ -232,6 +234,7 @@ body {
 
 .navheader{
   white-space: nowrap;
+  color: white;
 }
 .logoImage{
   width: 200px;

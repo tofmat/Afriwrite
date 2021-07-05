@@ -74,7 +74,7 @@ export default {
   /* padding-top: 0 !important; */
 }
 .dashSlate {
-  padding: 2em;
+  padding: 1em;
   border: solid #E0E0E0 1px;
   border-radius: 20px 0 0 20px;
   margin-bottom: 30px;
@@ -100,7 +100,7 @@ export default {
 
 
 .jobControls{
-  padding: 2em;
+  padding: 1em;
   background-color: #008952;
   border-radius: 0 20px 20px 0;
 }

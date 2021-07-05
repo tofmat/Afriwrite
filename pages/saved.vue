@@ -28,8 +28,8 @@
         </v-col>
         <v-col cols="12" sm="12" lg="8" class="">
           <div class="jobInfo">
-            <div class="row">
-              <v-col cols="12" sm="8" class="jobDesc">
+            <div class="row noMargin">
+              <v-col cols="12" sm="9" class="jobDesc">
                 <div class="flex alignCenter jobControl justifyBetween">
                   <h2 class="mainColor noMargin">Job Title</h2>
                   <span class="saveJob"><i class="fas fa-bookmark mr-2"></i> Saved <i class="far fa-trash-alt ml-2 mainColor iconBack"></i></span>
@@ -41,7 +41,7 @@
                   <v-btn class="tagBtn">Proof reading</v-btn>
                 </div>
               </v-col>
-              <v-col cols="12" sm="4" class="jobControls">
+              <v-col cols="12" sm="3" class="jobControls">
                   <div class="jobControl">
                     <p>Budget</p>
                     <h2>$5-10</h2>
@@ -71,10 +71,10 @@ export default {
 
 <style>
 .dashDef {
-  padding-top: 0 !important;
+  /* padding-top: 0 !important; */
 }
 .dashSlate {
-  padding: 2em;
+  padding: 1em;
   border: solid #E0E0E0 1px;
   border-radius: 20px 0 0 20px;
   margin-bottom: 30px;
@@ -100,7 +100,7 @@ export default {
 
 
 .jobControls{
-  padding: 2em;
+  padding: 1em;
   background-color: #008952;
   border-radius: 0 20px 20px 0;
 }
