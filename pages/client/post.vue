@@ -51,10 +51,109 @@
             <p class="circleRound mainColor mt-1">3</p>
           </div>
           <div class="fullWidth">
-            <h3>Select Duration </h3>
-            <p>Set the duration and type of job this is</p>
+            <div>
+              <h3>Select Duration </h3>
+              <p>Set the duration and type of job this is</p>
+              <v-radio-group v-model="radioGroup">
+              <div class="row noMargin">
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n1"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex">
+                      <img src="../../assets/images/working.svg" alt="work" width="30px">
+                      <h3>One-time Gig</h3>
+                      <p class="textCenter">Find the perfect freelancer for a very short term project</p>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n2"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex">
+                      <img src="../../assets/images/working-at-home.svg" alt="work" width="30px">
+                      <h3>Long Term Engagement</h3>
+                      <p class="textCenter">Find the perfect freelancer for a very short term project</p>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n3"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex">
+                      <img src="../../assets/images/handshake.svg" alt="work" width="30px">
+                      <h3>Extended Engagement</h3>
+                      <p class="textCenter">Find the perfect freelancer for a very short term project</p>
+                    </div>
+                  </div>
+                </v-col>
+              </div>
+              </v-radio-group>
+            </div>
+            <div>
+              <h3>What level of experience do you need? </h3>
+              <p>Set the duration and type of job this is</p>
+              <v-radio-group v-model="radioGroup">
+              <div class="row noMargin">
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n1"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex mb-5">
+                      <h3>Entry Level</h3>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n2"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex mb-5">
+                      <h3>Intermediate</h3>
+                    </div>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="4">
+                  <div class="radioBoxDiv">
+                    <div class="flex flexRowReverse"><v-radio color="green darken-3" value="n3"></v-radio></div>
+                    <div class="flex alignCenter justifyCenter columnFlex mb-5">
+                      <h3>Expert</h3>
+                    </div>
+                  </div>
+                </v-col>
+              </div>
+              </v-radio-group>
+            </div>
           </div>
         </div>
+        <div class="flex mb-5">
+          <div class="mr-5">
+            <p class="circleRound mainColor mt-1">4</p>
+          </div>
+          <div class="">
+            <div class="mb-5">
+              <h3>Proposed Project Price Range and Duration </h3>
+              <p>Propose an amount and time for a freelancer to work with</p>
+            </div>
+            <div>
+              <div class="my-2">
+                <h4>Price range</h4>
+                <div class="flex alignCenter my-1">
+                  <input type="text" class="mainSearch">
+                  <p class="mx-3 noMargin">To</p>
+                  <input type="text" class="mainSearch">
+                </div>
+              </div>
+              <div class="my-2">
+                <h4>Duration</h4>
+                <div class="flex alignCenter my-1">
+                  <input type="text" class="mainSearch" placeholder="Days">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 flex justifyCenter mobileColumn">
+        <v-btn class="findBtn mx-3 my-1" to="#">Post Job</v-btn>
+        <v-btn class="greyBtn mx-3 my-1" to="#">Save to Draft</v-btn>
       </div>
     </div>
   </div>
@@ -64,6 +163,7 @@
 export default {
   layout: 'client',
   data: () => ({
+    radioGroup: 'n1',
     items: ['Content writing', 'Articles', 'Blogging', 'Copywriting'],
     values: ['Articles', 'Blogging'],
     value: null,
@@ -80,5 +180,10 @@ export default {
 .dragAndDrop {
   padding: 40px;
   border: 1px dashed #008952;
+}
+.radioBoxDiv {
+  border: 1px #008952 solid;
+  border-radius: 10px;
+  padding: 15px;
 }
 </style>

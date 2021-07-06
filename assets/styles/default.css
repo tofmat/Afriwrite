@@ -45,6 +45,10 @@ h3 {
     padding: 10px 15px;
   }
 
+  .lightGreyBack {
+      background-color: rgba(249, 249, 249, 1);
+  }
+
   .textArea{
     border: solid 1px #CACACA;
     border-radius: 5px;
@@ -83,6 +87,9 @@ td {
 }
 .columnFlex {
     flex-direction: column;
+}
+.flexRowReverse {
+    flex-direction: row-reverse;
 }
 .noMargin{
     margin: 0 !important;
