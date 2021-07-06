@@ -18,6 +18,9 @@
         flex-direction: column;
         align-items: normal !important;
     }
+    .mobileColumn{
+      flex-direction: column;
+    }
     .dashDefaultContent{
         margin: 30px 10px 20px 10px !important;
     }
@@ -50,6 +53,9 @@
       margin-bottom: 50px;
     }
     .jobDesc {
+      padding: 1em !important;
+    }
+    .jobDescMile{
       padding: 1em !important;
     }
     .jobControls {

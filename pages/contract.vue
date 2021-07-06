@@ -12,7 +12,7 @@
               <div class="jobDetailsTexts">
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
-                <div class="flex alignCenter">
+                <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
                   <v-btn class="tagBtn">Proof reading</v-btn>
@@ -61,10 +61,37 @@
             <p>$8</p>
           </div>
         </div>
-        <div class="mt-5 flex justifyCenter">
-            <v-btn class="findBtn mx-3" to="#">Submit work for payment</v-btn>
-            <v-btn class="greyBtn mx-3" to="#">Cancel Contract</v-btn>
+        <div class="mt-5">
+          <div class="">
+            <h3 class="darkGreyColor">MILESTONE</h3>
+            <div class="flex alignCenter justifyBetween my-1">
+              <div>
+                <div class="flex alignCenter">
+                  <div>
+                    <h4 class="darkGreyColor">Description</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h4>Expected Time</h4>
+                <p>29-07-2021</p>
+              </div>
+              <div>
+                <h4>Milestone Amount</h4>
+                <p>$500</p>
+              </div>
+              <div class="paymentStatusMilestone">
+                <p class="mainColor">Completed</p>
+                <h4 class="mainColor">Unpaid</h4>
+              </div>
+            </div>
           </div>
+        </div>
+        <div class="mt-5 flex justifyCenter mobileColumn">
+          <v-btn class="findBtn mx-3 my-1" to="#">Submit work for payment</v-btn>
+          <v-btn class="greyBtn mx-3 my-1" to="#">Cancel Contract</v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -132,6 +159,11 @@ layout: 'dashboard'
   padding: 8px;
   width: 100%;
   text-align: center;
+}
+.paymentStatusMilestone{
+  background-color: rgba(0, 137, 82, 0.05);
+  padding: 10px 20px;
+  border-radius: 0 30px 30px 0;
 }
 .sideGreenInfo {
   background-color: #008952;

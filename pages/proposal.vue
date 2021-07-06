@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="dashDefaultContent">
-      
       <div class="jobI">
         <h2 class="mainColor mb-5">Proposal Details</h2>
         <div class="jobDetails">
@@ -12,7 +11,7 @@
               <div class="jobDetailsTexts">
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
-                <div class="flex alignCenter">
+                <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
                   <v-btn class="tagBtn">Proof reading</v-btn>

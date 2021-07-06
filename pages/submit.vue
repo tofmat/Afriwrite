@@ -10,7 +10,7 @@
               <hr class="mb-3">
               <div class="jobDetailsTexts">
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus</p>
-                <div class="flex alignCenter">
+                <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
                   <v-btn class="tagBtn">Proof reading</v-btn>
@@ -84,7 +84,14 @@
                 <div class="width70">
                   <div class="flex projectAmount my-5 justifyBetween">
                     <div class="width40">
-                      <h4 class="darkGreyColor">Total Project Amount <span><i class="fas fa-info-circle ml-1"></i> </span></h4>
+                      <h4 class="darkGreyColor">Total Project Amount
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <i class="fas fa-info-circle ml-1" v-bind="attrs" v-on="on"></i>
+                          </template>
+                          <span>This includes the total milestone amount, <br/> and is the amount the client will see on your proposal</span>
+                        </v-tooltip>
+                      </h4>
                     </div>
                     <div>
                       <h4>$</h4>
@@ -97,7 +104,14 @@
                   
                   <div class="flex projectAmount my-5 justifyBetween">
                     <div class="width40">
-                      <h4 class="darkGreyColor">AfriWrites Service Charge <span><i class="fas fa-info-circle ml-1"></i> </span></h4>
+                      <h4 class="darkGreyColor">AfriWrites Service Charge
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <i class="fas fa-info-circle ml-1" v-bind="attrs" v-on="on"></i>
+                          </template>
+                          <span>Learn More</span>
+                        </v-tooltip>
+                      </h4>
                     </div>
                     <div>
                       <h4>$</h4>
@@ -109,7 +123,14 @@
                   <hr>
                   <div class="flex projectAmount my-5 justifyBetween">
                     <div class="width40">
-                      <h4 class="darkGreyColor">You will be paid <span><i class="fas fa-info-circle ml-1"></i> </span></h4>
+                      <h4 class="darkGreyColor">You would be paid
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <i class="fas fa-info-circle ml-1" v-bind="attrs" v-on="on"></i>
+                          </template>
+                          <span>Estimated amount you will be paid after <br/> completing this project</span>
+                        </v-tooltip>
+                      </h4>
                     </div>
                     <div>
                       <h4>$</h4>
@@ -181,8 +202,37 @@
           </div>
 
           <div class="mt-10 flex justifyCenter">
-            <v-btn class="findBtn" to="#">Apply Now</v-btn>
+            <v-btn class="findBtn" @click="openDialog">Apply Now</v-btn>
           </div>
+
+          <v-col cols="auto">
+            <v-dialog
+              v-model="dialog"
+              transition="dialog-top-transition"
+              max-width="600"
+            >
+              <template>
+                <v-card class="py-5">
+                  <div class="centerflex columnFlex">
+                    <div class="">
+                      <img src="../assets/images/Group156.png" alt="Check Mail">
+                    </div>
+                    <div class="">
+                      <img src="../assets/images/Group155.png" alt="Check Mail">
+                    </div>
+                    <v-card-text>
+                    <h3 class="darkGreyColor textCenter">Successfully Submitted</h3>
+                    <p class="textCenter mt-2">Good job! You have successfully given that a shot.
+                      Checkout more jobs on your job feed</p>
+                    </v-card-text>
+                  </div>
+                  <div class="flex justifyCenter mobileColumn">
+                    <v-btn class="findBtn mx-3 my-1" to="#">My Job Feeds</v-btn>
+                  </div>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-col>
 
         </div>
       </div>
@@ -199,6 +249,7 @@ export default {
   layout: 'dashboard',
   data () {
     return {
+      dialog: false,
       radioGroup: 'n1',
       milestones: {
         items: [
@@ -217,6 +268,9 @@ export default {
           description: ''
       })
     },
+    openDialog() {
+      this.dialog = true;
+    }
   }
 }
 </script>
@@ -260,12 +314,7 @@ export default {
 .jobClientPrice{
   margin-right: 20px;
 }
-.textArea{
-  border: solid 1px #CACACA;
-  border-radius: 10px;
-  width: 100%;
-  padding: 10px;
-}
+
 .sideGreenInfo {
   background-color: #008952;
   padding: 15px;

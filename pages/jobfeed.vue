@@ -35,7 +35,7 @@
                   <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
                 </div>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
-                <div class="flex alignCenter">
+                <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
                   <v-btn class="tagBtn">Proof reading</v-btn>

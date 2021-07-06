@@ -9,7 +9,7 @@
               <hr class="mb-3">
               <div class="jobDetailsTexts">
                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus</p>
-                <div class="flex alignCenter">
+                <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
                   <v-btn class="tagBtn">Proof reading</v-btn>
