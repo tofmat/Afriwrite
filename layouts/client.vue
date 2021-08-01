@@ -167,6 +167,7 @@
 
 <script>
 export default {
+  middleware: 'client',
   data () {
     return {
       dialog: 'on',
@@ -175,7 +176,7 @@ export default {
       fixed: false,
       navItems: [
         {
-          title: 'My Job Feed',
+          title: 'My Jobs',
           to: 'client/jobs'
         },
         {

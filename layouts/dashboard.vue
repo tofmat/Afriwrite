@@ -129,32 +129,31 @@
               <v-col cols="auto">
                 <v-dialog
                   v-model="dialog"
+                  persistent
                   transition="dialog-top-transition"
                   max-width="600"
                 >
-                  <template v-slot:default="dialog">
-                    <v-card class="py-5">
-                      <div class="centerflex columnFlex">
-                        <div class="">
-                          <img src="../assets/images/Group154.png" alt="Check Mail">
-                        </div>
-                        <v-card-text>
-                        <h3 class="darkGreyColor textCenter">Verify your Email Address to continue</h3>
-                        <p class="textCenter mt-2">We have sent an Email to: ...xyz@gmail.com Please check your email and click the link to verify your account</p>
-                        </v-card-text>
+                  <v-card class="py-5">
+                    <div class="centerflex columnFlex">
+                      <div class="">
+                        <img src="../assets/images/Group154.png" alt="Check Mail">
                       </div>
-                      <div class="flex justifyCenter mobileColumn">
-                        <v-btn class="findBtn mx-3 my-1" to="#">Open Email</v-btn>
-                        <v-btn class="greyBtn mx-3 my-1" to="#">Resend Verification Mail</v-btn>
-                      </div>
-                      <v-card-actions class="justify-end">
-                        <v-btn
-                          text
-                          @click="dialog.value = false"
-                        >Close</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </template>
+                      <v-card-text>
+                      <h3 class="darkGreyColor textCenter">Verify your Email Address to continue</h3>
+                      <p class="textCenter mt-2">We have sent an email to {{this.$auth.user.email}}. Please check your email and click the link to verify your account</p>
+                      </v-card-text>
+                    </div>
+                    <div class="flex justifyCenter mobileColumn">
+                      <v-btn class="findBtn mx-3 my-1" to="#">Open Email</v-btn>
+                      <v-btn class="greyBtn mx-3 my-1" :loading = loading @click="sendNewMail()">Resend Verification Mail</v-btn>
+                    </div>
+                    <!-- <v-card-actions class="justify-end">
+                      <v-btn
+                        text
+                        @click="dialog.value = false"
+                      >Close</v-btn>
+                    </v-card-actions> -->
+                  </v-card>
                 </v-dialog>
               </v-col>
           </div>
@@ -167,9 +166,12 @@
 
 <script>
 export default {
+  middleware: 'dashboard',
   data () {
     return {
-      dialog: 'on',
+      loading: false,
+      // authenticatedUser: this.$auth.user.email,
+      dialog: false,
       clipped: false,
       drawer: false,
       fixed: false,
@@ -234,6 +236,34 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
+  },
+  methods: {
+    // verifyEmail () {
+    //   if (this.$auth.user.email_verification_status == "pending") {
+    //     this.dialog = "on"
+    //   }
+    // },
+    async sendNewMail() {
+      try {
+        this.loading = true;
+        const response = await this.$axios.post('/v1/auth/request-verification-link')
+        this.$toast.success('Verification Link has been sent.')
+      } catch (error) {
+        this.loading = false
+      }
+    }
+  },
+  computed : {
+    verifyEmail () {
+      if (this.$auth.user.email_verification_status == "pending") {
+        // this.dialog = "on"
+      } else {
+        this.dialog = false
+      }
+    }
+  },
+  mounted () {
+    this.verifyEmail
   }
 }
 </script>

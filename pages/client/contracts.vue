@@ -127,7 +127,7 @@
 
 <script>
 export default {
-  layout: 'dashboard',
+  layout: 'client',
   data() {
     return {
       tab: null

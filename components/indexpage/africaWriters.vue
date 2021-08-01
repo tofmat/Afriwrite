@@ -62,7 +62,7 @@ export default {
 }
 .findBtn{
     padding: 20px !important;
-    background-color: #00E68A !important;
+    background-color: #008952 !important;
     color: white !important;
     box-shadow: none !important;
     margin-right: 10px;
@@ -70,8 +70,8 @@ export default {
 .workBtn{
     padding: 20px !important;
     background-color: transparent !important;
-    border: #00E68A solid 1px;
-    color: #00E68A !important;
+    border: #008952 solid 1px;
+    color: #008952 !important;
     box-shadow: none !important;
 }
 @media(max-width: 600px){

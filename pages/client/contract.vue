@@ -99,7 +99,7 @@
 
 <script>
 export default {
-layout: 'dashboard'
+layout: 'client'
 }
 </script>
 

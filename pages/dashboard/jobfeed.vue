@@ -10,7 +10,7 @@
               <hr>
               <div class="mt-3">
                 <h4>Categories</h4>
-                <div class="flex alignCenter catCheck">
+                <div class="flex alignCenter catCheck mt-2">
                   <input type="checkbox" name="" id="">
                   <p>Basic Level</p>
                 </div>
@@ -27,7 +27,7 @@
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="8" class="">
-          <div class="jobInfo">
+          <div class="jobInfo" >
             <div class="row noMargin">
               <v-col cols="12" sm="9" class="jobDesc">
                 <div class="flex alignCenter jobControl justifyBetween">
@@ -64,7 +64,10 @@
 
 <script>
 export default {
-  layout: 'dashboard'
+  layout: 'dashboard',
+  methods : {
+    
+  }
 
 }
 </script>
@@ -134,7 +137,7 @@ export default {
 }
 .jobInfo{
   background-color: #F9F9F9;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 .mainSearch{
   border: #C5C5C5 1px solid;

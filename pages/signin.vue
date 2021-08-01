@@ -10,8 +10,10 @@
               <div class="signupForm">
                   <div class="centerflex columnFlex">
                     <p class="signUpHead">Sign in to AfriWrites</p>
-                    <p class="textCenter">You do not have an account? <span class="mainColor">Sign up</span>
-                    <p class="onlyShowSmall">Sign up with</p>
+                    <p class="textCenter">You do not have an account? <span class="mainColor"><nuxt-link to="/signup">
+                      Sign up
+                    </nuxt-link></span>
+                    <!-- <p class="onlyShowSmall">Sign up with</p>
                     <div class="otherSignUp">
                       <v-btn class="gooBtn myBtn" to="#"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
                       <v-btn class="faceBtn myBtn" to="#"><i class="fab fa-facebook-f facebookIcon"></i> <span class="noShowSmall">Sign up with Facebook</span> </v-btn>
@@ -20,14 +22,14 @@
                       <hr>
                       <p>or</p>
                       <hr>
-                    </div>
+                    </div> -->
 
-                    <form action="" class="signupInput">
+                    <form @submit.prevent="loginUser(userInfo)" class="signupInput">
                       <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Username/Email Address" />
+                        <input type="text" placeholder="Email Address" v-model="userInfo.email"/>
                       </div>
                       <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Set a Password" />
+                        <input type="password" placeholder="Set a Password" v-model="userInfo.password"/>
                       </div>
                       <div class="flex checkboxDiv">
                         <div class="flex alignCenter">
@@ -36,10 +38,19 @@
                         </div>
                         <p><span class="mainColor">Forget Password</span> </p>
                       </div>
+
+                      <div class="flex loginBtns justifyCenter mt-3">
+                        <v-btn class="myBtn findBtn" type="submit" :loading = loading>SIGN IN</v-btn>
+                      </div>
+
+                      <div class="flex justifyCenter mt-3">
+                        <small class="small textCenter">
+                          {{errors}}
+                        </small>
+                      </div>
+
                     </form>
-                    <div class="flex loginBtns">
-                      <v-btn class="myBtn findBtn" to="jobfeed">SIGN IN</v-btn>
-                    </div>
+                    
                   </div>
               </div>
           </div>
@@ -51,7 +62,41 @@
 
 <script>
 export default {
-
+  middleware : 'auth-page',
+  data () {
+    return {
+      errors: '',
+      loading: false,
+      userInfo : {
+        email: 'tofmatt@gmail.com',
+        password: 'Ogunfowote400'
+      }
+    }
+  },
+  methods : {
+    async loginUser(loginInfo){
+      this.errors = ""
+      try {
+          this.loading = true;
+          this.$toast.show('Logging in...')
+          const response = await this.$auth.loginWith('local', {
+            data: loginInfo
+          })
+          if (this.$auth.user.role === 'client') {
+            this.$router.push('/client')
+          } 
+          else if (this.$auth.user.role === 'writer') {
+            this.$router.push('/dashboard')
+          }
+          this.$toast.success('You are logged in')
+          return response;
+      } catch (error){
+          this.errors = error.response.data.error
+          this.loading = false;
+          this.$toast.info('There was a problem logging in, check your credentials');
+      }
+    }
+  },
 }
 </script>
 

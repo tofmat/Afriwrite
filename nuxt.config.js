@@ -44,7 +44,25 @@ export default {
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/toast'
   ],
+
+  toast: {
+    position: 'top-right',
+    duration: 3000,
+    keepOnHover: true,
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      },
+    ]
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
@@ -66,5 +84,36 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+  },
+
+  axios:{
+    baseURL: 'https://afriwrites-backend-api.herokuapp.com/api'
+  },
+
+
+  auth: {
+    redirect: {
+      logout: '/',
+      home: '/'
+    },
+    strategies: {
+      local: {
+        token: {
+          property: 'data.access_token',
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: false,
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/v1/auth/login', method: 'post', propertyName: 'data.access_token' },
+          logout: { url: '/v1/auth/logout', method: 'post' },
+          user: { url: '/user', method: 'get', propertyName: false }
+        }
+      }
+    }
   }
 }

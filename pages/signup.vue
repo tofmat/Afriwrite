@@ -10,8 +10,10 @@
               <div class="signupForm">
                   <div class="centerflex columnFlex">
                     <p class="signUpHead">Sign up to Afriwrites</p>
-                    <p class="textCenter">Already have an account? <span class="mainColor">Log in</span>
-                    <p class="onlyShowSmall">Sign up with</p>
+                    <p class="textCenter">Already have an account? <span class="mainColor"><nuxt-link to="/signin">
+                      Log in
+                    </nuxt-link></span>
+                    <!-- <p class="onlyShowSmall">Sign up with</p>
                     <div class="otherSignUp">
                       <v-btn class="gooBtn myBtn" to="#"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
                       <v-btn class="faceBtn myBtn" to="#"><i class="fab fa-facebook-f facebookIcon"></i> <span class="noShowSmall">Sign up with Facebook</span> </v-btn>
@@ -20,28 +22,34 @@
                       <hr>
                       <p>or</p>
                       <hr>
-                    </div>
+                    </div> -->
 
-                    <form action="" class="signupInput">
+                    <form @submit.prevent="register(userInfo)" class="signupInput mt-5">
                       <div class="formInput flex centerflex twoColumnsInput">
-                        <input type="text" placeholder="First Name" />
-                        <input type="text" placeholder="Last Name" />
+                        <input type="text" placeholder="First Name" v-model="userInfo.first_name"/>
+                        <input type="text" placeholder="Last Name" v-model="userInfo.last_name"/>
                       </div>
                       <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Email Address" />
+                        <input type="text" placeholder="Email Address" v-model="userInfo.email"/>
                       </div>
                       <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Set a Password" />
+                        <input type="password" placeholder="Set a Password" v-model="userInfo.password"/>
                       </div>
                       <div class="formInput flex centerflex">
-                        <v-btn class="myBtn jobBtn" to="jobfeed">Work as a freelancer</v-btn>
-                        <v-btn class="myBtn jobBtn" to="jobfeed">Hire for a project</v-btn>
+                        <v-btn class="myBtn jobBtn" :class= "{ selectedRole: freelancerSelectedRole }" @click="freelancerRole" >Work as a freelancer</v-btn>
+                        <v-btn class="myBtn jobBtn" :class= "{ selectedRole: clientSelectedRole }" @click="clientRole">Hire for a project</v-btn>
                       </div>
-                      
+
+                      <div class="flex loginBtns justifyCenter">
+                        <v-btn class="myBtn findBtn" type="submit" :loading = loading>CREATE MY ACCOUNT</v-btn>
+                      </div>
+
+                      <div class="flex justifyCenter mt-3">
+                        <small class="small textCenter">
+                          {{errors}}
+                        </small>
+                      </div>
                     </form>
-                    <div class="flex loginBtns">
-                      <v-btn class="myBtn findBtn" to="jobfeed">CREATE MY ACCOUNT</v-btn>
-                    </div>
                   </div>
               </div>
           </div>
@@ -53,11 +61,82 @@
 
 <script>
 export default {
-
+  middleware : 'auth-page',
+  data () {
+    return {
+      errors: '',
+      loading: false,
+      clientSelectedRole : false,
+      freelancerSelectedRole : false,
+      userInfo : {
+        first_name: 'Tosin',
+        last_name: 'Ogunfowote',
+        email: 'tofmatt@gmail.com',
+        role: '',
+        password: 'Ogunfowote400'
+      }
+    }
+  },
+  // computed (){
+  //   return {
+  //     this.
+  //   }
+  // },
+  methods: {
+    freelancerRole () {
+      this.clientSelectedRole = false
+      this.freelancerSelectedRole = true
+      this.userInfo.role = "writer"
+    },
+    clientRole () {
+      this.freelancerSelectedRole = false
+      this.clientSelectedRole = true
+      this.userInfo.role = "client"
+    },
+    async register (registrationInfo) {
+      this.errors = ""
+      try {
+        this.loading = true;
+        this.$toast.show('Signing you up')
+        const response = await this.$axios.post('/v1/auth/register', registrationInfo)
+        await this.$auth.loginWith('local', {
+          data: registrationInfo
+        })
+      this.$toast.success('You have successfully registered')            
+      if (this.$auth.user.role === 'client') {
+          this.$router.push('/client')
+      }
+      else if(this.$auth.user.role === 'writer'){
+          this.$router.push('/dashboard')
+      }
+      return response;
+      this.$toast.success('Welcome to your dashboard')
+      } catch(error) {
+          this.loading = false;
+          this.errors = error.response.data.error
+          this.$toast.info('There was a problem signing up, check your credentials');
+      }
+    }
+  },
+  // created() {
+  //   if (this.$auth.user.role === "writer") {
+  //       this.$router.push('/dashboard/jobfeed')
+  //   }  else if (this.$auth.user.role === "client"){
+  //       this.$router.push('/client')
+  //   } else {
+  //     // remain on this page
+  //   }
+  // }
 }
 </script>
 
 <style>
+.selectedRole {
+  background-color: #008952 !important;
+  color: white !important;
+  border-color: #008952 !important;
+  box-shadow: none !important;
+}
 .signUp{
   background-color: #F5F6FA;
 }
