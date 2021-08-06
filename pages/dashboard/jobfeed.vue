@@ -32,6 +32,7 @@
         </v-col>
         <v-col cols="12" sm="12" lg="8" class="">
           <skeleton-box
+          v-if="apiLoading"
           />
           <v-btn @click="getJobs()">Fetch</v-btn>
           <div class="jobInfo" >

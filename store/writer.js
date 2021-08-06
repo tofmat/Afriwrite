@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const state = () => ({
   allJobs: []
 })
@@ -17,7 +19,7 @@ export const mutations = {
 export const actions = {
   async getAllJobs({commit}){
     try {
-        const res = this.$axios.get('/v1/writer/jobs')
+        const res = await this.$axios.get('/v1/writer/jobs')
         if (res) {
           return Promise.resolve(res)
         }
