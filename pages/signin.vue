@@ -83,15 +83,16 @@ export default {
             data: loginInfo
           })
           if (this.$auth.user.role === 'client') {
-            this.$router.push('/client')
+            this.$router.push('/client/jobs')
           } 
           else if (this.$auth.user.role === 'writer') {
-            this.$router.push('/dashboard')
+            this.$router.push('/dashboard/jobfeed')
           }
           this.$toast.success('You are logged in')
+          this.loading = false;
           return response;
       } catch (error){
-          this.errors = error.response.data.error
+          // this.errors = error.response.data.error
           this.loading = false;
           this.$toast.info('There was a problem logging in, check your credentials');
       }

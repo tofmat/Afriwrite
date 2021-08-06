@@ -31,6 +31,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '~/plugins/axios'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -90,29 +91,28 @@ export default {
     baseURL: 'https://afriwrites-backend-api.herokuapp.com/api'
   },
 
-
   auth: {
-    redirect: {
-      logout: '/',
-      home: '/'
-    },
     strategies: {
       local: {
         token: {
-          property: 'data.access_token',
+          property: 'data.token',
           global: true,
           // required: true,
           // type: 'Bearer'
         },
         user: {
           property: false,
-          // autoFetch: true
+          autoFetch: true
         },
         endpoints: {
-          login: { url: '/v1/auth/login', method: 'post', propertyName: 'data.access_token' },
-          logout: { url: '/v1/auth/logout', method: 'post' },
+          login: { url: '/v1/auth/login', method: 'post', propertyName: 'data.token' },
+          logout: { url: '/v1/auth/logout', method: 'get' },
           user: { url: '/user', method: 'get', propertyName: false }
-        }
+        },
+        // tokenRequired: true,
+        // tokenType: 'Bearer',
+        // globalToken: true,
+        // autoFetchUser: true
       }
     }
   }

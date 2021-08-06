@@ -109,6 +109,7 @@ export default {
       else if(this.$auth.user.role === 'writer'){
           this.$router.push('/dashboard')
       }
+      this.loading = false;
       return response;
       this.$toast.success('Welcome to your dashboard')
       } catch(error) {

@@ -1,11 +1,15 @@
 <template>
   <div class="dashDefaultContent">
     <h2 class="mainColor mb-5">Job Feeds</h2>
-    <input type="text" placeholder="search for Jobs" class="mb-10 mainSearch">
+    <div class="flex mb-10">
+      <input type="text" placeholder="Search for Jobs" class="mainSearch">
+      <input class="submitSearch" type="submit">
+    </div>
      <div class="row">
         <v-col cols="12" sm="12" lg="4" class="dashDef">
           <div class="dashSlate">
             <div class="dashSearch">
+              <p>{{this.$auth.strategy.token.get()}}</p>
               <h3>Filter By</h3>
               <hr>
               <div class="mt-3">
@@ -27,6 +31,9 @@
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="8" class="">
+          <skeleton-box
+          />
+          <v-btn @click="getJobs()">Fetch</v-btn>
           <div class="jobInfo" >
             <div class="row noMargin">
               <v-col cols="12" sm="9" class="jobDesc">
@@ -63,10 +70,36 @@
 </template>
 
 <script>
+import skeletonBox from '../../components/skeletonBox'
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  components: {
+    skeletonBox
+  },
+  data () {
+    return {
+      apiLoading: false,
+      allJobs: []
+    }
+  },
   layout: 'dashboard',
   methods : {
-    
+    // ...mapActions({
+    //   getAllJobs: 'getAllJobs',
+    // }),
+    getJobs() {
+      this.apiLoading = true;
+      this.$store.dispatch('writer/getAllJobs').then(({data}) => {
+        this.apiLoading = false
+        this.allJobs = data.data
+      }).catch((err) => {
+        this.apiLoading = false
+        this.$toast.success('ERROR OOOOOO')
+      })
+    }
+  },
+  mounted() {
+    // this.getAllJobs();
   }
 
 }
@@ -75,6 +108,11 @@ export default {
 <style>
 .dashDef {
   /* padding-top: 0 !important; */
+}
+.submitSearch{
+    margin-left: -20px;
+    background-color: #008952;
+    padding: 0 50px;
 }
 .dashSlate {
   padding: 1em;
@@ -141,7 +179,7 @@ export default {
 }
 .mainSearch{
   border: #C5C5C5 1px solid;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 100%;
   padding: 10px 15px;
 }
