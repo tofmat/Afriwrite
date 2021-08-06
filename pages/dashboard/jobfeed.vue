@@ -3,13 +3,13 @@
     <h2 class="mainColor mb-5">Job Feeds</h2>
     <div class="flex mb-10">
       <input type="text" placeholder="Search for Jobs" class="mainSearch">
-      <input class="submitSearch" type="submit">
+      <input class="submitSearch" type="submit" value="">
+      
     </div>
      <div class="row">
         <v-col cols="12" sm="12" lg="4" class="dashDef">
           <div class="dashSlate">
             <div class="dashSearch">
-              <p>{{this.$auth.strategy.token.get()}}</p>
               <h3>Filter By</h3>
               <hr>
               <div class="mt-3">
@@ -111,9 +111,11 @@ export default {
   /* padding-top: 0 !important; */
 }
 .submitSearch{
+    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-left: -20px;
     background-color: #008952;
     padding: 0 50px;
+    color: white;
 }
 .dashSlate {
   padding: 1em;
