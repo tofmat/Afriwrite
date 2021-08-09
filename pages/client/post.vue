@@ -206,8 +206,6 @@ export default {
         for (const i of Object.keys(this.jobInfo.file)){
           formData.append('file[' + i + ']', this.jobInfo.file[i])
         }
-      } else {
-        formData.append('file', this.jobInfo.file)
       }
       formData.append('title', this.jobInfo.title)
       formData.append('description', this.jobInfo.description)

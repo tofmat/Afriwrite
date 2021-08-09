@@ -54,7 +54,6 @@
               </div>
             </div>
           </v-tab-item>
-          
         </v-tabs>
       </div>
     </div>
@@ -62,8 +61,36 @@
 </template>
 
 <script>
+import skeletonBox from '../../components/skeletonBox'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  layout: 'client'
+  layout: 'client',
+  data () {
+    return {
+      apiLoading: false,
+      allProposals: []
+    }
+  },
+  methods : {
+    getJobs() {
+      this.apiLoading = true;
+      this.$store.dispatch('client/getAllProposals').then(({data}) => {
+        this.apiLoading = false
+        this.allProposals = data.data
+      }).catch((err) => {
+        this.apiLoading = false
+        this.$toast.success('There was an error getting the pro')
+      })
+    }
+  },
+  mounted() {
+    this.getJobs();
+  },
+  computed: {
+    ...mapGetters({
+      allJobs: 'writer/allJobs',
+    })
+  }
 
 }
 </script>
