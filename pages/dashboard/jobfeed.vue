@@ -7,62 +7,96 @@
       
     </div>
      <div class="row">
-        <v-col cols="12" sm="12" lg="4" class="dashDef">
+        <v-col cols="12" sm="12" lg="3" class="dashDef">
           <div class="dashSlate">
             <div class="dashSearch">
               <h3>Filter By</h3>
               <hr>
               <div class="mt-3">
-                <h4>Categories</h4>
+                <h4>Categories:</h4>
                 <div class="flex alignCenter catCheck mt-2">
                   <input type="checkbox" name="" id="">
-                  <p>Basic Level</p>
+                  <p>Writing</p>
                 </div>
                 <div class="flex alignCenter catCheck">
                   <input type="checkbox" name="" id="">
-                  <p>Basic Level</p>
+                  <p>Content Creation</p>
                 </div>
                 <div class="flex alignCenter catCheck">
                   <input type="checkbox" name="" id="">
-                  <p>Basic Level</p>
+                  <p>Proof Reading</p>
                 </div>
               </div>
             </div>
           </div>
         </v-col>
-        <v-col cols="12" sm="12" lg="8" class="">
-          <skeleton-box
-          v-if="apiLoading"
-          />
-          <v-btn @click="getJobs()">Fetch</v-btn>
-          <div class="jobInfo" >
+        <v-col cols="12" sm="12" lg="9" class="">
+          <div class="jobInfo" v-if="apiLoading">
             <div class="row noMargin">
               <v-col cols="12" sm="9" class="jobDesc">
                 <div class="flex alignCenter jobControl justifyBetween">
-                  <h2 class="mainColor noMargin">Job Title</h2>
+                  <skeleton-box
+                    width="15%"
+                  />
                   <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
                 </div>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
+                 <skeleton-box width="90%"/>
+                 <skeleton-box width="90%"/>
+                 <skeleton-box width="90%"/>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn"><skeleton-box/></v-btn>
+                  <v-btn class="tagBtn"><skeleton-box/></v-btn>
                 </div>
               </v-col>
               <v-col cols="12" sm="3" class="jobControls">
                   <div class="jobControl">
                     <p>Budget</p>
-                    <h2>$5-10</h2>
+                    <skeleton-box width="50%"/>
                   </div>
                   <div class="jobControl">
                     <p>Est. Time</p>
-                    <h2>1-2 months</h2>
+                    <skeleton-box width="60%"/>
                   </div>
                   <div class="flex alignCenter jobControl">
                     <i class="fas fa-map-marker-alt"></i>
-                    <p>Remote</p>
+                    <skeleton-box width="40%"/>
                   </div>
               </v-col>
+            </div>
+          </div>
+          <div v-else>
+            <div class="jobInfo" v-if="allJobs.length > 0">
+              <div class="row noMargin">
+                <v-col cols="12" sm="9" class="jobDesc">
+                  <div class="flex alignCenter jobControl justifyBetween">
+                    <h2 class="mainColor noMargin">Job Title</h2>
+                    <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
+                  </div>
+                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
+                  <div class="flex alignCenter scrollable-x">
+                    <v-btn class="tagBtn">Writing</v-btn>
+                    <v-btn class="tagBtn">Content writing</v-btn>
+                    <v-btn class="tagBtn">Proof reading</v-btn>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="3" class="jobControls">
+                    <div class="jobControl">
+                      <p>Budget</p>
+                      <h2>$5-10</h2>
+                    </div>
+                    <div class="jobControl">
+                      <p>Est. Time</p>
+                      <h2>1-2 months</h2>
+                    </div>
+                    <div class="flex alignCenter jobControl">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <p>Remote</p>
+                    </div>
+                </v-col>
+              </div>
+            </div>
+            <div v-if="allJobs.length == 0">
+              <h4>Sorry there are no job available at the moment.</h4>
             </div>
           </div>
         </v-col>
@@ -100,7 +134,12 @@ export default {
     }
   },
   mounted() {
-    // this.getAllJobs();
+    this.getJobs();
+  },
+  computed: {
+    ...mapGetters({
+      allJobs: 'writer/allJobs',
+    })
   }
 
 }
@@ -184,7 +223,7 @@ export default {
   border: #C5C5C5 1px solid;
   border-radius: 10px;
   width: 100%;
-  padding: 10px 15px;
+  padding: 5px 15px;
 }
 @media(max-width: 1000px){
   .dashDefaultContent{

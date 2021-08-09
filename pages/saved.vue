@@ -145,7 +145,7 @@ export default {
   border: #C5C5C5 1px solid;
   border-radius: 15px;
   width: 100%;
-  padding: 10px 15px;
+  padding: 3px 15px;
 }
 @media(max-width: 1000px){
   .dashDefaultContent{

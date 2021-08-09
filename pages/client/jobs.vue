@@ -3,11 +3,11 @@
     <div class="dashDefaultContent">
       <div class="flex alignCenter justifyBetween">
         <div>
-          <h2 class="mainColor">Praise Aderinwale</h2>
+          <h2 class="mainColor">{{this.$auth.user.first_name}} {{this.$auth.user.last_name}}</h2>
           <p>Client</p>
         </div>
         <div class="">
-          <v-btn class="findBtn">Post a Job</v-btn>
+          <nuxt-link to="/client/post" class="findBtn">Post a Job</nuxt-link>
         </div>
       </div>
       <div class="proposalOffers">

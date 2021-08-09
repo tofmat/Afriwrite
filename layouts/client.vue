@@ -170,7 +170,7 @@ export default {
   middleware: 'client',
   data () {
     return {
-      dialog: 'on',
+      dialog: false,
       clipped: false,
       drawer: false,
       fixed: false,

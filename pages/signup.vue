@@ -142,7 +142,7 @@ export default {
   background-color: #F5F6FA;
 }
 .findBtn{
-    padding: 20px !important;
+    padding: 10px 20px !important;
     background-color: #008952 !important;
     color: white !important;
     box-shadow: none !important;
@@ -189,7 +189,7 @@ export default {
   margin: 15px;
 }
 .checkboxDiv .checkbox {
-  margin-right: 15px;
+  margin-right: 3px;
   width: 30px;
   color: #8B8B8B;
 }

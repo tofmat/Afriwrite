@@ -61,7 +61,7 @@ export default {
     width: 100%;
 }
 .findBtn{
-    padding: 20px !important;
+    padding: 10px 20px !important;
     background-color: #008952 !important;
     color: white !important;
     box-shadow: none !important;

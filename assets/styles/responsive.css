@@ -61,4 +61,7 @@
     .jobControls {
       padding: 1em !important;
     }
+    .dragAndDrop {
+      padding: 10px !important;
+    }
 }

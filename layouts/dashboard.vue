@@ -178,7 +178,7 @@ export default {
       navItems: [
         {
           title: 'My Job Feed',
-          to: '/jobfeed'
+          to: '/dashboard/jobfeed'
         },
         {
           title: 'Saved Jobs',

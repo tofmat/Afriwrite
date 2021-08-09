@@ -152,7 +152,7 @@ export default {
         },
         {
           title: 'Sign In',
-          to: 'signup'
+          to: 'signin'
         }
       ],
       miniVariant: false,

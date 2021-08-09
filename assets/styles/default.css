@@ -4,6 +4,9 @@
 select {
 outline: none;
 }
+.arrowCursor{
+  cursor: pointer;
+}
 a {
     outline: none;
     color: inherit !important;
@@ -44,7 +47,7 @@ h3 {
     border: #C5C5C5 1px solid;
     border-radius: 5px;
     width: 100%;
-    padding: 10px 15px;
+    padding: 3px 15px;
   }
 
   .lightGreyBack {
@@ -152,7 +155,7 @@ hr {
     font-style: italic;
 }
 .findBtn{
-    padding: 20px !important;
+    padding: 10px 20px !important;
     background-color:#008952 !important;
     color: white !important;
     box-shadow: none !important;
@@ -163,7 +166,7 @@ hr {
 }
 .greyBtn{
     letter-spacing: normal !important;
-    padding: 20px !important;
+    padding: 10px 20px !important;
     background-color:#E5E5E5 !important;
     color: #008952 !important;
     box-shadow: none !important;
