@@ -84,6 +84,13 @@ td {
     padding: 9px;
     border-radius: 2px;
   }
+  .submitSearch{
+    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-left: -20px;
+    background-color: #008952;
+    padding: 0 50px;
+    color: white !important;
+}
 .alignCenter{
     align-items: center;
 }

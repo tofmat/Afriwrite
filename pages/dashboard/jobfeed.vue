@@ -129,7 +129,7 @@ export default {
         this.allJobs = data.data
       }).catch((err) => {
         this.apiLoading = false
-        this.$toast.success('ERROR OOOOOO')
+        this.$toast.success('There was an error getting the available jobs')
       })
     }
   },
@@ -148,13 +148,6 @@ export default {
 <style>
 .dashDef {
   /* padding-top: 0 !important; */
-}
-.submitSearch{
-    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin-left: -20px;
-    background-color: #008952;
-    padding: 0 50px;
-    color: white;
 }
 .dashSlate {
   padding: 1em;
