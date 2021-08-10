@@ -4,6 +4,7 @@
       <h2 class="mainColor">Post a Job</h2>
       <h3 class="mainColor slimText">Get Started</h3>
       <form @submit.prevent="addJob()">
+        <small v-if="errors">{{errors}}</small>
         <div class="postJob mt-5">
           <div class="flex mb-5">
             <div class="mr-3">
@@ -28,7 +29,7 @@
             <div class="fullWidth">
               <h3>Job Description </h3>
               <p>Describe deliverables, anything unique about the project</p>
-              <textarea name="apply" id="apply" rows="5" class="textArea" placeholder="Input text here" required v-model="jobInfo.description"></textarea>
+              <textarea name="apply" id="apply" rows="5" class="textArea" placeholder="Input text here" v-model="jobInfo.description"></textarea>
               <h3 class="mt-3">Choose Category</h3>
               <p>Select the category this job falls under (You can select more than one)</p>
               <v-autocomplete
@@ -144,19 +145,19 @@
                   <h4>Price per word ($)</h4>
                   <small>Afriwrite recommended price per word is $4.</small>
                   <div class="flex alignCenter my-1">
-                    <input type="text" class="mainSearch" required placeholder="5" v-model="jobInfo.price">
+                    <input type="text" class="mainSearch" placeholder="5" v-model="jobInfo.price">
                   </div>
                 </div>
                 <div class="my-2">
                   <h4>Number of words</h4>
                   <div class="flex alignCenter my-1">
-                    <input type="text" class="mainSearch" required placeholder="400" v-model="jobInfo.number_of_words">
+                    <input type="text" class="mainSearch"  placeholder="400" v-model="jobInfo.number_of_words">
                   </div>
                 </div>
                 <div class="my-2">
                   <h4>Duration in days</h4>
                   <div class="flex alignCenter my-1">
-                    <input type="text" class="mainSearch" required placeholder="Days" v-model="jobInfo.duration_of_job_in_days">
+                    <input type="text" class="mainSearch" placeholder="Days" v-model="jobInfo.duration_of_job_in_days">
                   </div>
                 </div>
               </div>
@@ -176,6 +177,7 @@
 export default {
   layout: 'client',
   data: () => ({
+    errors: '',
     loading: false,
     items: ['Content writing', 'Articles', 'Blogging', 'Copywriting'],
     values: ['Articles', 'Blogging'],
@@ -229,10 +231,45 @@ export default {
       } catch(error){
         this.jobInfo = ''
           this.loading = false;
+          this.errors = error.response.data.error
+          this.$toast.error('An error occured, check all fields and try again')
+      }
+    },
+    async addDraftJob() {    
+      // const newCategory = JSON.stringify(this.jobInfo.category)
+      let formData = new FormData()
+      if (this.jobInfo.file) {
+        for (const i of Object.keys(this.jobInfo.file)){
+          formData.append('file[' + i + ']', this.jobInfo.file[i])
+        }
+      }
+      formData.append('title', this.jobInfo.title)
+      formData.append('description', this.jobInfo.description)
+      formData.append('price', this.jobInfo.price)
+      formData.append('project_duration', this.jobInfo.project_duration)
+      formData.append('category', this.jobInfo.category)
+      formData.append('level_of_experience', this.jobInfo.level_of_experience)
+      formData.append('number_of_words', this.jobInfo.number_of_words)
+      formData.append('duration_of_job_in_days', this.jobInfo.duration_of_job_in_days)
+      try {
+          this.loading = true;
+          const response = await this.$axios.post('/v1/client/create-job', formData, {
+              headers: {
+              'Content-Type': 'multipart/form-data'
+              }
+          })
+          this.$toast.success('Your Job has been added successfully')
+          this.loading = false;
+          this.jobInfo = ''
+          return response
+      } catch(error){
+        this.jobInfo = ''
+          this.loading = false;
           this.errors = error.response.data.message
           this.$toast.error('An error occured, check all fields and try again')
       }
-    }
+    },
+
   }
 }
 </script>

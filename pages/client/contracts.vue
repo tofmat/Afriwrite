@@ -2,7 +2,10 @@
   <div>
     <div class="dashDefaultContent">
       <h2 class="mainColor">All Contracts</h2>
-      <input type="text" placeholder="Search proposals" class="my-5 mainSearch">
+      <div class="flex my-5">
+        <input type="text" placeholder="Search contracts" class="mainSearch">
+        <input class="submitSearch" type="submit" value="">
+      </div>
       <div>
         <v-tabs color = "green darken-3">
           <v-tab>Project</v-tab>
@@ -126,14 +129,40 @@
 </template>
 
 <script>
+import skeletonBox from '../../components/skeletonBox'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'client',
+  components: {
+    skeletonBox
+  },
   data() {
     return {
-      tab: null
+      tab: null,
+      apiLoading: false,
+      allContracts: []
     }
+  },
+  methods : {
+    getContracts() {
+      this.apiLoading = true;
+      this.$store.dispatch('client/getAllContracts').then(({data}) => {
+        this.apiLoading = false
+        this.allContracts = data.data
+      }).catch((err) => {
+        this.apiLoading = false
+        this.$toast.success('There was an error getting the proposals')
+      })
+    }
+  },
+  mounted() {
+    this.getContracts();
+  },
+  computed: {
+    ...mapGetters({
+      allContracts: 'client/allContracts',
+    })
   }
-
 }
 </script>
 

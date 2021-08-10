@@ -98,6 +98,9 @@ import skeletonBox from '../../components/skeletonBox'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   layout: 'client',
+  components: {
+    skeletonBox
+  },
   data () {
     return {
       apiLoading: false,

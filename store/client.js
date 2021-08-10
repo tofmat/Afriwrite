@@ -1,19 +1,33 @@
 import axios from 'axios'
 
 export const state = () => ({
-  allProposals: []
+  allProposals: [],
+  allJobs: [],
+  allContracts: []
 })
 
 export const getters = {
-  allJobs(state) {
+  allProposals(state) {
     return state.allProposals
   },
+  allJobs(state) {
+    return state.allJobs
+  },
+  allContracts(state) {
+    return state.allContracts
+  }
 }
 
 export const mutations = {
   SET_ALLPROPOSALS(state, data){
     state.allProposals = data
   },
+  SET_ALLJOBS(state, data){
+    state.allJobs = data
+  },
+  SET_ALLCONTRACTS(state, data) {
+    state.allContracts = data
+  }
 }
 
 export const actions = {
@@ -27,6 +41,30 @@ export const actions = {
     } catch (error) {
         commit('SET_ALLPROPOSALS', null)
         return Promise.reject(error.response)
+    }
+  },
+  async getAllJobs({commit}){
+    try {
+      const res = await this.$axios.get('/v1/client/get-all-jobs')
+      if (res) {
+        return Promise.resolve(res)
+      }
+      commit ('SET_ALLJOBS', response.data)
+    } catch (error) {
+      commit('SET_ALLJOBS', null)
+      return Promise.reject(error.response)
+    }
+  },
+  async getAllContracts({commit}){
+    try {
+      const res = await this.$axios.get('/v1/client/get-all-contracts')
+      if (res) {
+        return Promise.resolve(res)
+      }
+      commit ('SET_ALLCONTRACTS', response.data)
+    } catch (error) {
+      commit('SET_ALLCONTRACTS', null)
+      return Promise.reject(error.response)
     }
   },
 }
