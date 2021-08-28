@@ -101,28 +101,70 @@
 
       
       <div class="draftss">
-        <div class="proposalOffers">
-          <div class="sectionTitle mb-5 px-3 flex justifyBetween">
-            <h4 class="ml-1 darkGreyColor">DRAFTS (2)</h4>
-            <p class="mainColor noMargin">View all</p>
-          </div>
-          <div class="jobInfo">
-            <div class="row noMargin">
-              <v-col cols="12" sm="3" class="jobDesc flex flexColumn justifyCenter">
-                <h3>Initiated on June 12, 2021</h3>
-                <p>5 days ago</p>
-              </v-col>
-              <v-col cols="12" sm="7" class="jobDesc">
-                <div class="flex alignCenter jobControl justifyBetween">
-                  <h2 class="mainColor noMargin">Job Title</h2>
-                </div>
-              </v-col>
-              <v-col cols="12" sm="2" class="jobControls">
-                  <div class="jobControl">
-                    <p> Continue Editing</p>
-                    <h2>Go to job</h2>
+        <div v-if="apiLoadingDrafts">
+          <div class="proposalOffers">
+            <div class="sectionTitle mb-5 px-3 flex justifyBetween">
+              <h4 class="ml-1 darkGreyColor">DRAFTS (...)</h4>
+              <p class="mainColor noMargin">View all</p>
+            </div>
+            <div class="jobInfo">
+              <div class="row noMargin">
+                <v-col cols="12" sm="3" class="jobDesc flex flexColumn justifyCenter">
+                  <div>
+                    <skeleton-box width="70%" />
                   </div>
-              </v-col>
+                  <div>
+                    <skeleton-box width="50%" />
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="7" class="jobDesc">
+                  <div class="flex alignCenter jobControl justifyBetween">
+                    <skeleton-box width="40%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="80%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="60%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="40%" />
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="2" class="jobControls">
+                    <div class="jobControl">
+                      <p> Continue Editing</p>
+                      <h2>Go to job</h2>
+                    </div>
+                </v-col>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="proposalOffers">
+            <div class="sectionTitle mb-5 px-3 flex justifyBetween">
+              <h4 class="ml-1 darkGreyColor">DRAFTS ({{allDrafts.length}})</h4>
+              <p class="mainColor noMargin">View all</p>
+            </div>
+            <div class="jobInfo" v-for="job in allDrafts" :key="job.id">
+              <div class="row noMargin">
+                <v-col cols="12" sm="3" class="jobDesc flex flexColumn justifyCenter">
+                  <h3>Initiated on {{job.created_at | slicee}}</h3>
+                  <p>{{job.created_at | formatDate}}</p>
+                </v-col>
+                <v-col cols="12" sm="7" class="jobDesc">
+                  <div class="flex alignCenter jobControl justifyBetween">
+                    <h2 class="mainColor noMargin">{{job.title}}</h2>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="2" class="jobControls">
+                    <div class="jobControl">
+                      <p> Continue Editing</p>
+                      <h2>Go to job</h2>
+                    </div>
+                </v-col>
+              </div>
             </div>
           </div>
         </div>
@@ -143,7 +185,9 @@ export default {
   data () {
     return {
       apiLoading: false,
-      allJobs: []
+      apiLoadingDrafts: false,
+      allJobs: [],
+      allDrafts: []
     }
   },
   methods : {
@@ -159,10 +203,21 @@ export default {
         this.apiLoading = false
         this.$toast.success('There was an error getting the available jobs')
       })
+    },
+    getDrafts() {
+      this.apiLoadingDrafts = true;
+      this.$store.dispatch('client/getAllDrafts').then(({data}) => {
+        this.apiLoadingDrafts = false
+        this.allDrafts = data.data
+      }).catch((err) => {
+        this.apiLoading = false
+        this.$toast.success('There was an error getting the drafts')
+      })
     }
   },
   mounted() {
     this.getJobs();
+    this.getDrafts();
   },
   computed: {
     ...mapGetters({

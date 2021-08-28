@@ -242,9 +242,7 @@ export default {
           formData.append('file[' + i + ']', this.jobInfo.file[i])
         }
       }
-      if (this.jobInfo.title) {
-        formData.append('title', this.jobInfo.title)
-      }
+      formData.append('title', this.jobInfo.title)
       if (this.jobInfo.description) {
         formData.append('description', this.jobInfo.description)
       }
@@ -281,7 +279,7 @@ export default {
         this.jobInfo = ''
           this.draftLoading = false;
           this.errors = error.response.data.message
-          this.$toast.error('An error occured, check all fields and try again')
+          this.$toast.error('An error occured, Please make sure the title is filled to save a draft.')
       }
     },
 
