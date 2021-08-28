@@ -166,7 +166,7 @@
         </div>
         <div class="mt-10 flex justifyCenter mobileColumn">
           <v-btn class="findBtn mx-3 my-1" type="submit" :loading = loading>Post Job</v-btn>
-          <v-btn class="greyBtn mx-3 my-1" to="#">Save to Draft</v-btn>
+          <v-btn class="greyBtn mx-3 my-1" :loading = draftLoading @click="addDraftJob()">Save to Draft</v-btn>
         </div>
       </form>
     </div>
@@ -179,6 +179,7 @@ export default {
   data: () => ({
     errors: '',
     loading: false,
+    draftLoading: false,
     items: ['Content writing', 'Articles', 'Blogging', 'Copywriting'],
     values: ['Articles', 'Blogging'],
     value: null,
@@ -202,7 +203,6 @@ export default {
       this.jobInfo.file = event.target.files
     },
     async addJob() {    
-      // const newCategory = JSON.stringify(this.jobInfo.category)
       let formData = new FormData()
       if (this.jobInfo.file) {
         for (const i of Object.keys(this.jobInfo.file)){
@@ -236,35 +236,50 @@ export default {
       }
     },
     async addDraftJob() {    
-      // const newCategory = JSON.stringify(this.jobInfo.category)
       let formData = new FormData()
       if (this.jobInfo.file) {
         for (const i of Object.keys(this.jobInfo.file)){
           formData.append('file[' + i + ']', this.jobInfo.file[i])
         }
       }
-      formData.append('title', this.jobInfo.title)
-      formData.append('description', this.jobInfo.description)
-      formData.append('price', this.jobInfo.price)
-      formData.append('project_duration', this.jobInfo.project_duration)
-      formData.append('category', this.jobInfo.category)
-      formData.append('level_of_experience', this.jobInfo.level_of_experience)
-      formData.append('number_of_words', this.jobInfo.number_of_words)
+      if (this.jobInfo.title) {
+        formData.append('title', this.jobInfo.title)
+      }
+      if (this.jobInfo.description) {
+        formData.append('description', this.jobInfo.description)
+      }
+      if (this.jobInfo.duration_of_job_in_days) {
       formData.append('duration_of_job_in_days', this.jobInfo.duration_of_job_in_days)
+      }
+      if (this.jobInfo.number_of_words) {
+      formData.append('number_of_words', this.jobInfo.number_of_words)
+      }
+      if (this.jobInfo.level_of_experience) {
+        formData.append('level_of_experience', this.jobInfo.level_of_experience)
+      }
+      if (this.jobInfo.category) {
+        formData.append('category', this.jobInfo.category)
+      }
+      if (this.jobInfo.project_duration) {
+        formData.append('project_duration', this.jobInfo.project_duration)
+      }
+      if (this.jobInfo.price) {
+        formData.append('price', this.jobInfo.price)
+      }
       try {
-          this.loading = true;
-          const response = await this.$axios.post('/v1/client/create-job', formData, {
+          this.draftLoading = true;
+          const response = await this.$axios.post('/v1/client/save-draft-job', formData, {
               headers: {
               'Content-Type': 'multipart/form-data'
               }
           })
-          this.$toast.success('Your Job has been added successfully')
-          this.loading = false;
+          this.$toast.success('Your Job has been saved to draft successfully')
+          this.draftLoading = false;
           this.jobInfo = ''
           return response
       } catch(error){
         this.jobInfo = ''
-          this.loading = false;
+          this.draftLoading = false;
           this.errors = error.response.data.message
           this.$toast.error('An error occured, check all fields and try again')
       }

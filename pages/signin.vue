@@ -68,7 +68,7 @@ export default {
       errors: '',
       loading: false,
       userInfo : {
-        email: 'tofmatt@gmail.com',
+        email: 'tosin@granthero.online',
         password: 'Ogunfowote400'
       }
     }
