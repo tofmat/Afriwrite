@@ -84,7 +84,7 @@
                   </div>
                   <div class="jobControl">
                     <p>Number of words</p>
-                    <h2>${{job.number_of_words}}</h2>
+                    <h2>{{job.number_of_words}}</h2>
                   </div>
                   <div class="jobControl">
                     <p>Est. Time</p>

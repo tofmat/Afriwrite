@@ -50,29 +50,29 @@
               </v-col>
               <v-col cols="12" sm="3" class="jobControls">
                   <div class="jobControl">
-                    <p>Budget</p>
+                    <p>Budget/word</p>
                     <skeleton-box width="50%"/>
                   </div>
                   <div class="jobControl">
-                    <p>Est. Time</p>
+                    <p>Number of words</p>
                     <skeleton-box width="60%"/>
                   </div>
-                  <div class="flex alignCenter jobControl">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <skeleton-box width="40%"/>
+                  <div class="jobControl">
+                    <p>Experience</p>
+                    <skeleton-box width="60%"/>
                   </div>
               </v-col>
             </div>
           </div>
           <div v-else>
-            <div class="jobInfo" v-if="allJobs.length > 0">
+            <div class="jobInfo" v-for="job in allJobs" :key="job.id">
               <div class="row noMargin">
                 <v-col cols="12" sm="9" class="jobDesc">
                   <div class="flex alignCenter jobControl justifyBetween">
-                    <h2 class="mainColor noMargin">Job Title</h2>
+                    <h2 class="mainColor noMargin">{{job.title}}</h2>
                     <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
                   </div>
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla possimus, facilis voluptas maiores voluptatibus ullam incidunt fuga, quae sunt veritatis ex ratione reprehenderit exercitationem veniam distinctio, minima quam hic?</p>
+                  <p>{{job.description}}</p>
                   <div class="flex alignCenter scrollable-x">
                     <v-btn class="tagBtn">Writing</v-btn>
                     <v-btn class="tagBtn">Content writing</v-btn>
@@ -81,16 +81,16 @@
                 </v-col>
                 <v-col cols="12" sm="3" class="jobControls">
                     <div class="jobControl">
-                      <p>Budget</p>
-                      <h2>$5-10</h2>
+                      <p>Budget/word</p>
+                      <h2>${{job.price}}</h2>
                     </div>
                     <div class="jobControl">
-                      <p>Est. Time</p>
-                      <h2>1-2 months</h2>
+                      <p>Number of words</p>
+                      <h2>{{job.number_of_words}}</h2>
                     </div>
-                    <div class="flex alignCenter jobControl">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <p>Remote</p>
+                    <div class="jobControl">
+                      <p>Experience</p>
+                      <h2>{{job.level_of_experience}}</h2>
                     </div>
                 </v-col>
               </div>
