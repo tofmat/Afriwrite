@@ -69,7 +69,9 @@
               <div class="row noMargin">
                 <v-col cols="12" sm="9" class="jobDesc">
                   <div class="flex alignCenter jobControl justifyBetween">
-                    <h2 class="mainColor noMargin">{{job.title}}</h2>
+                    <nuxt-link :to="`/dashboard/jobfeed/${job.public_reference_id}`">
+                      <h2 class="mainColor noMargin">{{job.title}}</h2>
+                    </nuxt-link>
                     <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
                   </div>
                   <p>{{job.description}}</p>
@@ -105,7 +107,7 @@
 </template>
 
 <script>
-import skeletonBox from '../../components/skeletonBox'
+import skeletonBox from '../../../components/skeletonBox'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {

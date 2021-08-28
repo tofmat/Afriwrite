@@ -22,7 +22,7 @@
       </v-item-group>
       <img src="../assets/images/bell.svg" class="mx-5" alt="notification">
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
-      <a href="/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px" class="dashProfilePic"></a>
+      <a href="/dashboard/profile"><img src="../assets/images/Profil.png" alt="avatar" height="50px" class="dashProfilePic"></a>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary class="pad-10 noDesktop mobileDisplay">
@@ -182,7 +182,7 @@ export default {
         },
         {
           title: 'Saved Jobs',
-          to: '/saved'
+          to: 'dashboard/saved'
         },
         {
           title: 'Messages',
