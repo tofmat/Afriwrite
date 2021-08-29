@@ -1,16 +1,18 @@
 <template>
   <div>
-      <nuxt-child :job="job" />
+      <nuxt-child />
   </div>
 </template>
 
 <script>
 export default {
-scrollToTop: true,
-layout: 'dashboard'
+  layout: 'dashboard',
+  data () {
+    return {
+    }
+  }
 }
 </script>
 
-<style>
 
-</style>
+

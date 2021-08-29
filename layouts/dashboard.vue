@@ -58,7 +58,7 @@
             dense
             class="openNavFull"
             >
-                <v-list-item link class="sideLinkCon" to="jobfeed" router exact active-class="navActive">
+                <v-list-item link class="sideLinkCon" to="/dashboard/jobfeed" router exact active-class="navActive">
                   <!-- <v-item v-slot="{ active }"> -->
                     <v-list-item-icon>
                       <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 17.088 15.58" class="anana"><g transform="translate(1 1)"><path d="M4.509,10.5H16.58a1.509,1.509,0,0,1,1.509,1.509v7.544a1.509,1.509,0,0,1-1.509,1.509H4.509A1.509,1.509,0,0,1,3,19.553V12.009A1.509,1.509,0,0,1,4.509,10.5Z" transform="translate(-3 -7.482)"/><path class="a" d="M18.035,18.08V6.009A1.509,1.509,0,0,0,16.527,4.5H13.509A1.509,1.509,0,0,0,12,6.009V18.08" transform="translate(-7.473 -4.5)"/></g></svg>
@@ -66,7 +66,7 @@
                     <v-list-item-title>My Job Feed</v-list-item-title>
                   <!-- </v-item> -->
                 </v-list-item>
-                <v-list-item link class="sideLinkCon" to="saved" router exact active-class="navActive">
+                <v-list-item link class="sideLinkCon" to="/dashboard/saved" router exact active-class="navActive">
                     <v-list-item-icon class="iconSpace">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.088 21.399"><g transform="translate(1 1)"><path d="M22.588,23.9l-7.544-5.389L7.5,23.9V6.655A2.155,2.155,0,0,1,9.655,4.5H20.433a2.155,2.155,0,0,1,2.155,2.155Z" transform="translate(-7.5 -4.5)"/></g></svg>
                     </v-list-item-icon>
@@ -249,7 +249,8 @@ export default {
         const response = await this.$axios.post('/v1/auth/request-verification-link')
         this.$toast.success('Verification Link has been sent.')
       } catch (error) {
-        this.loading = false
+        this.loading = false;
+        this.$toast.error('Error sending verification mail, Please try later')
       }
     }
   },
