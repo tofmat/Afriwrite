@@ -72,7 +72,8 @@
                     <nuxt-link :to="`/dashboard/jobfeed/${job.public_reference_id}`">
                       <h2 class="mainColor noMargin">{{job.title}}</h2>
                     </nuxt-link>
-                    <span class="mainColor saveJob"><i class="fas fa-bookmark mr-2"></i> Save job</span>
+                    <span class="saveJob" v-if="job.saved_jobs.length > 0"><i class="fas fa-bookmark mr-2"></i> Saved </span>
+                    <span class="mainColor saveJob arrowCursor" v-else @click="saveJob(job.id)"><i class="fas fa-bookmark mr-2"></i> Save job </span>
                   </div>
                   <p>{{job.description}}</p>
                   <div class="flex alignCenter scrollable-x">
@@ -116,7 +117,8 @@ export default {
   data () {
     return {
       apiLoading: false,
-      allJobs: []
+      allJobs: [],
+      loading: false
     }
   },
   layout: 'dashboard',
@@ -133,7 +135,19 @@ export default {
         this.apiLoading = false
         this.$toast.success('There was an error getting the available jobs')
       })
-    }
+    },
+    async saveJob(job_id) {
+        try {
+          this.loading = true;
+          const response = await this.$axios.post(`v1/writer/jobs/save/${job_id}`)
+          this.$toast.success('This job has been saved')
+          location.reload();
+          this.loading = false;
+        } catch (error) {
+          this.loading = false
+          this.$toast.error('There was an error saving this job please try again')
+        }
+      }
   },
   mounted() {
     this.getJobs();

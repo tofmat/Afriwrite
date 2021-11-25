@@ -45,7 +45,7 @@
                       </div>
                     </v-col>
                     <v-col cols="12" sm="2">
-                      <v-btn class="findBtn my-1 fullWidth" to="#" disabled>Invite to Job</v-btn>
+                      <v-btn class="findBtn my-1 fullWidth" to="#" disabled>View Details</v-btn>
                       <v-btn class="greyBtn my-1 fullWidth" to="#" disabled><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn>
                       <v-btn class="greyBtn mb-4 fullWidth" disabled><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn>
                     </v-col>
@@ -70,7 +70,7 @@
                           <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque nulla...</p>
                         </v-col>
                         <v-col cols="12" sm="2">
-                          <v-btn class="findBtn my-1 fullWidth" to="#">Invite to Job</v-btn>
+                          <v-btn class="findBtn my-1 fullWidth" to="#">View Details</v-btn>
                           <v-btn class="greyBtn my-1 fullWidth" to="#"><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn>
                           <v-btn class="greyBtn mb-4 fullWidth"><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn>
                         </v-col>

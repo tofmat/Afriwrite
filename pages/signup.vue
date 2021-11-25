@@ -104,10 +104,10 @@ export default {
         })
       this.$toast.success('You have successfully registered')            
       if (this.$auth.user.role === 'client') {
-          this.$router.push('/client')
+          this.$router.push('/client/jobs')
       }
       else if(this.$auth.user.role === 'writer'){
-          this.$router.push('/dashboard')
+          this.$router.push('/dashboard/jobfeed')
       }
       this.loading = false;
       return response;

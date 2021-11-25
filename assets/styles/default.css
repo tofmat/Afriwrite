@@ -91,6 +91,7 @@ td {
     padding: 0 50px;
     color: white !important;
 }
+
 .alignCenter{
     align-items: center;
 }
@@ -152,7 +153,7 @@ hr {
     font-weight: 400;
 }
 .mainColor {
-    color: #008952;
+    color: #008952 !important;
 }
 .redColor{
     color: #FF5656;

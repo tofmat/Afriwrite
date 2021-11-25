@@ -45,7 +45,7 @@
                     <v-col cols="6" sm="6">
                       <div class="flex alignCenter" v-for="media in singleJob.media" :key="media.id">
                         <i class="fas fa-link"></i>
-                        <p class="mainColor">{{media.file | slicee}}</p>
+                        <a :href="`${media.file}`" target="_blank" rel="noopener noreferrer" class="mainColor">{{media.file | slicee}}</a>
                       </div>
                     </v-col>
                   </row>
@@ -53,35 +53,38 @@
                 <div class="mt-5 activities">
                   <h2 class="mb-5">Activity on this Job</h2>
                   <div>
-                    <p>Proposals: <span class="boldText">10-30</span></p>
-                    <p>Last viewed by Client: <span class="boldText">4 Hours ago</span></p>
-                    <p>Interviewing: <span class="boldText">5</span></p>
-                    <p>Unanswered proposals: <span class="boldText">5-10</span></p>
+                    <p>Proposals: <span class="boldText">{{activities.total_proposals}}</span></p>
+                    <!-- <p>Last viewed by Client: <span class="boldText">4 Hours ago</span></p> -->
+                    <!-- <p>Interviewing: <span class="boldText">5</span></p> -->
+                    <p>Unanswered proposals: <span class="boldText">{{activities.total_unanswered_proposals}}</span></p>
                   </div>
                 </div>
               </v-col>
               <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
-                <v-btn class="findBtn mb-4 fullWidth" to="submit">Submit a Proposal</v-btn>
-                <v-btn class="greyBtn fullWidth" @click="saveJob(singleJob.id)" :loading= loading> <i class="fas fa-bookmark mr-2 mt-1"></i> Save Job</v-btn>
-                <div class="flex alignCenter fullWidth mt-1">
+                <v-btn class="findBtn mb-4 fullWidth" :to="`/dashboard/jobfeed/${this.$route.params.job}/submit`">Submit a Proposal</v-btn>
+                <div class="flex alignCenter fullWidth mt-1" v-if="savedJobs.length > 0">
                   <div class="darkGreyColor savedDiv"> <i class="fas fa-bookmark mr-2 mt-1"></i> Saved</div>
                   <i class="far fa-trash-alt ml-2 mainColor iconBack"></i>
                 </div>
+                <div v-else>
+                  <v-btn class="greyBtn fullWidth" @click="saveJob(singleJob.id)" :loading= loading> <i class="fas fa-bookmark mr-2 mt-1"></i> Save Job</v-btn>
+                </div>
+
                 <div>
                   <div class="clientInfo mt-10">
                     <h4><span><i class="far fa-file-alt mr-2 mb-5"></i> ABOUT THE CLIENT </span></h4>
                     <p class="mb-5 darkGreyColor"><span> Payment Verified <i class="fas fa-certificate yellowColor"></i></span></p>
+                    <h4>{{clientInfo.first_name}} {{clientInfo.last_name}}</h4>
                     <h4>USA</h4>
-                    <p class="mb-5">10:00am</p>
-                    <h4>20 Jobs posted</h4>
-                    <p class="mb-5">100% hire rate</p>
-                    <p class="mb-5">Member since August, 2021</p>
+                    <!-- <h4>20 Jobs posted</h4> -->
+                    <p class="mb-5">20 Jobs posted</p>
+                    <!-- <p class="mb-5">Member since {{clientCreated }}</p> -->
                     <div>
                       <h4><span><i class="far fa-file-alt mr-2 mb-2"></i> Job Link </span></h4>
-                      <v-btn class="workBtn fullWidth my-3" to="#">
-                          https://www.upwork
-                      </v-btn>
-                      <p class="mainColor">Copy link</p>
+                      <div class="workDiv fullWidth my-3 scrollable-x " to="#">
+                          https://www.afriwrite.com/jobs/{{singleJob.public_reference_id}}
+                      </div>
+                      <p class="mainColor arrowCursor" @click="copyJobLink()">Copy link</p>
                     </div>
                   </div>
                 </div>
@@ -97,7 +100,7 @@
 <script>
 import spinner from '../../../../components/spinner.vue'
 import skeletonBox from '../../../../components/skeletonBox'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   scrollToTop: true,
   apiLoading: false,
@@ -109,6 +112,9 @@ export default {
   data() {
     return {
       singleJob: '',
+      clientInfo: '',
+      activities: '',
+      savedJobs: '',
       loading: false,
       apiLoading: false
     }
@@ -120,9 +126,12 @@ export default {
         this.$store.dispatch('writer/getSingleJob', this.$route.params.job).then(({data}) => {
           this.apiLoading = false
           this.singleJob = data.data
+          this.clientInfo = this.singleJob.client
+          this.activities = this.singleJob.activities
+          this.savedJobs = this.singleJob.saved_jobs
         }).catch((err) => {
           this.apiLoading = false
-          this.$toast.success('There was an error getting the available jobs')
+          this.$toast.success('There was an error getting the job')
         })
       },
       async saveJob(job_id) {
@@ -135,6 +144,10 @@ export default {
           this.loading = false
           this.$toast.error('There was an error saving this job please try again')
         }
+      },
+      copyJobLink() {
+        navigator.clipboard.writeText(`https://www.afriwrite.com/jobs/${this.singleJob.public_reference_id}`);
+        this.$toast.success('Link copied')
       }
   },
   mounted() {
@@ -151,6 +164,11 @@ export default {
       let res = str.slice(86);
       return res;
     },
+    dateSlice(data) {
+      let str = data.toString();
+      let res = str.slice(0, 10)
+      return res;
+    }
   }
 }
 </script>
@@ -187,6 +205,13 @@ export default {
 .jobTips i{
   margin-right: 10px;
   color: #fff;
+}
+.workDiv{
+    padding: 10px !important;
+    background-color: transparent !important;
+    border: #008952 solid 1px;
+    color: #008952 !important;
+    box-shadow: none !important;
 }
 .jobTips h2 {
   color: white;

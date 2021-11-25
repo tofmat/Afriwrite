@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const state = () => ({
   allJobs: [],
-  singleJob: [],
+  singleJob: '',
   savedJobs: []
 })
 

@@ -8,7 +8,7 @@
               Description
             </th>
             <th class="text-left">
-              Due date
+              Deliverable
             </th>
             <th class="text-left">
               Milestone Amount
@@ -19,76 +19,43 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="singleItem in newProposal.milestones" :key="singleItem.description">
             <td>
                 <v-text-field
                   v-model="val.description"
-                  placeholder="Item Description"
+                  placeholder="Description of this milestone"
                   required
                 ></v-text-field>
             </td>
             <td>
-              <v-menu
-                ref="menu"
-                v-model="menu"
-                :close-on-content-click="false"
-                :return-value.sync="date"
-                transition="scale-transition"
-                offset-y
-                min-width="auto"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="date"
-                    label="Pick date"
-                    prepend-icon="mdi-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="date"
-                  no-title
-                  scrollable
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="menu = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menu.save(date)"
-                  >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
+              <v-text-field
+                  v-model="val.expected_time"
+                  placeholder="What would you deliver in this milestone ?"
+                  required
+                ></v-text-field>
             </td>
             <td>
                 <v-text-field
                   placeholder="Price per unit"
-                  v-model="val.rate"
+                  v-model="val.milestone_amount"
                   required
                 >
                   <v-icon
                     slot="prepend"
                     color="green"
                   >
-                    mdi-plus
+                    mdi-currency-ngn
                   </v-icon>
                 </v-text-field>
             </td>
             <td class="textCenter">
-              <i class="far fa-2x fa-times-circle"></i>
+              <i class="far fa-times-circle" @click="removeItem(val)"></i>
             </td>
           </tr>
         </tbody>
+        <div class="my-5 ">
+                  <a @click="addItem()"><p class="mainColor"><span><i class="fas fa-plus"></i></span> Add new Milestone</p></a>
+                </div>
       </template>
     </v-simple-table>
   </div>
@@ -96,10 +63,11 @@
 
 <script>
 export default {
-  props: ['initialItem'],
+  props: ['initialItem', 'proposal'],
   data() {
     return {
-      val: this.initialItem
+      val: this.initialItem,
+      newProposal: this.proposal
     }
   },
   computed: {
@@ -114,12 +82,15 @@ export default {
     }
   },
   methods: {
-    // removeItem(val) {
-    // this.invoice.items = this.invoice.items.filter(ite => {
-    //   return ite.val.item_num !== val.item_num
-    // })
+     addItem() {
+      this.newProposal.milestones.push({
+          description: '',
+          milestone_amount: '',
+          expected_time: ''
+      })
+    },
   }
-  }
+}
 </script>
 
 <style>
