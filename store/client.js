@@ -4,7 +4,8 @@ export const state = () => ({
   allProposals: [],
   allJobs: [],
   allContracts: [],
-  allDrafts: []
+  allDrafts: [],
+  singleProposal: ''
 })
 
 export const getters = {
@@ -19,7 +20,10 @@ export const getters = {
   },
   allContracts(state) {
     return state.allContracts
-  }
+  },
+  singleProposal(state) {
+    return state.singleJob
+  },
 }
 
 export const mutations = {
@@ -34,6 +38,9 @@ export const mutations = {
   },
   SET_ALLCONTRACTS(state, data) {
     state.allContracts = data
+  },
+  SET_SINGLEJOB(state, data) {
+    state.singleProposal = data
   }
 }
 
@@ -84,6 +91,18 @@ export const actions = {
     } catch (error) {
       commit('SET_ALLCONTRACTS', null)
       return Promise.reject(error.response)
+    }
+  },
+  async getSingleProposal({commit}, data){
+    try {
+        const res = await this.$axios.get(`/v1/client/get-a-single-job-proposal/${data}`)
+        if (res) {
+          return Promise.resolve(res)
+        }
+        commit ('SET_SINGLEJOB', response.data)
+    } catch (error) {
+        commit('SET_SINGLEJOB', null)
+        return Promise.reject(error.response)
     }
   },
 }

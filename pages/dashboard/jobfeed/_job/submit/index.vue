@@ -153,7 +153,7 @@
                       <tbody>
                         <tr
                           v-for="singleItem in proposal.milestones"
-                          :key="singleItem.milestone_amount"
+                          :key="singleItem.id"
                         >
                           <td>
                             <v-text-field

@@ -109,7 +109,7 @@
 
 <script>
 import skeletonBox from '../../../components/skeletonBox'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     skeletonBox
