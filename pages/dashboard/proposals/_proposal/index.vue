@@ -1,53 +1,48 @@
 <template>
   <div>
     <div class="dashDefaultContent">
-      <h2 class="mainColor">Contract</h2>
+      <h2 class="mainColor">Proposal</h2>
       <div v-if="pageLoading">
         <spinner />
       </div>
 
       <div class="row" v-else>
         <v-col cols="12" sm="9">
-          <div class="flex alignCenter mobileColumn mt-5">
+          <div class="flex alignCenter mobileColumn">
+            <div class="mr-10">
+              <img src="../../../../assets/images/Ellipse29.png" alt="user" />
+              <h3>{{ writerDetails.first_name }}</h3>
+              <p>{{ writerDetails.role }}</p>
+            </div>
             <div class="mr-10 infoCards">
               <h3 class="mb-2 mainColor">
-                N{{ singleContract.proposed_amount }}/word
+                N{{ singleProposal.proposed_amount }}/word
               </h3>
               <p class="darkGreyColor">Bid</p>
             </div>
             <div class="mr-10 infoCards">
-              <h3 class="mb-2 mainColor">{{ singleContract.duration }} Days</h3>
+              <h3 class="mb-2 mainColor">{{ singleProposal.duration }} Days</h3>
               <p class="darkGreyColor">Duration</p>
             </div>
-            <div class="infoCards mr-10">
-              <h3 class="mb-2 mainColor">N {{ totalAmount }}</h3>
+            <div class="infoCards">
+              <h3 class="mb-2 mainColor">N{{ totalAmount }}</h3>
               <p class="darkGreyColor">Total Amount</p>
             </div>
-            <!-- <div class="">
-              <img src="../../../../assets/images/Ellipse29.png" alt="user" />
-              <h3>{{ writerDetails.first_name }}</h3>
-              <p>{{ writerDetails.role }}</p>
-            </div> -->
           </div>
-          <div class="mt-3">
+          <div>
             <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
-
-            <p v-if="singleContract.payment_mode === 'by_project'">
-              Payment Method: Project based payment
-            </p>
-            <p v-else>Payment Method: Milestone based payment</p>
-            <p>
-              Payment Status:
-              {{ singleContract.disbursed_writer_payment_status }}
-            </p>
           </div>
-          <div v-if="singleContract.assets">
+          <h4 class="mainColor">Cover Letter</h4>
+          <p class="my-5">
+            {{ singleProposal.cover_letter }}
+          </p>
+          <div v-if="singleProposal.assets">
             <h3>Attachments</h3>
             <row class="row">
               <v-col cols="6" sm="6">
                 <div
                   class="flex alignCenter mt-5"
-                  v-for="media in singleContract.assets"
+                  v-for="media in singleProposal.assets"
                   :key="media.id"
                 >
                   <i class="fas fa-link mr-2"></i>
@@ -62,27 +57,25 @@
               </v-col>
             </row>
           </div>
-
-          <h4 class="mainColor mt-3">Milestones</h4>
-          <p class="mt-3">Milestone One</p>
-          <p>Milestone Two</p>
-
-          <h4 class="mainColor">Cover Letter</h4>
-          <p class="my-5">
-            {{ singleContract.cover_letter }}
-          </p>
         </v-col>
         <v-col cols="12" sm="3">
-          <div v-if="singleContract.payment_mode === 'by_project'">
+          <v-btn
+            class="findBtn mb-4 fullWidth"
+            v-if="singleProposal.status === 'accepted'"
+            >View Contract</v-btn
+          >
+          <div v-else>
             <v-btn
               class="findBtn mb-4 fullWidth"
-              v-if="singleContract.status === 'submitted_work_for_approval'"
-              @click="approveOneTimeJob()"
-              :loading="approveLoading"
-              >Approve for Payment</v-btn
+              @click="acceptProposal()"
+              :loading="loading"
+              >Accept Proposal</v-btn
             >
-            <v-btn class="findBtn mb-4 fullWidth" disabled v-else
-              >Approved for Payment</v-btn
+            <v-btn
+              class="findBtn mb-4 fullWidth"
+              @click="declineJobProposal()"
+              :loading="declineloading"
+              >Decline Proposal</v-btn
             >
           </div>
 
@@ -131,29 +124,28 @@ export default {
     return {
       loading: false,
       declineloading: false,
-      singleContract: "",
+      singleProposal: "",
       pageLoading: false,
       writerDetails: "",
       proposalDate: "",
       dateWriterRegistered: "",
-      approveLoading: false,
     };
   },
   methods: {
-    getSingleContract() {
-      this.singleContract = "";
+    getSingleProposal() {
+      this.singleProposal = "";
       this.pageLoading = true;
       this.$store
-        .dispatch("client/getSingleContract", this.$route.params.contract)
+        .dispatch("client/getSingleProposal", this.$route.params.proposal)
         .then(({ data }) => {
           this.pageLoading = false;
-          this.singleContract = data.data;
-          this.writerDetails = this.singleContract.writer;
-          this.jobDetails = this.singleContract.job;
-          this.proposalDate = this.singleContract.created_at;
+          this.singleProposal = data.data;
+          this.writerDetails = this.singleProposal.writer;
+          this.jobDetails = this.singleProposal.job;
+          this.proposalDate = this.singleProposal.created_at;
           this.dateWriterRegistered = this.writerDetails.created_at;
           this.totalAmount =
-            this.singleContract.proposed_amount *
+            this.singleProposal.proposed_amount *
             this.jobDetails.number_of_words;
         })
         .catch((err) => {
@@ -162,28 +154,63 @@ export default {
           this.$toast.success("There was an error getting the job");
         });
     },
-    async approveOneTimeJob() {
+    async acceptProposal() {
+      const that = this;
+      var handler = PaystackPop.setup({
+        key: "pk_test_d16ba2f6073caccc6adcac860d66d70ff969721a", // Replace with your public key
+        ref: "" + Math.floor(Math.random() * 1000000000 + 1),
+        email: this.$auth.user.email,
+        amount: this.totalAmount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+        currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
+        callback: async (response) => {
+          try {
+            this.loading = true;
+            var reference = response.reference;
+            let paymentDetails = {
+              payment_reference: reference,
+              job_proposal_id: this.singleProposal.id,
+            };
+            await this.$axios.post(
+              `/v1/client/accept-job-proposal/${this.singleProposal.id}`,
+              paymentDetails
+            );
+            this.$toast.success(
+              "This proposal has been accepted and can be found in contracts"
+            );
+            this.loading = false;
+            window.location = "/client/contracts";
+          } catch {
+            this.loading = false;
+            this.$toast.error("There was an error accepting this proposal");
+          }
+        },
+        onClose: function () {
+          alert("Transaction was not completed, window closed.");
+          this.loading = false;
+        },
+      });
+      handler.openIframe();
+    },
+    async declineJobProposal() {
       try {
-        this.approveLoading = true;
+        this.declineloading = true;
         const response = await this.$axios.post(
-          `/v1/client/approve-completed-one-time-work/${this.singleContract.id}`
+          `/v1/client/decline-job-proposal/${this.singleProposal.id}`
         );
-        this.approveLoading = false;
-        this.$toast.success("This job has been approved for payment.");
+        this.$toast.success("This proposal has been declined");
+        window.location = "/client/proposals";
       } catch (error) {
-        this.approveLoading = false;
-        this.$toast.error(
-          "There was an error approving this contract for payment"
-        );
+        this.declineloading = false;
+        this.$toast.error("There was an error declining this proposal");
       }
     },
   },
   mounted() {
-    this.getSingleContract();
+    this.getSingleProposal();
   },
   computed: {
     ...mapGetters({
-      singleContract: "client/singleContract",
+      singleProposal: "client/singleProposal",
     }),
   },
   filters: {

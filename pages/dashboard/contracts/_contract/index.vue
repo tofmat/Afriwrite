@@ -76,7 +76,7 @@
           <div v-if="singleContract.payment_mode === 'by_project'">
             <v-btn
               class="findBtn mb-4 fullWidth"
-              v-if="singleContract.status === 'submitted_work_for_approval'"
+              v-if="singleContract.submitted_work_for_approval === 'submitted'"
               @click="approveOneTimeJob()"
               :loading="approveLoading"
               >Approve for Payment</v-btn

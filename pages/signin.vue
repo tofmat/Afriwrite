@@ -82,7 +82,7 @@ export default {
       errors: "",
       loading: false,
       userInfo: {
-        email: "tosin@granthero.online",
+        email: "tofmatt@gmail.com",
         password: "Ogunfowote400",
       },
     };
