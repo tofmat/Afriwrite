@@ -96,13 +96,19 @@
                           <p class="noMargin">
                             Duration: {{ proposal.duration }}Days
                           </p>
-                          <p>{{ proposal.cover_letter }}</p>
+                          <p>
+                            {{ proposal.cover_letter | descriptionSlice }} ...
+                          </p>
                         </v-col>
                         <v-col cols="12" sm="2">
-                          <v-btn class="findBtn my-1 fullWidth" :to="`/client/proposals/${proposal.id}`"
+                          <v-btn
+                            class="findBtn my-1 fullWidth"
+                            :to="`/client/proposals/${proposal.id}`"
                             >View Details</v-btn
                           >
-                          <v-btn class="greyBtn my-1 fullWidth" :to="`/client/proposals/${proposal.id}`"
+                          <v-btn
+                            class="greyBtn my-1 fullWidth"
+                            :to="`/client/proposals/${proposal.id}`"
                             ><i class="far fa-comments mr-2 mainColor"></i>
                             Contact</v-btn
                           >
@@ -142,12 +148,12 @@ import { mapGetters } from "vuex";
 export default {
   layout: "client",
   components: {
-    skeletonBox
+    skeletonBox,
   },
   data() {
     return {
       apiLoading: false,
-      allProposals: []
+      allProposals: [],
     };
   },
   methods: {
@@ -159,20 +165,31 @@ export default {
           this.apiLoading = false;
           this.allProposals = data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the proposals");
         });
-    }
+    },
   },
   mounted() {
     this.getJobs();
   },
   computed: {
     ...mapGetters({
-      allProposals: "client/allProposals"
-    })
-  }
+      allProposals: "client/allProposals",
+    }),
+  },
+  filters: {
+    dateSlice(data) {
+      let str = data.toString();
+      let res = str.slice(0, 10);
+      return res;
+    },
+    descriptionSlice(data) {
+      let response = data.slice(0, 100);
+      return response;
+    },
+  },
 };
 </script>
 

@@ -3,9 +3,12 @@ import axios from 'axios'
 export const state = () => ({
   allProposals: [],
   allJobs: [],
+  singleJob: '',
   allContracts: [],
   allDrafts: [],
-  singleProposal: ''
+  singleProposal: '',
+  singleContract: '',
+  draftedJob: ''
 })
 
 export const getters = {
@@ -14,6 +17,9 @@ export const getters = {
   },
   allJobs(state) {
     return state.allJobs
+  },
+  singleJob(state) {
+    return state.singleJob
   },
   allDrafts(state) {
     return state.allDrafts
@@ -24,6 +30,12 @@ export const getters = {
   singleProposal(state) {
     return state.singleJob
   },
+  singleContract(state) {
+    return state.singleContract
+  },
+  draftedJob(state) {
+    return state.draftedJob
+  }
 }
 
 export const mutations = {
@@ -33,16 +45,25 @@ export const mutations = {
   SET_ALLJOBS(state, data){
     state.allJobs = data
   },
+  SET_SINGLEJOB (state, data) {
+    state.singleJob = data
+  },
   SET_ALLDRAFTS(state, data) {
     state.allDrafts = data
   },
   SET_ALLCONTRACTS(state, data) {
     state.allContracts = data
   },
-  SET_SINGLEJOB(state, data) {
+  SET_SINGLEPROPOSAL(state, data) {
     state.singleProposal = data
+  },
+  SET_SINGLECONTRACT(state, data) {
+    state.singleContract = data
+  },
+  SET_DRAFTEDJOB(state, data) {
+    state.draftedJob = data
   }
-}
+ }
 
 export const actions = {
   async getAllProposals({commit}){
@@ -67,6 +88,18 @@ export const actions = {
     } catch (error) {
       commit('SET_ALLJOBS', null)
       return Promise.reject(error.response)
+    }
+  },
+  async getSingleJob({commit}, data){
+    try {
+        const res = await this.$axios.get(`/v1/client/get-a-single-job/${data}`)
+        if (res) {
+          return Promise.resolve(res)
+        }
+        commit ('SET_SINGLEJOB', response.data)
+    } catch (error) {
+        commit('SET_SINGLEJOB', null)
+        return Promise.reject(error.response)
     }
   },
   async getAllDrafts({commit}){
@@ -99,9 +132,33 @@ export const actions = {
         if (res) {
           return Promise.resolve(res)
         }
-        commit ('SET_SINGLEJOB', response.data)
+        commit ('SET_SINGLEPROPOSAL', response.data)
     } catch (error) {
-        commit('SET_SINGLEJOB', null)
+        commit('SET_SINGLEPROPOSAL', null)
+        return Promise.reject(error.response)
+    }
+  },
+  async getSingleContract({commit}, data){
+    try {
+        const res = await this.$axios.get(`/v1/client/approved/job-proposal/${data}`)
+        if (res) {
+          return Promise.resolve(res)
+        }
+        commit ('SET_SINGLECONTRACT', response.data)
+    } catch (error) {
+        commit('SET_SINGLECONTRACT', null)
+        return Promise.reject(error.response)
+    }
+  },
+  async getDraftedJob({commit}, data){
+    try {
+        const res = await this.$axios.get(`/v1/client/get-a-single-drafted-job/${data}`)
+        if (res) {
+          return Promise.resolve(res)
+        }
+        commit ('SET_DRAFTEDJOB', response.data)
+    } catch (error) {
+        commit('SET_DRAFTEDJOB', null)
         return Promise.reject(error.response)
     }
   },

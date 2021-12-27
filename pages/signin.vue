@@ -1,19 +1,21 @@
 <template>
   <div class="signUp">
     <div class="fullHeight">
-			<div class="signupField">
+      <div class="signupField">
         <v-container>
           <div class="flex centerflex signupEvery">
-              <div class="signupImage">
-                <img src="../assets/images/typewriter.png" alt="">
-              </div>
-              <div class="signupForm">
-                  <div class="centerflex columnFlex">
-                    <p class="signUpHead">Sign in to AfriWrites</p>
-                    <p class="textCenter">You do not have an account? <span class="mainColor"><nuxt-link to="/signup">
-                      Sign up
-                    </nuxt-link></span>
-                    <!-- <p class="onlyShowSmall">Sign up with</p>
+            <div class="signupImage">
+              <img src="../assets/images/typewriter.png" alt="" />
+            </div>
+            <div class="signupForm">
+              <div class="centerflex columnFlex">
+                <p class="signUpHead">Sign in to AfriWrites</p>
+                <p class="textCenter">
+                  You do not have an account?
+                  <span class="mainColor"
+                    ><nuxt-link to="/signup"> Sign up </nuxt-link></span
+                  >
+                  <!-- <p class="onlyShowSmall">Sign up with</p>
                     <div class="otherSignUp">
                       <v-btn class="gooBtn myBtn" to="#"> <i class="fab fa-google googleIcon"></i> <span class="noShowSmall">Sign up with Google</span> </v-btn>
                       <v-btn class="faceBtn myBtn" to="#"><i class="fab fa-facebook-f facebookIcon"></i> <span class="noShowSmall">Sign up with Facebook</span> </v-btn>
@@ -23,106 +25,119 @@
                       <p>or</p>
                       <hr>
                     </div> -->
+                </p>
 
-                    <form @submit.prevent="loginUser(userInfo)" class="signupInput">
-                      <div class="formInput flex columnFlex">
-                        <input type="text" placeholder="Email Address" v-model="userInfo.email"/>
-                      </div>
-                      <div class="formInput flex columnFlex">
-                        <input type="password" placeholder="Set a Password" v-model="userInfo.password"/>
-                      </div>
-                      <div class="flex checkboxDiv">
-                        <div class="flex alignCenter">
-                        <input type="checkbox" class="checkbox"/>
-                        <p>Keep me logged in</p>
-                        </div>
-                        <p><span class="mainColor">Forget Password</span> </p>
-                      </div>
-
-                      <div class="flex loginBtns justifyCenter mt-3">
-                        <v-btn class="myBtn findBtn" type="submit" :loading = loading>SIGN IN</v-btn>
-                      </div>
-
-                      <div class="flex justifyCenter mt-3">
-                        <small class="small textCenter">
-                          {{errors}}
-                        </small>
-                      </div>
-
-                    </form>
-                    
+                <form @submit.prevent="loginUser(userInfo)" class="signupInput">
+                  <div class="formInput flex columnFlex">
+                    <input
+                      type="text"
+                      placeholder="Email Address"
+                      v-model="userInfo.email"
+                    />
                   </div>
+                  <div class="formInput flex columnFlex">
+                    <input
+                      type="password"
+                      placeholder="Set a Password"
+                      v-model="userInfo.password"
+                    />
+                  </div>
+                  <div class="flex checkboxDiv">
+                    <div class="flex alignCenter">
+                      <input type="checkbox" class="checkbox" />
+                      <p>Keep me logged in</p>
+                    </div>
+                    <p><span class="mainColor">Forget Password</span></p>
+                  </div>
+
+                  <div class="flex loginBtns justifyCenter mt-3">
+                    <v-btn
+                      class="myBtn findBtn"
+                      type="submit"
+                      :loading="loading"
+                      >SIGN IN</v-btn
+                    >
+                  </div>
+
+                  <div class="flex justifyCenter mt-3">
+                    <small class="small textCenter">
+                      {{ errors }}
+                    </small>
+                  </div>
+                </form>
               </div>
+            </div>
           </div>
         </v-container>
-			</div>
-		</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  middleware : 'auth-page',
-  data () {
+  middleware: "auth-page",
+  data() {
     return {
-      errors: '',
+      errors: "",
       loading: false,
-      userInfo : {
-        email: 'tofmatt@gmail.com',
-        password: 'Ogunfowote400'
-      }
-    }
+      userInfo: {
+        email: "tosin@granthero.online",
+        password: "Ogunfowote400",
+      },
+    };
   },
-  methods : {
-    async loginUser(loginInfo){
-      this.errors = ""
+  methods: {
+    async loginUser(loginInfo) {
+      this.errors = "";
       try {
-          this.loading = true;
-          this.$toast.show('Logging in...')
-          const response = await this.$auth.loginWith('local', {
-            data: loginInfo
-          })
-          if (this.$auth.user.role === 'client') {
-            this.$router.push('/client/jobs')
-          } 
-          else if (this.$auth.user.role === 'writer') {
-            this.$router.push('/dashboard/jobfeed')
-          }
-          this.$toast.success('You are logged in')
-          this.loading = false;
-          return response;
-      } catch (error){
-          // this.errors = error.response.data.error
-          this.loading = false;
-          this.$toast.info('There was a problem logging in, check your credentials');
+        this.loading = true;
+        this.$toast.show("Logging in...");
+        const response = await this.$auth.loginWith("local", {
+          data: loginInfo,
+        });
+        if (this.$auth.user.role === "client") {
+          this.$router.push("/client/jobs");
+        } else if (this.$auth.user.role === "writer") {
+          this.$router.push("/dashboard/jobfeed");
+        }
+        this.$toast.success("You are logged in");
+        this.loading = false;
+        return response;
+      } catch (error) {
+        // this.errors = error.response.data.error
+        this.loading = false;
+        this.$toast.info(
+          "There was a problem logging in, check your credentials"
+        );
       }
-    }
+    },
   },
-}
+};
 </script>
 
 <style>
-.signUp{
-  background-color: #F5F6FA;
+.signUp {
+  background-color: #f5f6fa;
 }
-.findBtn{
-    padding: 10px 20px !important;
-    background-color: #008952 !important;
-    color: white !important;
-    box-shadow: none !important;
-    margin-right: 10px;
+.findBtn {
+  padding: 10px 20px !important;
+  background-color: #008952 !important;
+  color: white !important;
+  box-shadow: none !important;
+  margin-right: 10px;
 }
-.gooBtn{
+.gooBtn {
   padding: 20px !important;
-  background-color: #346EF1 !important;
-  border: #346EF1 solid 1px;
+  background-color: #346ef1 !important;
+  border: #346ef1 solid 1px;
   color: #fff !important;
   margin-right: 10px;
 }
-.fullHeight{
+.fullHeight {
   min-height: 100vh;
 }
-.signupField{
+.signupField {
   padding: 60px 0;
 }
 .formInput label {
@@ -130,9 +145,9 @@ export default {
 }
 .formInput {
   margin-bottom: 20px;
-  color: #8B8B8B;
+  color: #8b8b8b;
 }
-.googleIcon{
+.googleIcon {
   margin-right: 10px;
   color: red;
 }
@@ -140,65 +155,65 @@ export default {
   color: blue;
   margin-right: 10px;
 }
-.otherSignUp{
+.otherSignUp {
   display: flex;
 }
 .checkboxDiv {
-  color: #8B8B8B;
+  color: #8b8b8b;
 }
 .checkboxDiv p {
-  color: #8B8B8B;
+  color: #8b8b8b;
   margin-bottom: 0 !important;
 }
-.orDiv p{
+.orDiv p {
   margin: 0 10px;
 }
-.orDiv{
+.orDiv {
   margin: 15px;
 }
 .checkboxDiv .checkbox {
   height: auto;
   margin-right: 3px;
   width: 15px;
-  color: #8B8B8B;
+  color: #8b8b8b;
 }
-.twoColumnsInput :first-child{
+.twoColumnsInput :first-child {
   margin-right: 10px;
 }
-.twoColumnsInput :last-child{
+.twoColumnsInput :last-child {
   margin-left: 10px;
 }
-.signupForm{
-  border: solid 1px #E5E5E5;
+.signupForm {
+  border: solid 1px #e5e5e5;
   border-radius: 30px;
   width: 60%;
-  padding:40px 50px;
-  color: #8B8B8B;
+  padding: 40px 50px;
+  color: #8b8b8b;
 }
-.onlyShowSmall{
-    display: none;
-  }
-.signupImage{
+.onlyShowSmall {
+  display: none;
+}
+.signupImage {
   padding: 0 50px;
 }
-.signupImage img{
+.signupImage img {
   width: 100%;
 }
-.noFullWidth{
+.noFullWidth {
   width: fit-content !important;
 }
 .signupInput {
   width: 100%;
 }
 .signupInput input {
-  border: solid 1px #8B8B8B;
+  border: solid 1px #8b8b8b;
   border-radius: 2px;
   height: 45px;
   padding: 10px;
   width: 100%;
   /* margin: 0 10px; */
 }
-.blueBack{
+.blueBack {
   background-color: blue;
 }
 .signUpHead {
@@ -207,61 +222,60 @@ export default {
   font-weight: 700;
   color: #008952;
 }
-.faceBtn{
+.faceBtn {
   padding: 21px !important;
   background-color: transparent !important;
-  border: #1877F2 solid 1px;
-  color: #1877F2 !important;
+  border: #1877f2 solid 1px;
+  color: #1877f2 !important;
 }
-@media(max-width: 1300px){
-    /* .signupField {
+@media (max-width: 1300px) {
+  /* .signupField {
       padding: 60px 50px;
     } */
-  .loginBtns{
+  .loginBtns {
     flex-direction: column;
   }
-  .findBtn{
+  .findBtn {
     margin: 5px 0;
   }
 }
-@media(max-width: 1000px){
-    /* .signupField {
+@media (max-width: 1000px) {
+  /* .signupField {
       padding: 60px 50px;
     } */
-  .loginBtns{
+  .loginBtns {
     flex-direction: column;
   }
-  .signupEvery{
+  .signupEvery {
     flex-direction: column;
   }
   .signupForm {
     width: 70%;
   }
-  
 }
-  @media(max-width: 700px){
+@media (max-width: 700px) {
   .signupForm {
     width: 100%;
   }
-  .signupImage img{
-      width: 200px;
-    }
-    .signupField{
-      padding: 30px 0;
-    }
+  .signupImage img {
+    width: 200px;
   }
-  @media(max-width: 500px){
-    .signupImage{
-      padding: 0 10px;
-    }
-    .signupForm{
-      padding: 0 10px;
-    }
-    .noShowSmall{
-      display: none;
-    }
-    .onlyShowSmall{
-      display: block;
-    }
+  .signupField {
+    padding: 30px 0;
   }
+}
+@media (max-width: 500px) {
+  .signupImage {
+    padding: 0 10px;
+  }
+  .signupForm {
+    padding: 0 10px;
+  }
+  .noShowSmall {
+    display: none;
+  }
+  .onlyShowSmall {
+    display: block;
+  }
+}
 </style>

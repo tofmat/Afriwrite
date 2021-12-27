@@ -3,7 +3,10 @@
     <div class="dashDefaultContent">
       <h2 class="mainColor">Post a Job</h2>
       <h3 class="mainColor slimText">Get Started</h3>
-      <form @submit.prevent="addJob()">
+      <div v-if="pageLoading">
+        <spinner />
+      </div>
+      <form @submit.prevent="addJob()" v-else>
         <small v-if="errors">{{ errors }}</small>
         <div class="postJob mt-5">
           <div class="flex mb-5">
@@ -54,6 +57,7 @@
                 placeholder="Input text here"
                 v-model="jobInfo.description"
               ></textarea>
+
               <!-- <h3 class="mt-3">Choose Category</h3>
               <p>
                 Select the category this job falls under (You can select more
@@ -118,7 +122,7 @@
                         </div>
                         <div class="flex alignCenter justifyCenter columnFlex">
                           <img
-                            src="../../assets/images/working.svg"
+                            src="../../../../assets/images/working.svg"
                             alt="work"
                             width="30px"
                           />
@@ -140,7 +144,7 @@
                         </div>
                         <div class="flex alignCenter justifyCenter columnFlex">
                           <img
-                            src="../../assets/images/working-at-home.svg"
+                            src="../../../../assets/images/working-at-home.svg"
                             alt="work"
                             width="30px"
                           />
@@ -162,7 +166,7 @@
                         </div>
                         <div class="flex alignCenter justifyCenter columnFlex">
                           <img
-                            src="../../assets/images/handshake.svg"
+                            src="../../../../assets/images/handshake.svg"
                             alt="work"
                             width="30px"
                           />
@@ -297,12 +301,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   layout: "client",
   data: () => ({
     errors: "",
     loading: false,
     draftLoading: false,
+    draftedJob: "",
+    pageLoading: false,
     items: ["Content writing", "Articles", "Blogging", "Copywriting"],
     values: ["Articles", "Blogging"],
     value: null,
@@ -424,6 +431,36 @@ export default {
         );
       }
     },
+    getDraftedJob() {
+      this.singleContract = "";
+      this.pageLoading = true;
+      this.$store
+        .dispatch("client/getDraftedJob", this.$route.params.draft)
+        .then(({ data }) => {
+          this.pageLoading = false;
+          this.draftedJob = data.data;
+          this.jobInfo.title = this.draftedJob.title;
+          this.jobInfo.description = this.draftedJob.description;
+          this.jobInfo.duration_of_job_in_days =
+            this.draftedJob.duration_of_job_in_days;
+          this.jobInfo.number_of_words = this.draftedJob.number_of_words;
+          this.jobInfo.price = this.draftedJob.price;
+          this.jobInfo.price = this.draftedJob.price;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.pageLoading = false;
+          this.$toast.success("There was an error getting the job");
+        });
+    },
+  },
+  mounted() {
+    this.getDraftedJob();
+  },
+  computed: {
+    ...mapGetters({
+      draftedJob: "client/draftedJob",
+    }),
   },
 };
 </script>
