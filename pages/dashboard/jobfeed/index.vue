@@ -196,7 +196,9 @@ export default {
 .jobDesc {
   padding: 2em;
 }
-
+.saveJob {
+  color: #aaaaaa;
+}
 .jobControls {
   padding: 1em;
   background-color: #008952;

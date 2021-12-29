@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  layout: "client",
+  layout: "dashboard",
   data() {
     return {};
   },

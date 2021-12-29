@@ -141,7 +141,7 @@
 import skeletonBox from "../../../components/skeletonBox";
 import { mapGetters } from "vuex";
 export default {
-  layout: "client",
+  layout: "dashboard",
   components: {
     skeletonBox,
   },

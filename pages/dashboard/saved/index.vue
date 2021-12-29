@@ -73,7 +73,17 @@
                   </nuxt-link>
                   <span class="saveJob"
                     ><i class="fas fa-bookmark mr-2"></i> Saved
-                    <i class="far fa-trash-alt ml-2 mainColor iconBack"></i
+                    <i
+                      class="
+                        far
+                        fa-trash-alt
+                        ml-2
+                        mainColor
+                        iconBack
+                        arrowCursor
+                      "
+                      @click="deleteSavedJob(job.job.id)"
+                    ></i
                   ></span>
                 </div>
                 <p>{{ job.job.description }}</p>
@@ -129,6 +139,21 @@ export default {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the saved jobs");
         });
+    },
+    async deleteSavedJob(job_id) {
+      try {
+        this.deleteSaveLoading = true;
+        this.$toast.success("Removing from saved jobs");
+        const response = await this.$axios.delete(
+          `v1/writer/jobs/saved/delete/${job_id}`
+        );
+        this.$toast.success("Removed from saved jobs");
+        window.location.reload();
+        this.deleteSaveLoading = false;
+      } catch (error) {
+        this.deleteSaveLoading = false;
+        this.$toast.error("There was an error removing from saved jobs");
+      }
     },
   },
   mounted() {

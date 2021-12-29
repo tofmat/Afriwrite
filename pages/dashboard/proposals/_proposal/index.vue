@@ -1,264 +1,685 @@
 <template>
   <div>
     <div class="dashDefaultContent">
-      <h2 class="mainColor">Proposal</h2>
-      <div v-if="pageLoading">
-        <spinner />
-      </div>
+      <div class="jobI">
+        <h2 class="mainColor mb-5">Submit a Proposal</h2>
 
-      <div class="row" v-else>
-        <v-col cols="12" sm="9">
-          <div class="flex alignCenter mobileColumn">
-            <div class="mr-10">
-              <img src="../../../../assets/images/Ellipse29.png" alt="user" />
-              <h3>{{ writerDetails.first_name }}</h3>
-              <p>{{ writerDetails.role }}</p>
-            </div>
-            <div class="mr-10 infoCards">
-              <h3 class="mb-2 mainColor">
-                N{{ singleProposal.proposed_amount }}/word
-              </h3>
-              <p class="darkGreyColor">Bid</p>
-            </div>
-            <div class="mr-10 infoCards">
-              <h3 class="mb-2 mainColor">{{ singleProposal.duration }} Days</h3>
-              <p class="darkGreyColor">Duration</p>
-            </div>
-            <div class="infoCards">
-              <h3 class="mb-2 mainColor">N{{ totalAmount }}</h3>
-              <p class="darkGreyColor">Total Amount</p>
-            </div>
+        <div v-if="apiLoading">
+          <spinner />
+        </div>
+
+        <div class="jobDetails" v-else>
+          <div class="row">
+            <v-col cols="12" sm="12" lg="9">
+              <h2 class="blackColor mb-3">{{ singleJob.title }}</h2>
+              <hr class="mb-3" />
+              <div class="jobDetailsTexts">
+                <p>{{ singleJob.description }}</p>
+                <div class="flex alignCenter scrollable-x">
+                  <v-btn class="tagBtn">Writing</v-btn>
+                  <v-btn class="tagBtn">Content writing</v-btn>
+                  <v-btn class="tagBtn">Proof reading</v-btn>
+                </div>
+              </div>
+              <div class="row alignCenter jobTips mt-10">
+                <v-col cols="6" sm="4">
+                  <div class="flex alignCenter justifyCenter">
+                    <p class="mr-2">Budget</p>
+                    <h2>${{ singleJob.price }}</h2>
+                  </div>
+                </v-col>
+                <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
+                  <div class="flex alignCenter">
+                    <p class="mr-2">Number of words</p>
+                    <h2>{{ singleJob.number_of_words }}</h2>
+                  </div>
+                </v-col>
+                <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
+                  <div class="flex alignCenter">
+                    <p class="mr-2">Experience</p>
+                    <h2>{{ singleJob.level_of_experience }}</h2>
+                  </div>
+                </v-col>
+              </div>
+            </v-col>
+
+            <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
+              <div>
+                <div class="clientInfo mt-10">
+                  <h4>
+                    <span
+                      ><i class="far fa-file-alt mr-2 mb-5"></i> ABOUT THE
+                      CLIENT
+                    </span>
+                  </h4>
+                  <p class="mb-5 darkGreyColor">
+                    <span>
+                      Payment Verified
+                      <i class="fas fa-certificate yellowColor"></i
+                    ></span>
+                  </p>
+                  <h4>
+                    {{ clientInfo.first_name }} {{ clientInfo.last_name }}
+                  </h4>
+                  <h4>USA</h4>
+                  <p class="mb-5">20 Jobs posted</p>
+                </div>
+              </div>
+            </v-col>
           </div>
-          <div>
-            <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
-          </div>
-          <h4 class="mainColor">Cover Letter</h4>
-          <p class="my-5">
-            {{ singleProposal.cover_letter }}
-          </p>
-          <div v-if="singleProposal.assets">
-            <h3>Attachments</h3>
-            <row class="row">
-              <v-col cols="6" sm="6">
+          <form @submit.prevent="sendProposal()">
+            <div class="terms mt-10">
+              <div class="row">
+                <v-col cols="12" sm="12" lg="9">
+                  <h2 class="darkGreyColor mb-3">Terms</h2>
+                  <hr class="mb-3" />
+                </v-col>
+
+                <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
+                  <div>
+                    <div class="sideGreenInfo">
+                      <p>Clients Budget</p>
+                      <h2>${{ singleJob.price }} USD</h2>
+                    </div>
+                  </div>
+                </v-col>
+              </div>
+
+              <div class="mt-5">
+                <h3>How do you want to get paid?</h3>
+                <v-container class="px-0 radioTerms" fluid>
+                  <v-radio-group v-model="proposal.payment_mode">
+                    <v-radio color="green darken-3" value="by_project">
+                      <template v-slot:label>
+                        <div>
+                          <p class="darkGreyColor">By Project</p>
+                          <p>
+                            You get paid at once when you complete the project.
+                            Payment is made on approval of a job well done by
+                            the client
+                          </p>
+                        </div>
+                      </template>
+                    </v-radio>
+                    <v-radio color="green darken-3" value="by_milestone">
+                      <template v-slot:label>
+                        <div>
+                          <p class="darkGreyColor">By Milestone</p>
+                          <p>
+                            You get paid the equivalent milestone amount when
+                            you complete the particular milestone. Payment is
+                            made on approval of the mailestone by the client
+                          </p>
+                        </div>
+                      </template>
+                    </v-radio>
+                  </v-radio-group>
+                </v-container>
+
                 <div
-                  class="flex alignCenter mt-5"
-                  v-for="media in singleProposal.assets"
-                  :key="media.id"
+                  class="
+                    flex
+                    alignCenter
+                    width70
+                    mt-5
+                    justifyBetween
+                    breakToColumn
+                  "
+                  v-if="proposal.payment_mode === 'by_project'"
                 >
-                  <i class="fas fa-link mr-2"></i>
-                  <a
-                    :href="`${media.file}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="mainColor"
-                    >{{ media.file | slicee }}</a
+                  <div>
+                    <h3>Proposed Amount</h3>
+                    <p>Total amount you would like to get paid (Per Word)</p>
+                  </div>
+                  <input
+                    type="tel"
+                    v-model="proposal.proposed_amount"
+                    placeholder="N5"
+                    class="normalInput"
+                  />
+                </div>
+
+                <div
+                  class="mt-5"
+                  v-if="proposal.payment_mode === 'by_milestone'"
+                >
+                  <h3 class="mb-5">Add as many milestones as you need</h3>
+                  <v-simple-table>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left">Description</th>
+                          <th class="text-left">Deliverable</th>
+                          <th class="text-left">Milestone Amount</th>
+                          <th class="textCenter"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="singleItem in proposal.milestones"
+                          :key="singleItem.id"
+                        >
+                          <td>
+                            <v-text-field
+                              v-model="singleItem.description"
+                              placeholder="Description of this milestone"
+                              required
+                            ></v-text-field>
+                          </td>
+                          <td>
+                            <v-text-field
+                              v-model="singleItem.expected_time"
+                              placeholder="What would you deliver in this milestone ?"
+                              required
+                            ></v-text-field>
+                          </td>
+                          <td>
+                            <v-text-field
+                              placeholder="Price per unit"
+                              v-model="singleItem.milestone_amount"
+                              required
+                            >
+                              <v-icon slot="prepend" color="green">
+                                mdi-currency-ngn
+                              </v-icon>
+                            </v-text-field>
+                          </td>
+                          <td class="textCenter">
+                            <i
+                              class="far fa-times-circle"
+                              @click="removeItem(singleItem)"
+                            ></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <div class="my-5">
+                        <a @click="addItem()"
+                          ><p class="mainColor">
+                            <span><i class="fas fa-plus"></i></span> Add new
+                            Milestone
+                          </p></a
+                        >
+                      </div>
+                    </template>
+                  </v-simple-table>
+                </div>
+
+                <div class="mt-10">
+                  <div class="width70">
+                    <div class="flex projectAmount my-5 justifyBetween">
+                      <div class="width40">
+                        <h4 class="darkGreyColor">
+                          Total Project Amount
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <i
+                                class="fas fa-info-circle ml-1"
+                                v-bind="attrs"
+                                v-on="on"
+                              ></i>
+                            </template>
+                            <span
+                              >This includes the total milestone amount, <br />
+                              and is the amount the client will see on your
+                              proposal</span
+                            >
+                          </v-tooltip>
+                        </h4>
+                      </div>
+                      <div>
+                        <h4>$</h4>
+                      </div>
+                      <div>
+                        <h4>60.00 USD</h4>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div class="flex projectAmount my-5 justifyBetween">
+                      <div class="width40">
+                        <h4 class="darkGreyColor">
+                          AfriWrites Service Charge
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <i
+                                class="fas fa-info-circle ml-1"
+                                v-bind="attrs"
+                                v-on="on"
+                              ></i>
+                            </template>
+                            <span>Learn More</span>
+                          </v-tooltip>
+                        </h4>
+                      </div>
+                      <div>
+                        <h4>$</h4>
+                      </div>
+                      <div>
+                        <h4>-10.00 USD</h4>
+                      </div>
+                    </div>
+                    <hr />
+                    <div class="flex projectAmount my-5 justifyBetween">
+                      <div class="width40">
+                        <h4 class="darkGreyColor">
+                          You would be paid
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <i
+                                class="fas fa-info-circle ml-1"
+                                v-bind="attrs"
+                                v-on="on"
+                              ></i>
+                            </template>
+                            <span
+                              >Estimated amount you will be paid after <br />
+                              completing this project</span
+                            >
+                          </v-tooltip>
+                        </h4>
+                      </div>
+                      <div>
+                        <h4>$</h4>
+                      </div>
+                      <div>
+                        <h4>50.00 USD</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="duration mt-10">
+              <div class="row">
+                <v-col cols="12" sm="12" lg="9">
+                  <h2 class="darkGreyColor mb-3">Duration</h2>
+                  <hr class="mb-3" />
+                </v-col>
+
+                <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
+                  <div>
+                    <div class="sideGreenInfo">
+                      <p>Client’s Estimated Time</p>
+                      <h2>{{ singleJob.duration_of_job_in_days }} Days</h2>
+                    </div>
+                  </div>
+                </v-col>
+              </div>
+              <div
+                class="
+                  flex
+                  alignCenter
+                  width70
+                  mt-5
+                  justifyBetween
+                  breakToColumn
+                "
+              >
+                <div>
+                  <h3>How long will this project take?</h3>
+                  <p>Total estimated time that this project will take (Days)</p>
+                </div>
+                <input
+                  type="number"
+                  v-model="proposal.duration"
+                  placeholder="2 Days"
+                  class="normalInput"
+                />
+              </div>
+            </div>
+
+            <div class="additionalInfo mt-10">
+              <div class="row">
+                <v-col cols="12" sm="12" lg="9">
+                  <h2 class="darkGreyColor mb-3">Additional Information</h2>
+                  <hr class="mb-3" />
+                </v-col>
+
+                <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
+                  <!-- <div>
+                  <div class="sideGreenInfo">
+                    <p>Client’s Estimated Time</p>
+                    <h2>1-2 Months</h2>
+                  </div>
+                </div> -->
+                </v-col>
+              </div>
+              <div class="mt-3">
+                <h4>Cover Letter</h4>
+                <p>
+                  Why are you the best fit for this gig/role? Introduce and
+                  explain yourself. Keep it short and simple
+                </p>
+                <textarea
+                  v-model="proposal.cover_letter"
+                  rows="5"
+                  class="textArea"
+                  placeholder="Type cover letter here"
+                ></textarea>
+              </div>
+              <div class="mt-5">
+                <h4>Attachments</h4>
+                <p>
+                  Include any other attachments to further prove your
+                  qualification
+                </p>
+                <label class="custom-file-upload">
+                  <input
+                    className="inputDefault"
+                    type="file"
+                    accept="file_extension|audio/*|video/*|image/*|media_type"
+                    v-on:change="onChange"
+                    multiple
+                  />
+                  <div class="flex alignCenter attachFile mt-5">
+                    <i class="fas fa-paperclip"></i>
+                    <p>Attach Files</p>
+                  </div>
+                </label>
+                <div v-if="this.proposal.file" class="mt-3">
+                  <span v-for="file in this.proposal.file" :key="file.id"
+                    >{{ file.name }},&nbsp;</span
                   >
                 </div>
-              </v-col>
-            </row>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-btn
-            class="findBtn mb-4 fullWidth"
-            v-if="singleProposal.status === 'accepted'"
-            >View Contract</v-btn
-          >
-          <div v-else>
-            <v-btn
-              class="findBtn mb-4 fullWidth"
-              @click="acceptProposal()"
-              :loading="loading"
-              >Accept Proposal</v-btn
-            >
-            <v-btn
-              class="findBtn mb-4 fullWidth"
-              @click="declineJobProposal()"
-              :loading="declineloading"
-              >Decline Proposal</v-btn
-            >
-          </div>
-
-          <v-btn class="greyBtn mb-4 fullWidth"
-            ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
-          >
-          <v-btn class="greyBtn mb-4 fullWidth"
-            ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
-          >
-          <div>
-            <div class="clientInfo">
-              <h4>
-                <span
-                  ><i class="far fa-user mr-2 mb-5"></i> ABOUT THE FREELANCER
-                </span>
-              </h4>
-              <p class="mb-5 darkGreyColor">
-                <span>
-                  Verified <i class="fas fa-certificate yellowColor"></i
-                ></span>
-              </p>
-              <h4>
-                {{ writerDetails.first_name }} {{ writerDetails.last_name }}
-              </h4>
-              <p class="mb-5">
-                Member since: {{ dateWriterRegistered | dateSlice }}
-              </p>
+              </div>
             </div>
-          </div>
-        </v-col>
+            <div class="mt-10 flex justifyCenter">
+              <v-btn class="findBtn" type="submit" :loading="loading"
+                >Apply Now</v-btn
+              >
+            </div>
+          </form>
+
+          <v-col cols="auto">
+            <v-dialog
+              v-model="dialog"
+              transition="dialog-top-transition"
+              max-width="600"
+              persistent
+            >
+              <template>
+                <v-card class="py-5">
+                  <div class="centerflex columnFlex">
+                    <div class="">
+                      <img
+                        src="../../../../assets/images/Group156.png"
+                        alt="Check Mail"
+                      />
+                    </div>
+                    <v-card-text>
+                      <h3 class="darkGreyColor textCenter">
+                        Successfully Submitted
+                      </h3>
+                      <p class="textCenter mt-3">
+                        Good job! You have successfully given that a shot.
+                        Checkout more jobs on your job feed
+                      </p>
+                    </v-card-text>
+                  </div>
+                  <div class="flex justifyCenter mobileColumn">
+                    <v-btn class="findBtn mx-3 my-1" to="/dashboard/jobfeed"
+                      >My Job Feeds</v-btn
+                    >
+                  </div>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-col>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
+import spinner from "../../../../components/spinner.vue";
+import { mapGetters, mapActions } from "vuex";
+import addMilestoneForm from "../../../../components/addMilestoneForm";
 export default {
-  scrollToTop: true,
-  layout: "client",
-  head: {
-    script: [{ src: "https://js.paystack.co/v2/inline.js", body: true }],
+  components: {
+    addMilestoneForm,
   },
+  layout: "dashboard",
   data() {
     return {
-      loading: false,
-      declineloading: false,
+      singleJob: "",
       singleProposal: "",
-      pageLoading: false,
-      writerDetails: "",
-      proposalDate: "",
-      dateWriterRegistered: "",
+      loading: false,
+      apiLoading: false,
+      clientInfo: "",
+      activities: "",
+      savedJobs: "",
+      dialog: false,
+      proposal: {
+        duration: "",
+        cover_letter: "",
+        proposed_amount: "",
+        payment_mode: "by_project",
+        milestones: [
+          {
+            description: "",
+            deliverables: "",
+            amount: "",
+          },
+        ],
+        file: null,
+      },
     };
   },
   methods: {
-    getSingleProposal() {
-      this.singleProposal = "";
-      this.pageLoading = true;
+    onChange(event) {
+      this.proposal.file = event.target.files;
+    },
+    addItem() {
+      this.proposal.milestones.push({
+        description: "",
+        milestone_amount: "",
+        expected_time: "",
+      });
+    },
+    removeItem(val) {
+      this.milestones = this.milestones.reduce(
+        (p, c) => (c.description !== val.description && p.push(c), p),
+        []
+      );
+    },
+    openDialog() {
+      this.dialog = true;
+    },
+    getSingleJobs() {
+      this.singleJob = "";
+      this.apiLoading = true;
       this.$store
-        .dispatch("client/getSingleProposal", this.$route.params.proposal)
+        .dispatch("writer/getSingleJob", this.$route.params.proposal)
         .then(({ data }) => {
-          this.pageLoading = false;
-          this.singleProposal = data.data;
-          this.writerDetails = this.singleProposal.writer;
-          this.jobDetails = this.singleProposal.job;
-          this.proposalDate = this.singleProposal.created_at;
-          this.dateWriterRegistered = this.writerDetails.created_at;
-          this.totalAmount =
-            this.singleProposal.proposed_amount *
-            this.jobDetails.number_of_words;
+          this.apiLoading = false;
+          this.singleJob = data.data;
+          this.clientInfo = this.singleJob.client;
+          this.activities = this.singleJob.activities;
+          this.savedJobs = this.singleJob.saved_jobs;
         })
         .catch((err) => {
-          console.log(err);
-          this.pageLoading = false;
+          this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
         });
     },
-    async acceptProposal() {
-      const that = this;
-      var handler = PaystackPop.setup({
-        key: "pk_test_d16ba2f6073caccc6adcac860d66d70ff969721a", // Replace with your public key
-        ref: "" + Math.floor(Math.random() * 1000000000 + 1),
-        email: this.$auth.user.email,
-        amount: this.totalAmount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
-        currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
-        callback: async (response) => {
-          try {
-            this.loading = true;
-            var reference = response.reference;
-            let paymentDetails = {
-              payment_reference: reference,
-              job_proposal_id: this.singleProposal.id,
-            };
-            await this.$axios.post(
-              `/v1/client/accept-job-proposal/${this.singleProposal.id}`,
-              paymentDetails
-            );
-            this.$toast.success(
-              "This proposal has been accepted and can be found in contracts"
-            );
-            this.loading = false;
-            window.location = "/client/contracts";
-          } catch {
-            this.loading = false;
-            this.$toast.error("There was an error accepting this proposal");
-          }
-        },
-        onClose: function () {
-          alert("Transaction was not completed, window closed.");
-          this.loading = false;
-        },
-      });
-      handler.openIframe();
+    getSingleProposal() {
+      this.singleProposal = "";
+      this.apiLoading = true;
+      this.$store
+        .dispatch(
+          "writer/getSingleProposal",
+          this.singleJob.public_reference_id
+        )
+        .then(({ data }) => {
+          this.apiLoading = false;
+          this.singleProposal = data.data;
+        })
+        .catch((err) => {
+          this.apiLoading = false;
+          this.$toast.success("There was an error getting the job");
+        });
     },
-    async declineJobProposal() {
+    copyJobLink() {
+      navigator.clipboard.writeText(
+        `https://www.afriwrite.com/jobs/${this.singleJob.public_reference_id}`
+      );
+      this.$toast.success("Link copied");
+    },
+    async sendProposal() {
+      let formData = new FormData();
+      if (this.proposal.file) {
+        for (const i of Object.keys(this.proposal.file)) {
+          formData.append("file[" + i + "]", this.proposal.file[i]);
+        }
+      }
+      formData.append("duration", this.proposal.duration);
+      formData.append("cover_letter", this.proposal.cover_letter);
+      formData.append("proposed_amount", this.proposal.proposed_amount);
+      formData.append("payment_mode", this.proposal.payment_mode);
+      formData.append("milestones[]", this.proposal.milestones);
       try {
-        this.declineloading = true;
+        this.loading = true;
         const response = await this.$axios.post(
-          `/v1/client/decline-job-proposal/${this.singleProposal.id}`
+          `/v1/writer/jobs/${this.singleJob.id}/submit-proposal`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
-        this.$toast.success("This proposal has been declined");
-        window.location = "/client/proposals";
+        this.$toast.success("You have successfully submitted a proposal!");
+        this.loading = false;
+        this.dialog = true;
+        this.proposal = "";
+        return response;
       } catch (error) {
-        this.declineloading = false;
-        this.$toast.error("There was an error declining this proposal");
+        this.loading = false;
+        // this.errors = error.response.data.error;
+        this.$toast.error(error.response.data.error);
       }
     },
   },
   mounted() {
-    this.getSingleProposal();
+    this.getSingleJobs();
   },
   computed: {
     ...mapGetters({
-      singleProposal: "client/singleProposal",
+      singleJob: "writer/singleJob",
+      singleProposal: "writer/singleProposal",
     }),
   },
+  computed() {
+    this.getSingleProposal();
+  },
+
   filters: {
     slicee(data) {
       let str = data.toString();
       let res = str.slice(86);
       return res;
     },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
-    paystackFees: function (value) {
-      let newvalue = Math.floor(value);
-      if (newvalue > 126000) {
-        return Math.floor((newvalue += 2000));
-      } else {
-        const payst = (1.5 / 100) * newvalue + 100;
-        return (newvalue += payst);
-      }
-    },
   },
 };
 </script>
 
 <style>
-.infoCards {
-  background-color: rgba(0, 137, 82, 0.05);
-  border-radius: 15px;
-  padding: 15px 30px;
+.projectAmount {
 }
-.infoCards h3 {
-  background-color: rgba(0, 137, 82, 0.2);
-  width: fit-content;
+.width40 {
+  width: 30%;
+}
+.v-radio {
+  background-color: #f5f5f5;
+  padding: 15px 8px;
   border-radius: 5px;
-  padding: 5px;
-  text-align: center;
-  margin: auto;
+}
+.v-item--active {
+  background-color: rgba(0, 137, 82, 0.13) !important;
+}
+.jobI {
+  /* padding: 1em; */
+  background-color: white;
+  /* border-radius: 10px; */
+}
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.workDiv {
+  padding: 10px !important;
+  background-color: transparent !important;
+  border: #008952 solid 1px;
+  color: #008952 !important;
+  box-shadow: none !important;
+}
+.radioTerms p {
+  margin: 0;
+}
+.dashDefaultContent {
+  margin: 50px 50px 20px 120px;
+}
+.jobTips {
+  padding: 20px 0;
+  background-color: #008952;
+  border-radius: 0 0 20px 20px;
+}
+.jobTips p {
+  color: #fff;
+  margin: 0;
+}
+.jobTips i {
+  margin-right: 10px;
+  color: #fff;
+}
+.jobTips h2 {
+  color: white;
+  font-weight: 700;
+}
+.jobTips p {
+  margin: 0;
+}
+.jobClientPrice {
+  margin-right: 20px;
+}
+
+.sideGreenInfo {
+  background-color: #008952;
+  padding: 15px;
+  color: #fff !important;
+  border-radius: 0 25px 25px 0;
+}
+.sideGreenInfo p {
+  color: white;
+  margin: 0;
+}
+.attachFile p {
+  margin: 0;
+}
+.attachFile i {
+  margin-right: 10px;
+  color: #00e68a;
 }
 .clientInfo {
-  border-radius: 20px;
   background-color: #f8f8f8;
   padding: 20px;
   color: #4d4d4d;
+  border-radius: 20px;
 }
 
 .clientInfo h4 {
   color: #4d4d4d;
+}
+@media (max-width: 1000px) {
+  .dashDefaultContent {
+    margin: 30px 8px 20px 8px;
+  }
 }
 </style>

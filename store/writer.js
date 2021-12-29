@@ -97,7 +97,7 @@ export const actions = {
   },
   async getAllProposals({commit}){
     try {
-        const res = await this.$axios.get('/v1/client/get-job-proposals')
+        const res = await this.$axios.get(`/v1/writer/jobs/${this.$auth.user.id}/submitted-proposals`)
         if (res) {
           return Promise.resolve(res)
         }
@@ -109,7 +109,7 @@ export const actions = {
   },
   async getAllContracts({commit}){
     try {
-      const res = await this.$axios.get('/v1/client/get-all-contracts')
+      const res = await this.$axios.get(`/v1/writer/jobs/${this.$auth.user.id}/all-accepted-proposals`)
       if (res) {
         return Promise.resolve(res)
       }
@@ -121,7 +121,7 @@ export const actions = {
   },
   async getSingleProposal({commit}, data){
     try {
-        const res = await this.$axios.get(`/v1/client/get-a-single-job-proposal/${data}`)
+        const res = await this.$axios.get(`/v1/writer/jobs/get/job-proposal/${data}`)
         if (res) {
           return Promise.resolve(res)
         }
@@ -133,7 +133,7 @@ export const actions = {
   },
   async getSingleContract({commit}, data){
     try {
-        const res = await this.$axios.get(`/v1/client/approved/job-proposal/${data}`)
+        const res = await this.$axios.get(`/v1/writer/jobs/${this.$auth.user.id}/accepted-proposal/${data}`)
         if (res) {
           return Promise.resolve(res)
         }

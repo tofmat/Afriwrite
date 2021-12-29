@@ -1,236 +1,247 @@
 * {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 select {
-outline: none;
+  outline: none;
 }
-.arrowCursor{
+.arrowCursor {
   cursor: pointer;
 }
 a {
-    outline: none;
-    color: inherit !important;
-    text-decoration: none;
-  }
-  input {
-      outline: none;
-  }
-  textarea {
-      outline: none;
-  }
+  outline: none;
+  color: inherit !important;
+  text-decoration: none;
+}
+input {
+  outline: none;
+}
+textarea {
+  outline: none;
+}
 p {
-    font-weight: 400;
-    color: #787878;
+  font-weight: 400;
+  color: #787878;
 }
 .scrollable-x {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 h2 {
-    font-weight: 500;
-    /* color: #555555; */
+  font-weight: 500;
+  /* color: #555555; */
 }
 h3 {
-    color: #555555;
+  color: #555555;
 }
 .v-sheet {
-    max-height: 100vh;
+  max-height: 100vh;
 }
-.flex{
-    display: flex;
+.flex {
+  display: flex;
 }
-.centerflex{
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+.centerflex {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
-.mainSearch{
-    border: #C5C5C5 1px solid;
-    border-radius: 5px;
-    width: 100%;
-    padding: 3px 15px;
-  }
+.mainSearch {
+  border: #c5c5c5 1px solid;
+  border-radius: 5px;
+  width: 100%;
+  padding: 3px 15px;
+}
 
-  .lightGreyBack {
-      background-color: rgba(249, 249, 249, 1);
-  }
+.lightGreyBack {
+  background-color: rgba(249, 249, 249, 1);
+}
 
-  .textArea{
-    border: solid 1px #CACACA;
-    border-radius: 5px;
-    width: 100%;
-    padding: 10px;
-  }
+.textArea {
+  border: solid 1px #cacaca;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+}
 .justifyCenter {
-    justify-content: center;
+  justify-content: center;
 }
-.yellowColor{
-    color: #FFC107;
+.yellowColor {
+  color: #ffc107;
+}
+.upperCase {
+  text-transform: uppercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+
+h2 {
+  text-transform: capitalize;
 }
 .boldText {
-    font-weight: 600;
+  font-weight: 600;
 }
 .darkGreyColor {
-    color: #555555 !important;
-    font-weight: 500;
+  color: #555555 !important;
+  font-weight: 500;
 }
 .width70 {
-    width: 70%;
+  width: 70%;
 }
 td {
-    /* padding: 0 !important; */
+  /* padding: 0 !important; */
 }
-.iconBack{
-    background-color: #0089521f;
-    padding: 9px;
-    border-radius: 2px;
-  }
-  .submitSearch{
-    font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin-left: -20px;
-    background-color: #008952;
-    padding: 0 50px;
-    color: white !important;
+.iconBack {
+  background-color: #0089521f;
+  padding: 9px;
+  border-radius: 2px;
+}
+.submitSearch {
+  font-family: FontAwesome, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-left: -20px;
+  background-color: #008952;
+  padding: 0 50px;
+  color: white !important;
 }
 
-.alignCenter{
-    align-items: center;
+.alignCenter {
+  align-items: center;
 }
-.marginy-20{
-    margin: 20px 0;
+.marginy-20 {
+  margin: 20px 0;
 }
 .columnFlex {
-    flex-direction: column;
+  flex-direction: column;
 }
 .flexRowReverse {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
-.noMargin{
-    margin: 0 !important;
+.noMargin {
+  margin: 0 !important;
 }
 .blueColor {
-    color: #007BFF !important;
+  color: #007bff !important;
 }
 .ashColor {
-    color: #9F9F9F;
+  color: #9f9f9f;
 }
 .textCenter {
-    text-align: center !important;
+  text-align: center !important;
 }
 hr {
-    height: 1px;
-    color: #E9E9E9;
-    /* width: 30px; */
-    border-top: 1px #E9E9E9;
+  height: 1px;
+  color: #e9e9e9;
+  /* width: 30px; */
+  border-top: 1px #e9e9e9;
 }
 .myBtn {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
-.justifyBetween{
-    justify-content: space-between;
+.justifyBetween {
+  justify-content: space-between;
 }
-.fullWidth{
-    width: 100%;
+.fullWidth {
+  width: 100%;
 }
 .sectionTitle {
-    background-color: #E8E8E8;
-    padding: 5px;
+  background-color: #e8e8e8;
+  padding: 5px;
 }
-.tagBtn{
-    letter-spacing: normal !important;
-    background-color: #F1F1F1;
-    color: #787878 !important;
-    border-radius: 20px !important;
-    text-transform: none !important;
-    box-shadow: none !important;
-    margin-right: 5px;
-    font-size: 12px !important;
+.tagBtn {
+  letter-spacing: normal !important;
+  background-color: #f1f1f1;
+  color: #787878 !important;
+  border-radius: 20px !important;
+  text-transform: none !important;
+  box-shadow: none !important;
+  margin-right: 5px;
+  font-size: 12px !important;
 }
 
-.rightAlign{
-    text-align: right;
+.rightAlign {
+  text-align: right;
 }
 .slimText {
-    font-weight: 400;
+  font-weight: 400;
 }
 .mainColor {
-    color: #008952 !important;
+  color: #008952 !important;
 }
-.redColor{
-    color: #FF5656;
+.redColor {
+  color: #ff5656;
 }
 
-.textItalics{
-    font-style: italic;
+.textItalics {
+  font-style: italic;
 }
-.findBtn{
-    padding: 10px 20px !important;
-    background-color:#008952 !important;
-    color: white !important;
-    box-shadow: none !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    /* margin-right: 10px; */
-    border-radius: 2px !important;
+.findBtn {
+  padding: 10px 20px !important;
+  background-color: #008952 !important;
+  color: white !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  /* margin-right: 10px; */
+  border-radius: 2px !important;
 }
-.greyBtn{
-    letter-spacing: normal !important;
-    padding: 10px 20px !important;
-    background-color:#E5E5E5 !important;
-    color: #008952 !important;
-    box-shadow: none !important;
-    text-transform: none !important;
-    /* margin-right: 10px; */
-    border-radius: 2px !important;
+.greyBtn {
+  letter-spacing: normal !important;
+  padding: 10px 20px !important;
+  background-color: #e5e5e5 !important;
+  color: #008952 !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  /* margin-right: 10px; */
+  border-radius: 2px !important;
 }
-.jobBtn{
-    padding: 20px !important;
-    background-color: transparent !important;
-    border: #8B8B8B solid 1px;
-    color: #8B8B8B !important;
-    box-shadow: none !important;
-    border-radius: 2px !important;
+.jobBtn {
+  padding: 20px !important;
+  background-color: transparent !important;
+  border: #8b8b8b solid 1px;
+  color: #8b8b8b !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
 }
-.workBtn{
-    padding: 20px !important;
-    background-color: transparent !important;
-    border: #008952 solid 1px;
-    color: #008952 !important;
-    box-shadow: none !important;
+.workBtn {
+  padding: 20px !important;
+  background-color: transparent !important;
+  border: #008952 solid 1px;
+  color: #008952 !important;
+  box-shadow: none !important;
 }
-.navActive{
-    color: #008952 !important;
-    stroke:#008952 !important;
+.navActive {
+  color: #008952 !important;
+  stroke: #008952 !important;
 }
 .v-list-item--active {
-    color: #008952 !important;
-    background-color: none;
+  color: #008952 !important;
+  background-color: none;
 }
 .v-list-item--link:before {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 /* input {
     border: solid 1px black;
 } */
-.normalInput{
-    border: solid 1px #C5C5C5 !important;
-    padding: 5px 20px;
-    height: 30px;
-    border-radius: 5px;
+.normalInput {
+  border: solid 1px #c5c5c5 !important;
+  padding: 5px 20px;
+  height: 30px;
+  border-radius: 5px;
 }
 .v-application--wrap {
-    background: white;
-  }
+  background: white;
+}
 
-  .blackColor {
-      color: black !important;
-  }
+.blackColor {
+  color: black !important;
+}
 
-.dashDefaultContent{
-    margin: 50px 50px 20px 120px;
+.dashDefaultContent {
+  margin: 50px 50px 20px 120px;
 }
 .dashRealContent {
-    margin-top: 120px;
+  margin-top: 120px;
 }
 .flexColumn {
-    flex-direction: column;
+  flex-direction: column;
 }

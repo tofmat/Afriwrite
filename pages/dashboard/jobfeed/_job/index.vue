@@ -90,7 +90,7 @@
                   class="flex alignCenter fullWidth mt-1"
                   v-if="savedJobs.length > 0"
                 >
-                  <div class="darkGreyColor savedDiv">
+                  <div class="darkGreyColor savedDiv saveJob">
                     <i class="fas fa-bookmark mr-2 mt-1"></i> Saved
                   </div>
                   <i
@@ -202,7 +202,7 @@ export default {
     async saveJob(job_id) {
       try {
         this.loading = true;
-
+        this.$toast.success("Saving Job");
         const response = await this.$axios.post(
           `v1/writer/jobs/save/${job_id}`
         );
@@ -323,6 +323,9 @@ export default {
   padding: 8px;
   width: 100%;
   text-align: center;
+}
+.saveJob {
+  color: #aaaaaa;
 }
 @media (max-width: 1000px) {
   .dashDefaultContent {

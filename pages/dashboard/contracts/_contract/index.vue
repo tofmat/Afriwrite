@@ -123,7 +123,7 @@ import { mapGetters } from "vuex";
 
 export default {
   scrollToTop: true,
-  layout: "client",
+  layout: "dashboard",
   head: {
     script: [{ src: "https://js.paystack.co/v2/inline.js", body: true }],
   },

@@ -13,12 +13,6 @@
             <div>
               <div class="mt-5">
                 <div v-if="apiLoading">
-                  <div class="sectionTitle mb-5 px-3 flex justifyBetween">
-                    <div>
-                      <skeleton-box width="10%" />
-                    </div>
-                    <p class="darkGreyColor noMargin">View all</p>
-                  </div>
                   <div class="row noMargin lightGreyBack">
                     <v-col cols="12" sm="1">
                       <skeleton-box
@@ -46,89 +40,88 @@
                     </v-col>
                     <v-col cols="12" sm="2">
                       <v-btn class="findBtn my-1 fullWidth" to="#" disabled
-                        >View Details</v-btn
+                        >Edit Proposal</v-btn
                       >
                       <v-btn class="greyBtn my-1 fullWidth" to="#" disabled
-                        ><i class="far fa-comments mr-2 mainColor"></i>
-                        Contact</v-btn
-                      >
-                      <v-btn class="greyBtn mb-4 fullWidth" disabled
-                        ><i class="far fa-trash-alt mr-2 mainColor"></i>
-                        Delete</v-btn
+                        ><i class="far fa-comments mr-2 mainColor"></i> Delete
+                        Proposal</v-btn
                       >
                     </v-col>
                   </div>
                 </div>
                 <div v-else>
                   <div v-if="allProposals.length > 0">
-                    <div v-for="jobs in allProposals" :key="jobs.id">
-                      <div class="sectionTitle my-5 px-3 flex justifyBetween">
-                        <h4 class="ml-1 darkGreyColor">{{ jobs.title }}</h4>
-                        <p class="mainColor noMargin">View all</p>
-                      </div>
-                      <div
-                        class="row noMargin lightGreyBack"
-                        v-for="proposal in jobs.proposals"
-                        :key="proposal.id"
-                      >
-                        <v-col cols="12" sm="1">
-                          <div v-if="proposal.writer.profile_picture">
-                            <img
-                              :src="proposal.writer.profile_picture"
-                              alt="user"
-                            />
+                    <div
+                      class="noMargin lightGreyBack mt-5"
+                      v-for="job in allProposals"
+                      :key="job.id"
+                    >
+                      <div class="proposalOffers">
+                        <div class="jobInfo">
+                          <div class="row noMargin">
+                            <v-col
+                              cols="12"
+                              sm="2"
+                              class="jobDesc flex flexColumn justifyCenter"
+                            >
+                              <h4 class="mainColor upperCase">
+                                {{ job.status }}
+                              </h4>
+                              <h4>{{ job.created_at | dateSlice }}</h4>
+                              <p>Date Submitted</p>
+                              <h4 class="mainColor">N10</h4>
+                              <p>Proposed Amount</p>
+                            </v-col>
+                            <v-col cols="12" sm="8" class="jobDesc">
+                              <div
+                                class="
+                                  flex
+                                  alignCenter
+                                  jobControl
+                                  justifyBetween
+                                "
+                              >
+                                <h2 class="mainColor noMargin">Job title</h2>
+                              </div>
+                              <p>Description....</p>
+                              <p v-if="job.payment_mode === 'by_project'">
+                                Payment Method: Project based payment
+                              </p>
+                              <p v-else>
+                                Payment Method: Milestone based payment
+                              </p>
+                            </v-col>
+                            <v-col cols="12" sm="2">
+                              <v-btn
+                                v-if="job.status === 'accepted'"
+                                class="findBtn my-1 fullWidth"
+                                :to="`/dashboard/contracts/${job.job.public_reference_id}`"
+                                >View Contract</v-btn
+                              >
+                              <v-btn
+                                v-else
+                                class="findBtn my-1 fullWidth"
+                                :to="`/dashboard/proposals/${job.job.public_reference_id}`"
+                                >Edit Proposal</v-btn
+                              >
+                              <v-btn
+                                class="findBtn my-1 fullWidth"
+                                :to="`/dashboard/proposals/${job.job.public_reference_id}`"
+                                >Edit Proposal</v-btn
+                              >
+                              <v-btn class="greyBtn mb-4 fullWidth">
+                                Delete Proposal</v-btn
+                              >
+                            </v-col>
                           </div>
-                          <div v-else>
-                            <img
-                              src="../../../assets/images/Ellipse29.png"
-                              alt="user"
-                            />
-                          </div>
-                        </v-col>
-                        <v-col cols="12" sm="9">
-                          <h4 class="mainColor">
-                            {{ proposal.writer.first_name }}
-                          </h4>
-                          <small>{{ proposal.writer.role }}</small>
-                          <p class="noMargin">
-                            Bid: N{{ proposal.proposed_amount }}/word
-                          </p>
-                          <p class="noMargin">
-                            Duration: {{ proposal.duration }}Days
-                          </p>
-                          <p>
-                            {{ proposal.cover_letter | descriptionSlice }} ...
-                          </p>
-                        </v-col>
-                        <v-col cols="12" sm="2">
-                          <v-btn
-                            class="findBtn my-1 fullWidth"
-                            :to="`/client/proposals/${proposal.id}`"
-                            >View Details</v-btn
-                          >
-                          <v-btn
-                            class="greyBtn my-1 fullWidth"
-                            :to="`/client/proposals/${proposal.id}`"
-                            ><i class="far fa-comments mr-2 mainColor"></i>
-                            Contact</v-btn
-                          >
-                          <v-btn class="greyBtn mb-4 fullWidth"
-                            ><i class="far fa-trash-alt mr-2 mainColor"></i>
-                            Delete</v-btn
-                          >
-                        </v-col>
+                        </div>
                       </div>
-                      <h5 v-if="jobs.proposals.length == 0">
-                        Sorry you have received no proposal for this job at the
-                        moment.
-                      </h5>
                     </div>
                   </div>
                   <div v-if="allProposals.length == 0">
                     <div class="sectionTitle mb-5 px-3 flex">
                       <h4 class="ml-1 darkGreyColor">
-                        You have not uploaded any job. Please do and come back
-                        later.
+                        You have not submitted any proposal please do.
                       </h4>
                     </div>
                   </div>
@@ -146,7 +139,7 @@
 import skeletonBox from "../../../components/skeletonBox";
 import { mapGetters } from "vuex";
 export default {
-  layout: "client",
+  layout: "dashboard",
   components: {
     skeletonBox,
   },
@@ -160,7 +153,7 @@ export default {
     getJobs() {
       this.apiLoading = true;
       this.$store
-        .dispatch("client/getAllProposals")
+        .dispatch("writer/getAllProposals")
         .then(({ data }) => {
           this.apiLoading = false;
           this.allProposals = data.data;
@@ -176,7 +169,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      allProposals: "client/allProposals",
+      allProposals: "writer/allProposals",
     }),
   },
   filters: {
