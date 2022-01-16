@@ -510,11 +510,15 @@ export default {
       this.$store
         .dispatch(
           "writer/getSingleProposal",
-          this.singleJob.public_reference_id
+          this.$store.state.writer.savedProposal.public_reference_id
         )
         .then(({ data }) => {
           this.apiLoading = false;
           this.singleProposal = data.data;
+          this.proposal.cover_letter = this.singleProposal.cover_letter;
+          this.proposal.proposed_amount = this.singleProposal.proposed_amount;
+          this.proposal.duration = this.singleProposal.duration;
+          this.proposal.payment_mode = this.singleJob.payment_mode
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -564,17 +568,15 @@ export default {
   },
   mounted() {
     this.getSingleJobs();
+    this.getSingleProposal();
   },
   computed: {
     ...mapGetters({
       singleJob: "writer/singleJob",
       singleProposal: "writer/singleProposal",
+      savedProposal: "writer/savedProposal",
     }),
   },
-  computed() {
-    this.getSingleProposal();
-  },
-
   filters: {
     slicee(data) {
       let str = data.toString();
@@ -586,8 +588,6 @@ export default {
 </script>
 
 <style>
-.projectAmount {
-}
 .width40 {
   width: 30%;
 }

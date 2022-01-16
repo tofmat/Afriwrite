@@ -127,8 +127,7 @@
                   <div v-if="allProposals.length == 0">
                     <div class="sectionTitle mb-5 px-3 flex">
                       <h4 class="ml-1 darkGreyColor">
-                        You have not uploaded any job. Please do and come back
-                        later.
+                        You have no pending proposal at the moment.
                       </h4>
                     </div>
                   </div>

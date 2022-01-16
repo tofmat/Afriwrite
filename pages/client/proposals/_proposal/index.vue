@@ -6,106 +6,110 @@
         <spinner />
       </div>
 
-      <div class="row" v-else>
-        <v-col cols="12" sm="9">
-          <div class="flex alignCenter mobileColumn">
-            <div class="mr-10">
-              <img src="../../../../assets/images/Ellipse29.png" alt="user" />
-              <h3>{{ writerDetails.first_name }}</h3>
-              <p>{{ writerDetails.role }}</p>
+      <div v-else>
+        <h3 class="mt-5">Job Title: {{ jobDetails.title }}</h3>
+        <div class="row">
+          <v-col cols="12" sm="9">
+            <div class="flex alignCenter mobileColumn">
+              <div class="mr-10">
+                <img src="../../../../assets/images/Ellipse29.png" alt="user" />
+                <h3>{{ writerDetails.first_name }}</h3>
+                <p>{{ writerDetails.role }}</p>
+              </div>
+              <div class="mr-10 infoCards">
+                <h3 class="mb-2 mainColor">
+                  N{{ singleProposal.proposed_amount }}/word
+                </h3>
+                <p class="darkGreyColor">Bid</p>
+              </div>
+              <div class="mr-10 infoCards">
+                <h3 class="mb-2 mainColor">
+                  {{ singleProposal.duration }} Days
+                </h3>
+                <p class="darkGreyColor">Duration</p>
+              </div>
+              <div class="infoCards">
+                <h3 class="mb-2 mainColor">N{{ totalAmount }}</h3>
+                <p class="darkGreyColor">Total Amount</p>
+              </div>
             </div>
-            <div class="mr-10 infoCards">
-              <h3 class="mb-2 mainColor">
-                N{{ singleProposal.proposed_amount }}/word
-              </h3>
-              <p class="darkGreyColor">Bid</p>
+            <div>
+              <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
             </div>
-            <div class="mr-10 infoCards">
-              <h3 class="mb-2 mainColor">{{ singleProposal.duration }} Days</h3>
-              <p class="darkGreyColor">Duration</p>
-            </div>
-            <div class="infoCards">
-              <h3 class="mb-2 mainColor">N{{ totalAmount }}</h3>
-              <p class="darkGreyColor">Total Amount</p>
-            </div>
-          </div>
-          <div>
-            <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
-          </div>
-          <h4 class="mainColor">Cover Letter</h4>
-          <p class="my-5">
-            {{ singleProposal.cover_letter }}
-          </p>
-          <div v-if="singleProposal.assets">
-            <h3>Attachments</h3>
-            <row class="row">
-              <v-col cols="6" sm="6">
-                <div
-                  class="flex alignCenter mt-5"
-                  v-for="media in singleProposal.assets"
-                  :key="media.id"
-                >
-                  <i class="fas fa-link mr-2"></i>
-                  <a
-                    :href="`${media.file}`"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="mainColor"
-                    >{{ media.file | slicee }}</a
+            <h4 class="mainColor">Cover Letter</h4>
+            <p class="my-5">
+              {{ singleProposal.cover_letter }}
+            </p>
+            <div v-if="singleProposal.assets.length > 0">
+              <h3>Attachments</h3>
+              <row class="row">
+                <v-col cols="6" sm="6">
+                  <div
+                    class="flex alignCenter mt-5"
+                    v-for="media in singleProposal.assets"
+                    :key="media.id"
                   >
-                </div>
-              </v-col>
-            </row>
-          </div>
-        </v-col>
-        <v-col cols="12" sm="3">
-          <v-btn
-            class="findBtn mb-4 fullWidth"
-            v-if="singleProposal.status === 'accepted'"
-            >View Contract</v-btn
-          >
-          <div v-else>
-            <v-btn
-              class="findBtn mb-4 fullWidth"
-              @click="acceptProposal()"
-              :loading="loading"
-              >Accept Proposal</v-btn
-            >
-            <v-btn
-              class="findBtn mb-4 fullWidth"
-              @click="declineJobProposal()"
-              :loading="declineloading"
-              >Decline Proposal</v-btn
-            >
-          </div>
-
-          <v-btn class="greyBtn mb-4 fullWidth"
-            ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
-          >
-          <v-btn class="greyBtn mb-4 fullWidth"
-            ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
-          >
-          <div>
-            <div class="clientInfo">
-              <h4>
-                <span
-                  ><i class="far fa-user mr-2 mb-5"></i> ABOUT THE FREELANCER
-                </span>
-              </h4>
-              <p class="mb-5 darkGreyColor">
-                <span>
-                  Verified <i class="fas fa-certificate yellowColor"></i
-                ></span>
-              </p>
-              <h4>
-                {{ writerDetails.first_name }} {{ writerDetails.last_name }}
-              </h4>
-              <p class="mb-5">
-                Member since: {{ dateWriterRegistered | dateSlice }}
-              </p>
+                    <i class="fas fa-link mr-2"></i>
+                    <a
+                      :href="`${media.file}`"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="mainColor"
+                      >{{ media.file | slicee }}</a
+                    >
+                  </div>
+                </v-col>
+              </row>
             </div>
-          </div>
-        </v-col>
+          </v-col>
+          <v-col cols="12" sm="3">
+            <v-btn
+              class="findBtn mb-4 fullWidth"
+              v-if="singleProposal.status === 'accepted'"
+              >View Contract</v-btn
+            >
+            <div v-else>
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                @click="acceptProposal()"
+                :loading="loading"
+                >Accept Proposal</v-btn
+              >
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                @click="declineJobProposal()"
+                :loading="declineloading"
+                >Decline Proposal</v-btn
+              >
+            </div>
+            <v-btn class="greyBtn mb-4 fullWidth" @click="contactRecipient"
+              ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
+            >
+            <v-btn class="greyBtn mb-4 fullWidth"
+              ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
+            >
+            <div>
+              <div class="clientInfo">
+                <h4>
+                  <span
+                    ><i class="far fa-user mr-2 mb-5"></i> ABOUT THE FREELANCER
+                  </span>
+                </h4>
+                <p class="mb-5 darkGreyColor">
+                  <span>
+                    Verified <i class="fas fa-certificate yellowColor"></i
+                  ></span>
+                </p>
+                <h4>
+                  {{ writerDetails.first_name }} {{ writerDetails.last_name }}
+                </h4>
+                <p class="mb-5">
+                  Member since: {{ dateWriterRegistered | dateSlice }}
+                </p>
+              </div>
+            </div>
+          </v-col>
+        </div>
       </div>
     </div>
   </div>
@@ -129,9 +133,15 @@ export default {
       writerDetails: "",
       proposalDate: "",
       dateWriterRegistered: "",
+      jobDetails: "",
     };
   },
   methods: {
+    contactRecipient() {
+      window.location.assign(
+        `http://afriwrites-chat-system.herokuapp.com/create-chat?user_id=${this.$auth.user.id}&recipient_id=${this.writerDetails.id}&email=${this.$auth.user.email}&signature_key=$2y$10$jXZolJaVBfwnAUM1qMR3Ju7MGvqFrrqW119gzcHZXgsKTQDnijl3y`
+      );
+    },
     getSingleProposal() {
       this.singleProposal = "";
       this.pageLoading = true;

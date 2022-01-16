@@ -17,7 +17,7 @@
         <div v-if="apiLoading">
           <div class="proposalOffers">
             <div class="sectionTitle mb-5 px-3 flex justifyBetween">
-              <h4 class="ml-1 darkGreyColor">POSTINGS (...)</h4>
+              <h4 class="ml-1 darkGreyColor">POSTED JOBS (...)</h4>
               <p class="darkGreyColor noMargin">View all</p>
             </div>
             <div class="jobInfo">
@@ -68,7 +68,9 @@
         </div>
         <div class="proposalOffers" v-else>
           <div class="sectionTitle mb-5 px-3 flex justifyBetween">
-            <h4 class="ml-1 darkGreyColor">POSTINGS ({{ allJobs.length }})</h4>
+            <h4 class="ml-1 darkGreyColor">
+              POSTED JOBS ({{ allJobs.length }})
+            </h4>
             <p class="mainColor noMargin">View all</p>
           </div>
           <div class="jobInfo" v-for="job in allJobs" :key="job.id">

@@ -13,12 +13,6 @@
             <div>
               <div class="mt-5">
                 <div v-if="apiLoading">
-                  <div class="sectionTitle mb-5 px-3 flex justifyBetween">
-                    <div>
-                      <skeleton-box width="10%" />
-                    </div>
-                    <p class="darkGreyColor noMargin">View all</p>
-                  </div>
                   <div class="row noMargin lightGreyBack">
                     <v-col
                       cols="12"
@@ -58,7 +52,7 @@
                         >View Details</v-btn
                       >
                       <v-btn class="greyBtn mb-4 fullWidth" disabled>
-                        Approve for Payment</v-btn
+                        Contact Client</v-btn
                       >
                     </v-col>
                   </div>
@@ -66,7 +60,7 @@
                 <div v-else>
                   <div v-if="allContracts.length > 0">
                     <div
-                      class="row noMargin lightGreyBack"
+                      class="row noMargin lightGreyBack mt-5"
                       v-for="contract in allContracts"
                       :key="contract.id"
                     >
@@ -79,10 +73,7 @@
                               class="jobDesc flex flexColumn justifyCenter"
                             >
                               <h3>{{ contract.created_at | dateSlice }}</h3>
-                              <h3>Freelancer</h3>
-                              <p>
-                                {{ contract.proposals[0].writer.first_name }}
-                              </p>
+                              <p>Contract started</p>
                             </v-col>
                             <v-col cols="12" sm="6" class="jobDesc">
                               <div
@@ -94,25 +85,35 @@
                                 "
                               >
                                 <h2 class="mainColor noMargin">
-                                  {{ contract.title }}
+                                  {{ contract.job.title }}
                                 </h2>
                               </div>
                               <p>
-                                {{ contract.description | descriptionSlice }}
+                                {{
+                                  contract.job.description | descriptionSlice
+                                }}
                                 ....
+                              </p>
+                              <p v-if="contract.payment_mode === 'by_project'">
+                                <span class="mainColor">Payment Method:</span>
+                                Project based payment
+                              </p>
+                              <p v-else>
+                                <span class="mainColor">Payment Method:</span>
+                                Milestone based payment
                               </p>
                             </v-col>
                             <v-col cols="12" sm="3">
                               <v-btn
                                 class="findBtn my-1 fullWidth"
-                                :to="`/client/contracts/${contract.proposals[0].id}`"
+                                :to="`/dashboard/contracts/${contract.id}`"
                                 >View Details</v-btn
                               >
                               <v-btn
                                 class="greyBtn mb-4 fullWidth"
-                                :to="`/client/contracts/${contract.proposals[0].id}`"
+                                :to="`/dashboard/contracts/${contract.id}`"
                               >
-                                Approve for Payment</v-btn
+                                Contact Client</v-btn
                               >
                             </v-col>
                           </div>
@@ -157,7 +158,7 @@ export default {
     getContracts() {
       this.apiLoading = true;
       this.$store
-        .dispatch("client/getAllContracts")
+        .dispatch("writer/getAllContracts")
         .then(({ data }) => {
           this.apiLoading = false;
           this.allContracts = data.data;
@@ -167,28 +168,13 @@ export default {
           this.$toast.success("There was an error getting the proposals");
         });
     },
-    async approveOneTimeJob() {
-      try {
-        this.approveLoading = true;
-        const response = await this.$axios.post(
-          `/v1/client/approve-completed-one-time-work/${this.singleContract.id}`
-        );
-        this.approveLoading = false;
-        this.$toast.success("This job has been approved for payment.");
-      } catch (error) {
-        this.approveLoading = false;
-        this.$toast.error(
-          "There was an error approving this contract for payment"
-        );
-      }
-    },
   },
   mounted() {
     this.getContracts();
   },
   computed: {
     ...mapGetters({
-      allContracts: "client/allContracts",
+      allContracts: "writer/allContracts",
     }),
   },
   filters: {
@@ -203,7 +189,8 @@ export default {
       return res;
     },
     descriptionSlice(data) {
-      let response = data.slice(0, 100);
+      let str = data.toString();
+      let response = str.slice(0, 100);
       return response;
     },
     paystackFees: function (value) {

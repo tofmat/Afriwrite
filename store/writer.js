@@ -8,6 +8,7 @@ export const state = () => ({
   allProposals: [],
   singleProposal: '',
   singleContract: '',
+  savedProposal: ''
 })
 
 export const getters = {
@@ -32,6 +33,9 @@ export const getters = {
   singleContract(state) {
     return state.singleContract
   },
+  savedProposal(state) {
+    return state.savedProposal
+  }
 }
 
 export const mutations = {
@@ -56,6 +60,9 @@ export const mutations = {
   SET_SINGLECONTRACT(state, data) {
     state.singleContract = data
   },
+  SAVE_PROPOSAL(state, data) {
+    state.savedProposal = data
+  }
 }
 
 export const actions = {
@@ -143,4 +150,7 @@ export const actions = {
         return Promise.reject(error.response)
     }
   },
+  async saveProposal({ commit }, data) {
+    commit ('SAVE_PROPOSAL', data)
+  }
 }

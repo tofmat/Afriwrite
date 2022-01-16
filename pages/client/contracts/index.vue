@@ -66,7 +66,7 @@
                 <div v-else>
                   <div v-if="allContracts.length > 0">
                     <div
-                      class="row noMargin lightGreyBack"
+                      class="row noMargin lightGreyBack mt-5"
                       v-for="contract in allContracts"
                       :key="contract.id"
                     >
@@ -79,6 +79,7 @@
                               class="jobDesc flex flexColumn justifyCenter"
                             >
                               <h3>{{ contract.created_at | dateSlice }}</h3>
+                              <p>Contract started</p>
                               <h3>Freelancer</h3>
                               <p>
                                 {{ contract.proposals[0].writer.first_name }}
@@ -103,6 +104,12 @@
                               </p>
                             </v-col>
                             <v-col cols="12" sm="3">
+                              <p
+                                class="mainColor"
+                                v-if="contract.status === 'submitted'"
+                              >
+                                Submitted for Review
+                              </p>
                               <v-btn
                                 class="findBtn my-1 fullWidth"
                                 :to="`/client/contracts/${contract.proposals[0].id}`"
@@ -112,7 +119,7 @@
                                 class="greyBtn mb-4 fullWidth"
                                 :to="`/client/contracts/${contract.proposals[0].id}`"
                               >
-                                Approve for Payment</v-btn
+                                Contact</v-btn
                               >
                             </v-col>
                           </div>

@@ -14,33 +14,39 @@
                 <div class="jobDetailsTexts">
                   <p>{{ singleJob.description }}</p>
                   <div class="flex alignCenter scrollable-x">
-                    <v-btn class="tagBtn">Writing</v-btn>
-                    <v-btn class="tagBtn">Content writing</v-btn>
-                    <v-btn class="tagBtn">Proof reading</v-btn>
+                    <v-btn class="tagBtn">{{
+                      singleJob.project_duration
+                    }}</v-btn>
                   </div>
                 </div>
                 <div class="row alignCenter jobTips mt-10">
-                  <v-col cols="6" sm="4">
+                  <v-col cols="6" sm="3">
                     <div class="flex alignCenter justifyCenter">
                       <p class="mr-2">Budget</p>
-                      <h2>${{ singleJob.price }}</h2>
+                      <h2>N{{ singleJob.price }}</h2>
                     </div>
                   </v-col>
-                  <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
-                    <div class="flex alignCenter">
+                  <v-col cols="6" sm="3">
+                    <div class="flex alignCenter justifyCenter">
                       <p class="mr-2">Number of words</p>
                       <h2>{{ singleJob.number_of_words }}</h2>
                     </div>
                   </v-col>
-                  <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
-                    <div class="flex alignCenter">
+                  <v-col cols="6" sm="3">
+                    <div class="flex alignCenter justifyCenter">
                       <p class="mr-2">Experience</p>
                       <h2>{{ singleJob.level_of_experience }}</h2>
                     </div>
                   </v-col>
+                  <v-col cols="6" sm="3">
+                    <div class="flex alignCenter justifyCenter">
+                      <p class="mr-2">Duration</p>
+                      <h2>{{ singleJob.duration_of_job_in_days }} Days</h2>
+                    </div>
+                  </v-col>
                 </div>
-                <div class="mt-10 attachments">
-                  <h2 class="mb-5">Attachments</h2>
+                <div class="mt-10 attachments" v-if="singleJobMedia.length > 0">
+                  <h3 class="mb-5">Attachments</h3>
                   <row class="row">
                     <v-col cols="6" sm="6">
                       <div
@@ -61,7 +67,7 @@
                   </row>
                 </div>
                 <div class="mt-5 activities">
-                  <h2 class="mb-5">Activity on this Job</h2>
+                  <h3 class="mb-5">Activity on this Job</h3>
                   <div>
                     <p>
                       Proposals:
@@ -69,7 +75,12 @@
                         activities.total_proposals
                       }}</span>
                     </p>
-                    <!-- <p>Last viewed by Client: <span class="boldText">4 Hours ago</span></p> -->
+                    <p>
+                      Last viewed by Client:
+                      <span class="boldText">{{
+                        lastViewedByCLient | dateSlice
+                      }}</span>
+                    </p>
                     <!-- <p>Interviewing: <span class="boldText">5</span></p> -->
                     <p>
                       Unanswered proposals:
@@ -178,6 +189,8 @@ export default {
       clientCreatedAt: "",
       loading: false,
       apiLoading: false,
+      singleJobMedia: [],
+      lastViewedByCLient: "",
     };
   },
   methods: {
@@ -189,7 +202,9 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.singleJob = data.data;
+          this.singleJobMedia = this.singleJob.media;
           this.clientInfo = this.singleJob.client;
+          this.lastViewedByCLient = this.singleJob.last_viewed_by_client;
           this.clientCreatedAt = this.clientInfo.created_at;
           this.activities = this.singleJob.activities;
           this.savedJobs = this.singleJob.saved_jobs;

@@ -43,7 +43,7 @@
                         >Edit Proposal</v-btn
                       >
                       <v-btn class="greyBtn my-1 fullWidth" to="#" disabled
-                        ><i class="far fa-comments mr-2 mainColor"></i> Delete
+                        ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete
                         Proposal</v-btn
                       >
                     </v-col>
@@ -69,7 +69,9 @@
                               </h4>
                               <h4>{{ job.created_at | dateSlice }}</h4>
                               <p>Date Submitted</p>
-                              <h4 class="mainColor">N10</h4>
+                              <h4 class="mainColor">
+                                N{{ job.proposed_amount }}
+                              </h4>
                               <p>Proposed Amount</p>
                             </v-col>
                             <v-col cols="12" sm="8" class="jobDesc">
@@ -81,35 +83,41 @@
                                   justifyBetween
                                 "
                               >
-                                <h2 class="mainColor noMargin">Job title</h2>
+                                <h2 class="mainColor noMargin">
+                                  {{ job.job.title }}
+                                </h2>
                               </div>
-                              <p>Description....</p>
+                              <p>
+                                {{ job.job.description | descriptionSlice }}...
+                              </p>
                               <p v-if="job.payment_mode === 'by_project'">
-                                Payment Method: Project based payment
+                                <span class="mainColor">Payment Method:</span>
+                                Project based payment
                               </p>
                               <p v-else>
-                                Payment Method: Milestone based payment
+                                <span class="mainColor">Payment Method:</span>
+                                Milestone based payment
                               </p>
                             </v-col>
                             <v-col cols="12" sm="2">
                               <v-btn
                                 v-if="job.status === 'accepted'"
                                 class="findBtn my-1 fullWidth"
-                                :to="`/dashboard/contracts/${job.job.public_reference_id}`"
+                                :to="`/dashboard/contracts/${job.id}`"
                                 >View Contract</v-btn
                               >
                               <v-btn
                                 v-else
                                 class="findBtn my-1 fullWidth"
+                                @click="saveProposals(job)"
                                 :to="`/dashboard/proposals/${job.job.public_reference_id}`"
                                 >Edit Proposal</v-btn
                               >
                               <v-btn
-                                class="findBtn my-1 fullWidth"
-                                :to="`/dashboard/proposals/${job.job.public_reference_id}`"
-                                >Edit Proposal</v-btn
-                              >
-                              <v-btn class="greyBtn mb-4 fullWidth">
+                                class="greyBtn mb-4 fullWidth"
+                                @click="deleteProposal(job.id)"
+                                :disabled="deleteProposalLoading"
+                                ><i class="far fa-trash-alt mr-2 mainColor"></i>
                                 Delete Proposal</v-btn
                               >
                             </v-col>
@@ -147,6 +155,7 @@ export default {
     return {
       apiLoading: false,
       allProposals: [],
+      deleteProposalLoading: false,
     };
   },
   methods: {
@@ -162,6 +171,25 @@ export default {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the proposals");
         });
+    },
+    saveProposals(data) {
+      this.$store.dispatch("writer/saveProposal", data);
+      console.log("saverd to store");
+    },
+    async deleteProposal(job_id) {
+      try {
+        this.deleteProposalLoading = true;
+        this.$toast.success("Deleting Proposal");
+        const response = await this.$axios.delete(
+          `v1/writer/jobs/delete/proposal/${job_id}`
+        );
+        this.$toast.success("Deleted Proposal");
+        window.location.reload();
+        this.deleteProposalLoading = false;
+      } catch (error) {
+        this.deleteProposalLoading = false;
+        this.$toast.error("There was an error deleting proposal");
+      }
     },
   },
   mounted() {

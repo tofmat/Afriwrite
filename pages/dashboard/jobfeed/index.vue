@@ -67,6 +67,9 @@
                   <nuxt-link
                     :to="`/dashboard/jobfeed/${job.public_reference_id}`"
                   >
+                    <p class="mainColor" v-if="job.submittedProposal">
+                      Proposal Submitted
+                    </p>
                     <h2 class="mainColor noMargin">{{ job.title }}</h2>
                   </nuxt-link>
                   <span class="saveJob" v-if="job.saved_jobs.length > 0"
@@ -79,17 +82,16 @@
                     ><i class="fas fa-bookmark mr-2"></i> Save job
                   </span>
                 </div>
-                <p>{{ job.description }}</p>
+                <p>{{ job.description | descriptionSlice }} ...</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn">{{ job.level_of_experience }}</v-btn>
+                  <v-btn class="tagBtn">{{ job.project_duration }}</v-btn>
                 </div>
               </v-col>
               <v-col cols="12" sm="3" class="jobControls">
                 <div class="jobControl">
                   <p>Budget/word</p>
-                  <h2>${{ job.price }}</h2>
+                  <h2>N{{ job.price }}</h2>
                 </div>
                 <div class="jobControl">
                   <p>Number of words</p>
@@ -164,6 +166,13 @@ export default {
     ...mapGetters({
       allJobs: "writer/allJobs",
     }),
+  },
+  filters: {
+    descriptionSlice(data) {
+      let str = data.toString();
+      let response = str.slice(0, 200);
+      return response;
+    },
   },
 };
 </script>

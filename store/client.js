@@ -8,7 +8,8 @@ export const state = () => ({
   allDrafts: [],
   singleProposal: '',
   singleContract: '',
-  draftedJob: ''
+  draftedJob: '',
+  
 })
 
 export const getters = {
@@ -35,17 +36,18 @@ export const getters = {
   },
   draftedJob(state) {
     return state.draftedJob
-  }
+  },
+  
 }
 
 export const mutations = {
-  SET_ALLPROPOSALS(state, data){
+  SET_ALLPROPOSALS(state, data) {
     state.allProposals = data
   },
-  SET_ALLJOBS(state, data){
+  SET_ALLJOBS(state, data) {
     state.allJobs = data
   },
-  SET_SINGLEJOB (state, data) {
+  SET_SINGLEJOB(state, data) {
     state.singleJob = data
   },
   SET_ALLDRAFTS(state, data) {
@@ -62,8 +64,10 @@ export const mutations = {
   },
   SET_DRAFTEDJOB(state, data) {
     state.draftedJob = data
-  }
- }
+  },
+  
+
+}
 
 export const actions = {
   async getAllProposals({commit}){
@@ -162,4 +166,5 @@ export const actions = {
         return Promise.reject(error.response)
     }
   },
+  
 }
