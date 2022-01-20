@@ -1,8 +1,10 @@
 export default function({ $auth, redirect, store }) {
   let user = store.state.auth.user;
-  if (user && user.role === "writer") {
+  if (user && user.role === "admin") {
   } else if (user && user.role === "client") {
     redirect("/client/jobs");
+  } else if (user && user.role === "writer") {
+    redirect("/dashboard/jobfeed");
   } else {
     redirect("/signin");
   }

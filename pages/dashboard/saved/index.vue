@@ -86,7 +86,7 @@
                     ></i
                   ></span>
                 </div>
-                <p>{{ job.job.description }}</p>
+                <p>{{ job.job.description | descriptionSlice }} ...</p>
                 <div class="flex alignCenter scrollable-x">
                   <v-btn class="tagBtn">Writing</v-btn>
                   <v-btn class="tagBtn">Content writing</v-btn>
@@ -96,7 +96,7 @@
               <v-col cols="12" sm="3" class="jobControls">
                 <div class="jobControl">
                   <p>Budget/word</p>
-                  <h2>${{ job.job.price }}</h2>
+                  <h2>N{{ job.job.price }}</h2>
                 </div>
                 <div class="jobControl">
                   <p>Number of words</p>
@@ -163,6 +163,12 @@ export default {
     ...mapGetters({
       savedJobs: "writer/savedJobs",
     }),
+  },
+  filters: {
+    descriptionSlice(data) {
+      let response = data.slice(0, 100);
+      return response;
+    },
   },
 };
 </script>

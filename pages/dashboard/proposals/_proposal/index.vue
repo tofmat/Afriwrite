@@ -433,7 +433,6 @@
 </template>
 
 <script>
-import spinner from "../../../../components/spinner.vue";
 import { mapGetters, mapActions } from "vuex";
 import addMilestoneForm from "../../../../components/addMilestoneForm";
 export default {
@@ -518,7 +517,7 @@ export default {
           this.proposal.cover_letter = this.singleProposal.cover_letter;
           this.proposal.proposed_amount = this.singleProposal.proposed_amount;
           this.proposal.duration = this.singleProposal.duration;
-          this.proposal.payment_mode = this.singleJob.payment_mode
+          this.proposal.payment_mode = this.singleJob.payment_mode;
         })
         .catch((err) => {
           this.apiLoading = false;

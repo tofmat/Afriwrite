@@ -100,6 +100,8 @@ export default {
           this.$router.push("/client/jobs");
         } else if (this.$auth.user.role === "writer") {
           this.$router.push("/dashboard/jobfeed");
+        } else if (this.$auth.user.role === "admin") {
+          this.$router.push("/admin");
         }
         this.$toast.success("You are logged in");
         this.loading = false;

@@ -156,6 +156,11 @@ export default {
       dateWriterRegistered: "",
       approveLoading: false,
       jobDetails: "",
+      paymentDetails: {
+        recipient_code: "",
+        job_proposal_id: "",
+        description: "Thanks",
+      },
     };
   },
   methods: {
@@ -202,10 +207,14 @@ export default {
       }
     },
     async requestPayment() {
+      this.paymentDetails.recipient_code = this.$auth.user.recipient_code;
+      this.paymentDetails.job_proposal_id = "dasdas";
+      this.paymentDetails.description = "I want to request for payment";
       try {
         this.approveLoading = true;
         const response = await this.$axios.post(
-          `/v1/writer/jobs/request-payment-for-one-time-work`
+          `/v1/writer/jobs/request-payment-for-one-time-work`,
+          this.paymentDetails
         );
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for payment.");
