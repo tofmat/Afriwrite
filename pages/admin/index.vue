@@ -475,7 +475,7 @@ export default {
   color: blue;
 }
 .rightSideDash {
-  padding: 50px 30px;
+  padding: 30px 30px;
 }
 .dashMainContent {
   margin: 20px 10px 20px 120px;

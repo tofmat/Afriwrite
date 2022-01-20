@@ -92,11 +92,31 @@
                 </div>
               </v-col>
               <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
-                <v-btn
-                  class="findBtn mb-4 fullWidth"
-                  :to="`/dashboard/jobfeed/${this.$route.params.job}/submit`"
-                  >Submit a Proposal</v-btn
+                <div
+                  v-if="
+                    this.$auth.user.writer_stage_two_test_status === 'pending'
+                  "
                 >
+                  <v-btn
+                    class="findBtn mb-4 fullWidth"
+                    @click="
+                      () => {
+                        this.$toast.error(
+                          'Please complete the tests that has been sent to your mail before submitting a proposal'
+                        );
+                      }
+                    "
+                    >Submit a Proposal</v-btn
+                  >
+                </div>
+                <div v-else>
+                  <v-btn
+                    class="findBtn mb-4 fullWidth"
+                    :to="`/dashboard/jobfeed/${this.$route.params.job}/submit`"
+                    >Submit a Proposal</v-btn
+                  >
+                </div>
+
                 <div
                   class="flex alignCenter fullWidth mt-1"
                   v-if="savedJobs.length > 0"

@@ -67,21 +67,13 @@
             </v-col>
             <v-col cols="6" sm="6">
               <input
-                v-model="profileDetails.writing_niches"
-                type="text"
-                class="normalInput2 fullWidth"
-                placeholder="Preffered Writing Niche"
-              />
-            </v-col>
-            <v-col cols="4" sm="4">
-              <input
                 v-model="profileDetails.date_of_birth"
                 type="date"
                 class="normalInput2 fullWidth"
                 placeholder="Date of Birth"
               />
             </v-col>
-            <v-col cols="4" sm="4" class="inputWithLabel">
+            <v-col cols="6" sm="6" class="inputWithLabel">
               <span> Availability </span>
               <select
                 v-model="profileDetails.availability"
@@ -91,31 +83,13 @@
                 <option value="0">Not Availanle</option>
               </select>
             </v-col>
-            <v-col cols="4" sm="4">
+            <v-col cols="6" sm="6">
               <input
                 v-model="profileDetails.country"
                 type="text"
                 class="normalInput2 fullWidth"
                 placeholder="Country"
               />
-            </v-col>
-            <v-col cols="12" sm="12">
-              <input
-                v-model="profileDetails.languages"
-                type="text"
-                class="normalInput2 fullWidth"
-                placeholder="Languages"
-              />
-              <span>List of languages, seperated by comma</span>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <input
-                v-model="profileDetails.additional_links"
-                type="text"
-                class="normalInput2 fullWidth"
-                placeholder="Additional Links"
-              />
-              <span>Any link you would like us to see? Portfolio?</span>
             </v-col>
           </div>
         </div>
@@ -135,7 +109,7 @@
 
 <script>
 export default {
-  layout: "dashboard",
+  layout: "client",
   data() {
     return {
       profileDetails: {
@@ -168,18 +142,6 @@ export default {
           `${this.$auth.user.about_me}` !== "null"
             ? `${this.$auth.user.about_me}`
             : "",
-        languages:
-          `${this.$auth.user.languages}` !== "null"
-            ? `${this.$auth.user.languages}`
-            : "",
-        writing_niches:
-          `${this.$auth.user.writing_niches}` !== "null"
-            ? `${this.$auth.user.writing_niches}`
-            : "",
-        additional_links:
-          `${this.$auth.user.additional_links}` !== "null"
-            ? `${this.$auth.user.additional_links}`
-            : " ",
       },
       loading: false,
     };
@@ -194,7 +156,7 @@ export default {
         );
         this.loading = false;
         this.$toast.success("Your profile has been updated.");
-        window.location.assign("/dashboard/profile");
+        window.location.assign("/client/profile");
       } catch (error) {
         this.loading = false;
         this.$toast.error("There was an error updating your profile");

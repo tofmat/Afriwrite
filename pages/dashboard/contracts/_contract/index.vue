@@ -88,7 +88,25 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="singleContract.status === 'approved_for_payment'"
+                v-if="
+                  singleContract.status === 'approved_for_payment' &&
+                  !this.$auth.user.recipient_code
+                "
+                @click="
+                  () => {
+                    this.$toast.error(
+                      'Please add your account number to be abe to request for payment. Do this in your profile'
+                    );
+                  }
+                "
+                >Request for Payment</v-btn
+              >
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                v-if="
+                  singleContract.status === 'approved_for_payment' &&
+                  this.$auth.user.recipient_code
+                "
                 @click="requestPayment()"
                 :loading="approveLoading"
                 >Request for Payment</v-btn
@@ -208,7 +226,7 @@ export default {
     },
     async requestPayment() {
       this.paymentDetails.recipient_code = this.$auth.user.recipient_code;
-      this.paymentDetails.job_proposal_id = "dasdas";
+      this.paymentDetails.job_proposal_id = this.singleContract.id;
       this.paymentDetails.description = "I want to request for payment";
       try {
         this.approveLoading = true;

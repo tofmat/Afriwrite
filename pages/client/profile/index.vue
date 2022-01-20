@@ -54,7 +54,7 @@
                 <v-col cols="6" sm="6">
                   <div class="mx-2 infoCards">
                     <h3 class="mb-2 mainColor">Null</h3>
-                    <p class="darkGreyColor">Hourly Rate</p>
+                    <p class="darkGreyColor">Completed contracts</p>
                   </div>
                 </v-col>
                 <v-col cols="6" sm="6" class="">
@@ -72,7 +72,7 @@
                 <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
                     <h3 class="mb-2 mainColor">Null</h3>
-                    <p class="darkGreyColor">Hours Worked</p>
+                    <p class="darkGreyColor">Amount payed</p>
                   </div>
                 </v-col>
               </div>
@@ -138,7 +138,7 @@
         </v-col>
         <v-col cols="12" sm="12" lg="3">
           <div class="sideB rightSideDash">
-            <div v-if="!this.$auth.user.recipient_code">
+            <!-- <div v-if="!this.$auth.user.recipient_code">
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
@@ -149,7 +149,7 @@
               >
                 Add account Number
               </v-btn>
-            </div>
+            </div> -->
             <div class="mt-3">
               <v-btn
                 class="myBtn findBtn fullWidth"
@@ -194,7 +194,7 @@
                 </p>
               </div>
             </div>
-            <hr class="fullWidth my-5" />
+            <!-- <hr class="fullWidth my-5" />
             <div class="profileInfoHolder">
               <p class="darkGreyColor noMargin mb-2">
                 <span
@@ -206,77 +206,8 @@
                 >
               </p>
               <p class="mainColor noMargin">{{ this.$auth.user.languages }}</p>
-            </div>
+            </div> -->
           </div>
-        </v-col>
-      </div>
-
-      <div>
-        <v-col cols="auto">
-          <v-dialog
-            v-model="dialog"
-            transition="dialog-top-transition"
-            max-width="600"
-          >
-            <template>
-              <v-card class="py-5">
-                <div class="centerflex columnFlex">
-                  <v-card-text>
-                    <h2 class="mainColor textCenter">Add account number</h2>
-                    <p class="textCenter mt-3">
-                      Please input the account number you want your money to be
-                      settled in. Please cross check before submitting
-                    </p>
-                    <div class="mt-5">
-                      <div class="row">
-                        <v-col cols="12" sm="12">
-                          <span>Account Number</span>
-                          <input
-                            type="tel"
-                            class="normalInput2 fullWidth"
-                            v-model="accountDetails.account_number"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <span>Name of account</span>
-                          <input
-                            type="text"
-                            class="normalInput2 fullWidth"
-                            v-model="accountDetails.description"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <span>Bank Name</span>
-                          <div>
-                            <select
-                              class="selectBank normalInput2 fullWidth"
-                              v-model="accountDetails.bank_code"
-                            >
-                              <option
-                                :value="bank.code"
-                                v-for="bank in allBanks"
-                                :key="bank.code"
-                              >
-                                {{ bank.name }}
-                              </option>
-                            </select>
-                          </div>
-                        </v-col>
-                      </div>
-                    </div>
-                  </v-card-text>
-                </div>
-                <div class="flex justifyCenter mobileColumn">
-                  <v-btn
-                    @click="addAccount()"
-                    class="findBtn mx-3 my-1"
-                    :loading="loading"
-                    >Add Account</v-btn
-                  >
-                </div>
-              </v-card>
-            </template>
-          </v-dialog>
         </v-col>
       </div>
 
@@ -300,7 +231,7 @@
               </v-card-text>
             </div>
             <div class="flex justifyCenter mobileColumn">
-              <v-btn class="greyBtn mx-3 my-1" to="/dashboard/profile/edit"
+              <v-btn class="greyBtn mx-3 my-1" to="/client/profile/edit"
                 >Edit Profile</v-btn
               >
             </div>
@@ -314,7 +245,7 @@
 <script>
 import banks from "../../../static/banks";
 export default {
-  layout: "dashboard",
+  layout: "client",
   data() {
     return {
       dialog: false,

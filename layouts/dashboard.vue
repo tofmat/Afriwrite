@@ -328,7 +328,6 @@
                   </v-card-text>
                 </div>
                 <div class="flex justifyCenter mobileColumn">
-                  <v-btn class="findBtn mx-3 my-1" to="#">Open Email</v-btn>
                   <v-btn
                     class="greyBtn mx-3 my-1"
                     :loading="loading"
@@ -358,7 +357,8 @@ export default {
     return {
       loading: false,
       // authenticatedUser: this.$auth.user.email,
-      dialog: false,
+      dialog:
+        this.$auth.user.email_verification_status === "pending" ? true : false,
       clipped: false,
       drawer: false,
       fixed: false,
@@ -437,6 +437,7 @@ export default {
           "/v1/auth/request-verification-link"
         );
         this.$toast.success("Verification Link has been sent.");
+        this.loading = false;
       } catch (error) {
         this.loading = false;
         this.$toast.error("Error sending verification mail, Please try later");
