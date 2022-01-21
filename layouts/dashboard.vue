@@ -10,36 +10,20 @@
       absolute
     >
       <a href="/"
-        ><img src="../assets/images/logo.png" class="logoImage noMobile"
+        ><img src="../assets/images/afriNewLogo.png" class="logoImage noMobile"
       /></a>
       <v-app-bar-nav-icon
         @click="drawer = true"
-        class="noDesktop mobileDisplay"
+        class="noDesktop mobileDisplay mobileNavBar"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-item-group mandatory class="noMobile">
-        <div class="flex">
-          <v-list-item
-            v-for="nav in upNavItems"
-            :key="nav"
-            :to="nav.to"
-            router
-            exact
-            class="theItem"
-          >
-            <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? '' : ''">{{ nav.title }}</v-title>
-            </v-item>
-          </v-list-item>
-        </div>
-      </v-item-group>
       <img src="../assets/images/bell.svg" class="mx-5" alt="notification" />
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
       <a href="/dashboard/profile"
         ><img
-          src="../assets/images/Profil.png"
+          src="../assets/images/emptyUser.png"
           alt="avatar"
-          height="50px"
+          height="40px"
           class="dashProfilePic"
       /></a>
     </v-app-bar>
@@ -270,30 +254,29 @@
           <v-list-item
             link
             class="sideLinkCon"
-            to="/dashboard/settings"
             router
             exact
             active-class="navActive"
+            @click="logoutUser()"
           >
             <v-list-item-icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 25.388 25.388"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#000000"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               >
-                <g transform="translate(1 1)">
-                  <path
-                    d="M19.879,16.689A3.189,3.189,0,1,1,16.689,13.5,3.189,3.189,0,0,1,19.879,16.689Z"
-                    transform="translate(-4.995 -4.995)"
-                  />
-                  <path
-                    class="a"
-                    d="M21.061,16.383a1.754,1.754,0,0,0,.351,1.935l.064.064a2.127,2.127,0,1,1-3.009,3.009l-.064-.064a1.768,1.768,0,0,0-3,1.254v.181a2.126,2.126,0,1,1-4.252,0v-.1A1.754,1.754,0,0,0,10,21.061a1.754,1.754,0,0,0-1.935.351l-.064.064A2.127,2.127,0,1,1,5,18.467l.064-.064a1.768,1.768,0,0,0-1.254-3H3.626a2.126,2.126,0,1,1,0-4.252h.1A1.754,1.754,0,0,0,5.327,10,1.754,1.754,0,0,0,4.976,8.07l-.064-.064A2.127,2.127,0,1,1,7.921,5l.064.064a1.754,1.754,0,0,0,1.935.351H10a1.754,1.754,0,0,0,1.063-1.605V3.626a2.126,2.126,0,1,1,4.252,0v.1a1.768,1.768,0,0,0,3,1.254l.064-.064a2.127,2.127,0,1,1,3.009,3.009l-.064.064a1.754,1.754,0,0,0-.351,1.935V10a1.754,1.754,0,0,0,1.605,1.063h.181a2.126,2.126,0,1,1,0,4.252h-.1a1.754,1.754,0,0,0-1.605,1.063Z"
-                    transform="translate(-1.5 -1.5)"
-                  />
-                </g>
+                <path
+                  d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"
+                />
               </svg>
             </v-list-item-icon>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
@@ -430,6 +413,11 @@ export default {
     //     this.dialog = "on"
     //   }
     // },
+    logoutUser() {
+      console.log("Heyooo");
+      localStorage.removeItem("auth._token.local");
+      this.$cookie.delete("auth._token.local");
+    },
     async sendNewMail() {
       try {
         this.loading = true;
@@ -548,7 +536,7 @@ body {
     padding: 5px 10px;
   }
   .dashProfilePic {
-    height: 40px !important;
+    background: white;
   }
   .dashRealContent {
     margin-top: 60px;
