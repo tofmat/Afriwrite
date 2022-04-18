@@ -40,7 +40,9 @@
             <p class="my-5">
               {{ singleProposal.cover_letter }}
             </p>
-            <div v-if="singleProposal.assets.length > 0">
+            <div
+              v-if="singleProposal.assets && singleProposal.assets.length > 0"
+            >
               <h3>Attachments</h3>
               <row class="row">
                 <v-col cols="6" sm="6">

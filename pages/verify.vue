@@ -240,7 +240,7 @@ export default {
     width: 200px;
   }
   .signupField {
-    padding: 30px 0;
+    padding: 120px 0;
   }
 }
 @media (max-width: 500px) {

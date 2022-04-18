@@ -88,9 +88,6 @@
                 v-if="singleContract.status === 'approved_for_payment'"
                 >Approved for Payment</v-btn
               >
-              <v-btn class="findBtn mb-4 fullWidth" disabled v-else
-                >Approve for Payment</v-btn
-              >
             </div>
             <v-btn class="greyBtn mb-4 fullWidth" @click="contactRecipient"
               ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
