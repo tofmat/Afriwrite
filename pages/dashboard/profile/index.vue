@@ -9,12 +9,12 @@
                 <v-col cols="12" sm="3" lg="2" class="profilePicture">
                   <div class="profileImage">
                     <img
-                      src=".././../../assets/images/emptyUser.png"
+                      :src="this.$auth.user.avatar"
                       alt="ProfilePic"
-                      v-if="!this.$auth.user.profile_picture"
+                      v-if="this.$auth.user.avatar"
                     />
                     <img
-                      :src="this.$auth.user.profile_picture"
+                      src=".././../../assets/images/emptyUser.png"
                       alt="ProfilePic"
                       v-else
                     />
@@ -32,7 +32,6 @@
                       <p class="noMargin">{{ this.$auth.user.country }}</p>
                     </div>
                     <p>Email: {{ this.$auth.user.email }}</p>
-
                     <p>Phone Number: {{ this.$auth.user.phone_number }}</p>
                     <p class="textMainColor">
                       Bio: {{ this.$auth.user.about_me }}
@@ -77,63 +76,110 @@
                 </v-col>
               </div>
             </div>
-            <!-- <div class="mt-10">
-              <div class="backWhite workHis">
-                <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
+            <div class="mt-10" v-if="this.$auth.user.portfolio.length > 0">
+              <div class="allArticle">
+                <h2 class="mb-4 darkGreyColor">Past written Articles</h2>
                 <hr class="fullWidth" />
                 <div class="mt-4">
                   <div>
                     <v-row>
-                      <v-col cols="12" sm="8">
-                        <h3 class="mainColor">
-                          Storytelling expert with narrative skills and an eye
-                          for design
-                        </h3>
-                        <div class="flex alignCenter my-3 lca">
-                          <i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i>
-                          <h3>5.0</h3>
+                      <v-col
+                        cols="12"
+                        sm="4"
+                        v-for="singleArticle in this.$auth.user.portfolio"
+                        :key="singleArticle.id"
+                      >
+                        <div class="articleSingle">
+                          <img
+                            src=".././../../assets/images/articleImage.jpg"
+                            alt=""
+                          />
+                          <div class="articleDetails">
+                            <h3 class="mainColor">
+                              {{ singleArticle.primary_keywords }}
+                            </h3>
+                            <p>
+                              {{ singleArticle.meta_description }}
+                            </p>
+                            <p
+                              class="
+                                textItalics
+                                rightAlign
+                                mainColor
+                                cursorPointer
+                              "
+                            >
+                              <a
+                                :href="singleArticle.article_link"
+                                _blank="true"
+                                >Read more</a
+                              >
+                            </p>
+                          </div>
                         </div>
-                        <p class="textItalics">
-                          As always, great work and working with you
-                        </p>
-                      </v-col>
-                      <v-col cols="12" sm="4" class="rightAlign">
-                        <h3>$60</h3>
-                        <h3>Fixed Price</h3>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <hr class="fullWidth mt-4" />
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="8">
-                        <h3 class="mainColor">
-                          Storytelling expert with narrative skills and an eye
-                          for design
-                        </h3>
-                        <div class="flex alignCenter my-3 lca">
-                          <i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i>
-                          <h3>5.0</h3>
-                        </div>
-                        <p class="textItalics">
-                          As always, great work and working with you
-                        </p>
-                      </v-col>
-                      <v-col cols="12" sm="4" class="rightAlign">
-                        <h3>$60</h3>
-                        <h3>Fixed Price</h3>
                       </v-col>
                     </v-row>
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
+            <!-- <div class="mt-10">
+                <div class="backWhite workHis">
+                  <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
+                  <hr class="fullWidth" />
+                  <div class="mt-4">
+                    <div>
+                      <v-row>
+                        <v-col cols="12" sm="8">
+                          <h3 class="mainColor">
+                            Storytelling expert with narrative skills and an eye
+                            for design
+                          </h3>
+                          <div class="flex alignCenter my-3 lca">
+                            <i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i>
+                            <h3>5.0</h3>
+                          </div>
+                          <p class="textItalics">
+                            As always, great work and working with you
+                          </p>
+                        </v-col>
+                        <v-col cols="12" sm="4" class="rightAlign">
+                          <h3>$60</h3>
+                          <h3>Fixed Price</h3>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <hr class="fullWidth mt-4" />
+                    <div>
+                      <v-row>
+                        <v-col cols="12" sm="8">
+                          <h3 class="mainColor">
+                            Storytelling expert with narrative skills and an eye
+                            for design
+                          </h3>
+                          <div class="flex alignCenter my-3 lca">
+                            <i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i
+                            ><i class="fas fa-star yellowColor"></i>
+                            <h3>5.0</h3>
+                          </div>
+                          <p class="textItalics">
+                            As always, great work and working with you
+                          </p>
+                        </v-col>
+                        <v-col cols="12" sm="4" class="rightAlign">
+                          <h3>$60</h3>
+                          <h3>Fixed Price</h3>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="3">
@@ -205,7 +251,9 @@
                   />LANGUAGES</span
                 >
               </p>
-              <p class="mainColor noMargin">{{ this.$auth.user.languages }}</p>
+              <p class="mainColor noMargin">
+                {{ this.$auth.user.languages }}
+              </p>
             </div>
           </div>
         </v-col>
@@ -385,7 +433,16 @@ export default {
 .selectBank {
   -webkit-appearance: auto;
 }
-
+.articleSingle {
+  background: #f9f9f9;
+  padding: 0 0 10px 0;
+}
+.articleSingle img {
+  width: 100%;
+}
+.articleDetails {
+  padding: 9px;
+}
 .textMainColor {
   color: #707070;
 }
@@ -446,6 +503,9 @@ export default {
   padding: 30px;
   border-radius: 20px;
   background-color: rgba(248, 248, 248, 1);
+}
+.allArticle {
+  padding: 30px;
 }
 .sideB {
   background-color: #f8f8f8;

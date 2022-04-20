@@ -33,7 +33,7 @@
           </v-list-item>
         </div>
       </v-item-group>
-      <img src="../assets/images/bell.svg" class="mx-5" alt="notification" />
+      <!-- <img src="../assets/images/bell.svg" class="mx-5" alt="notification" /> -->
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
       <a href="/profile"
         ><img
@@ -239,7 +239,7 @@
             </v-list-item-icon>
             <v-list-item-title>Transactions</v-list-item-title>
           </v-list-item>
-          <v-list-item
+          <!-- <v-list-item
             link
             class="sideLinkCon"
             to="reports"
@@ -266,7 +266,7 @@
               </svg>
             </v-list-item-icon>
             <v-list-item-title>Reports</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item
             link
             class="sideLinkCon"
@@ -384,10 +384,10 @@ export default {
           title: "Transaction",
           to: "client/transactions",
         },
-        {
-          title: "Reports",
-          to: "client/reports",
-        },
+        // {
+        //   title: "Reports",
+        //   to: "client/reports",
+        // },
         {
           title: "Logout",
           to: "client/profile",

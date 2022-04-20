@@ -17,7 +17,7 @@
         class="noDesktop mobileDisplay mobileNavBar"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <img src="../assets/images/bell.svg" class="mx-5" alt="notification" />
+      <!-- <img src="../assets/images/bell.svg" class="mx-5" alt="notification" /> -->
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
 
       <a href="/profile"
@@ -250,7 +250,7 @@
                 </g>
               </svg>
             </v-list-item-icon>
-            <v-list-item-title>Reports</v-list-item-title>
+            <!-- <v-list-item-title>Reports</v-list-item-title> -->
           </v-list-item>
           <v-list-item
             link
@@ -374,10 +374,10 @@ export default {
           title: "Transaction",
           to: "client/transactions",
         },
-        {
-          title: "Reports",
-          to: "client/reports",
-        },
+        // {
+        //   title: "Reports",
+        //   to: "client/reports",
+        // },
         {
           title: "Logout",
           to: "client/profile",
