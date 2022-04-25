@@ -20,13 +20,21 @@
       <!-- <img src="../assets/images/bell.svg" class="mx-5" alt="notification" /> -->
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
 
-      <a href="/profile"
-        ><img
-          src="../assets/images/emptyUser.png"
-          alt="avatar"
-          height="40px"
-          class="dashProfilePic"
-      /></a>
+      <a href="/client/profile"
+        ><div class="profileImage2" v-if="this.$auth.user.profile_picture">
+          <img
+            :src="`${this.$auth.user.profile_picture}`"
+            alt="ProfilePic"
+            class="dashProfilePic"
+          />
+        </div>
+        <div class="profileImage2" v-else>
+          <img
+            src="../assets/images/emptyUser.png"
+            alt="ProfilePic"
+            class="dashProfilePic"
+          /></div
+      ></a>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -36,7 +44,9 @@
       class="pad-10 noDesktop mobileDisplay"
     >
       <a href="/"
-        ><img src="../assets/images/logo.png" class="logoImage mobileLogo"
+        ><img
+          src="../assets/images/afriNewLogo.png"
+          class="logoImage mobileLogo"
       /></a>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="navActive">
@@ -50,6 +60,16 @@
           >
             <v-list-item-content>
               <v-list-item-title v-text="nav.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            router
+            exact
+            active-class="navActive"
+            @click="logoutUser()"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -227,34 +247,6 @@
           <v-list-item
             link
             class="sideLinkCon"
-            to="reports"
-            router
-            exact
-            active-class="navActive"
-          >
-            <v-list-item-icon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 21.123 21.117"
-              >
-                <g transform="translate(1.007 1)">
-                  <path
-                    d="M21.36,16.727A9.558,9.558,0,1,1,8.734,4.245"
-                    transform="translate(-2.999 -3.452)"
-                  />
-                  <path
-                    class="a"
-                    d="M27.558,12.558A9.558,9.558,0,0,0,18,3v9.558Z"
-                    transform="translate(-8.441 -3)"
-                  />
-                </g>
-              </svg>
-            </v-list-item-icon>
-            <!-- <v-list-item-title>Reports</v-list-item-title> -->
-          </v-list-item>
-          <v-list-item
-            link
-            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -374,14 +366,6 @@ export default {
           title: "Transaction",
           to: "client/transactions",
         },
-        // {
-        //   title: "Reports",
-        //   to: "client/reports",
-        // },
-        {
-          title: "Logout",
-          to: "client/profile",
-        },
       ],
       upNavItems: [
         {
@@ -414,7 +398,12 @@ export default {
     //   }
     // },
     logoutUser() {
-      localStorage.deleteItem(token);
+      console.log("Heyooo");
+      localStorage.removeItem("auth._token.local");
+      document.cookie =
+        "auth._token.local" +
+        "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      window.location.assign("/signin");
     },
     async sendNewMail() {
       try {
@@ -503,6 +492,16 @@ body {
   background-color: white !important;
   color: #008952 !important;
   box-shadow: none !important;
+}
+.profileImage2 {
+  padding: 5px 7px;
+  width: fit-content;
+  border: 1px solid rgba(0, 137, 82, 0.2);
+  border-radius: 50%;
+}
+.profileImage2 img {
+  width: 50px !important;
+  height: 50px !important;
 }
 .openNavFull {
   position: static;

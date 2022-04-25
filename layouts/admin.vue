@@ -10,7 +10,7 @@
       absolute
     >
       <a href="/"
-        ><img src="../assets/images/logo.png" class="logoImage noMobile"
+        ><img src="../assets/images/afriNewLogo.png" class="logoImage noMobile"
       /></a>
       <v-app-bar-nav-icon
         @click="drawer = true"
@@ -51,7 +51,9 @@
       class="pad-10 noDesktop mobileDisplay"
     >
       <a href="/"
-        ><img src="../assets/images/logo.png" class="logoImage mobileLogo"
+        ><img
+          src="../assets/images/afriNewLogo.png"
+          class="logoImage mobileLogo"
       /></a>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="navActive">

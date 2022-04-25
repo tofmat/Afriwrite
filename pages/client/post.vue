@@ -29,12 +29,12 @@
                   needed for a writing gig
                 </p>
                 <p class="noMargin">
-                  <span><i class="far fa-dot-circle mr-3"></i></span>UX Writer
-                  needed for a writing gig
+                  <span><i class="far fa-dot-circle mr-3"></i></span>SEO Writer
+                  needed for a website copy
                 </p>
                 <p class="noMargin">
-                  <span><i class="far fa-dot-circle mr-3"></i></span>UX Writer
-                  needed for a writing gig
+                  <span><i class="far fa-dot-circle mr-3"></i></span>Content
+                  Creator needed for reasearch and documentation
                 </p>
               </div>
             </div>
@@ -54,7 +54,7 @@
                 placeholder="Input text here"
                 v-model="jobInfo.description"
               ></textarea>
-              <!-- <h3 class="mt-3">Choose Category</h3>
+              <h3 class="mt-3">Choose Category</h3>
               <p>
                 Select the category this job falls under (You can select more
                 than one)
@@ -68,8 +68,7 @@
                 color="green darken-3"
                 small-chips
                 label="Categories"
-                multiple
-              ></v-autocomplete> -->
+              ></v-autocomplete>
               <h3 class="my-3">Attach additional project files (optional)</h3>
               <div class="dragAndDrop">
                 <p class="textCenter">
@@ -303,7 +302,15 @@ export default {
     errors: "",
     loading: false,
     draftLoading: false,
-    items: ["Content writing", "Articles", "Blogging", "Copywriting"],
+    items: [
+      "Article Writing",
+      "Website Copywriting",
+      "Sales and Marketing Copy",
+      "Career Writing",
+      "Academic Writing",
+      "Creative Writing ",
+      "Social Media Writing",
+    ],
     values: ["Articles", "Blogging"],
     value: null,
     jobInfo: {

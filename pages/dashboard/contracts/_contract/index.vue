@@ -33,7 +33,7 @@
                 <p>{{ writerDetails.role }}</p>
               </div> -->
             </div>
-            <div class="mt-3">
+            <div class="mt-5">
               <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
               <p v-if="singleContract.payment_mode === 'by_project'">
                 <span class="mainColor">Payment Method:</span> Project based
@@ -69,9 +69,12 @@
                 </v-col>
               </row>
             </div>
-            <h4 class="mainColor mt-3">Milestones</h4>
-            <p class="mt-3">Milestone One</p>
-            <p>Milestone Two</p>
+            <div v-if="singleContract.payment_mode === 'by_milestone'">
+              <h4 class="mainColor mt-3">Milestones</h4>
+              <p class="mt-3">Milestone One</p>
+              <p>Milestone Two</p>
+            </div>
+
             <h4 class="mainColor">Cover Letter</h4>
             <p class="my-5">
               {{ singleContract.cover_letter }}

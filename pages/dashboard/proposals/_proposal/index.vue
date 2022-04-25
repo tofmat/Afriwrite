@@ -101,14 +101,20 @@
                         </div>
                       </template>
                     </v-radio>
-                    <v-radio color="green darken-3" value="by_milestone">
+                    <v-radio
+                      color="green darken-3"
+                      value="by_milestone"
+                      disabled
+                    >
                       <template v-slot:label>
                         <div>
-                          <p class="darkGreyColor">By Milestone</p>
+                          <p class="darkGreyColor">
+                            By Milestone (coming soon)
+                          </p>
                           <p>
                             You get paid the equivalent milestone amount when
                             you complete the particular milestone. Payment is
-                            made on approval of the mailestone by the client
+                            made on approval of the milestone by the client
                           </p>
                         </div>
                       </template>

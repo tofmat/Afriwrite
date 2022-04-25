@@ -31,12 +31,14 @@
                       <i class="fas fa-map-marker-alt"></i>
                       <p class="noMargin">{{ this.$auth.user.country }}</p>
                     </div>
-                    <p>Email: {{ this.$auth.user.email }}</p>
-
-                    <p>Phone Number: {{ this.$auth.user.phone_number }}</p>
-                    <p class="textMainColor">
-                      Bio: {{ this.$auth.user.about_me }}
-                    </p>
+                    <div class="flex alignCenter mb-3 lca">
+                      <i class="fas fa-envelope"></i>
+                      <p class="noMargin">{{ this.$auth.user.email }}</p>
+                    </div>
+                    <div class="flex alignCenter mb-3 lca">
+                      <i class="fas fa-phone"></i>
+                      <p class="noMargin">{{ this.$auth.user.phone_number }}</p>
+                    </div>
                   </div>
                 </v-col>
                 <v-col cols="12" sm="5" lg="5">
@@ -151,10 +153,7 @@
               </v-btn>
             </div> -->
             <div class="mt-3">
-              <v-btn
-                class="myBtn findBtn fullWidth"
-                to="/dashboard/profile/edit"
-              >
+              <v-btn class="myBtn findBtn fullWidth" to="/client/profile/edit">
                 Edit Profile
               </v-btn>
             </div>

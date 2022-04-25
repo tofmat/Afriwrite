@@ -7,7 +7,9 @@
       class="headNav"
       style="position: relative"
     >
-      <a href="/"><img src="../assets/images/logo.png" class="logoImage" /></a>
+      <a href="/"
+        ><img src="../assets/images/afriNewLogo.png" class="logoImage"
+      /></a>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
         <div class="flex">
@@ -38,7 +40,10 @@
       temporary
       class="pad-10 noDesktop mobileDisplay"
     >
-      <img src="../assets/images/logo.png" class="logoImage mobileLogo" />
+      <img
+        src="../assets/images/afriNewLogo.png"
+        class="logoImage mobileLogo"
+      />
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="navActive">
           <v-list-item

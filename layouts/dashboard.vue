@@ -20,12 +20,20 @@
       <!-- <img src="../assets/images/bell.svg" class="mx-5" alt="notification" /> -->
       <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
       <a href="/dashboard/profile"
-        ><img
-          src="../assets/images/emptyUser.png"
-          alt="avatar"
-          height="40px"
-          class="dashProfilePic"
-      /></a>
+        ><div class="profileImage2" v-if="this.$auth.user.profile_picture">
+          <img
+            :src="`${this.$auth.user.profile_picture}`"
+            alt="ProfilePic"
+            class="dashProfilePic"
+          />
+        </div>
+        <div class="profileImage2" v-else>
+          <img
+            src="../assets/images/emptyUser.png"
+            alt="ProfilePic"
+            class="dashProfilePic"
+          /></div
+      ></a>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -35,7 +43,9 @@
       class="pad-10 noDesktop mobileDisplay"
     >
       <a href="/"
-        ><img src="../assets/images/logo.png" class="logoImage mobileLogo"
+        ><img
+          src="../assets/images/afriNewLogo.png"
+          class="logoImage mobileLogo"
       /></a>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="navActive">
@@ -49,6 +59,16 @@
           >
             <v-list-item-content>
               <v-list-item-title v-text="nav.title" />
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            router
+            exact
+            active-class="navActive"
+            @click="logoutUser()"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -360,27 +380,27 @@ export default {
         },
         {
           title: "Proposals",
-          to: "/proposals",
+          to: "/dashboard/proposals",
         },
         {
           title: "All Contracts",
-          to: "/contracts",
+          to: "/dashboard/contracts",
         },
         {
           title: "Profile",
-          to: "/profile",
+          to: "/dashboard/profile",
         },
         {
           title: "Transaction",
-          to: "/transactions",
+          to: "/dashboard/transactions",
         },
         // {
         //   title: "Reports",
         //   to: "/reports",
         // },
         {
-          title: "Settings",
-          to: "/profile",
+          title: "Profile",
+          to: "/dashboard/profile",
         },
       ],
       upNavItems: [
@@ -404,7 +424,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: "Vuetify.js",
+      title: "Afriwrites",
     };
   },
   methods: {
@@ -416,7 +436,10 @@ export default {
     logoutUser() {
       console.log("Heyooo");
       localStorage.removeItem("auth._token.local");
-      this.$cookie.delete("auth._token.local");
+      document.cookie =
+        "auth._token.local" +
+        "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      window.location.assign("/signin");
     },
     async sendNewMail() {
       try {
@@ -483,6 +506,16 @@ body {
 .px-12 {
   padding-left: 10px;
   padding-right: 10px;
+}
+.profileImage2 {
+  padding: 5px 7px;
+  width: fit-content;
+  border: 1px solid rgba(0, 137, 82, 0.2);
+  border-radius: 50%;
+}
+.profileImage2 img {
+  width: 50px !important;
+  height: 50px !important;
 }
 .pad-10 {
   padding: 10px;

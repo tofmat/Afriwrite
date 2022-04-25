@@ -9,9 +9,9 @@
                 <v-col cols="12" sm="3" lg="2" class="profilePicture">
                   <div class="profileImage">
                     <img
-                      :src="this.$auth.user.avatar"
+                      :src="this.$auth.user.profile_picture"
                       alt="ProfilePic"
-                      v-if="this.$auth.user.avatar"
+                      v-if="this.$auth.user.profile_picture"
                     />
                     <img
                       src=".././../../assets/images/emptyUser.png"
@@ -31,11 +31,14 @@
                       <i class="fas fa-map-marker-alt"></i>
                       <p class="noMargin">{{ this.$auth.user.country }}</p>
                     </div>
-                    <p>Email: {{ this.$auth.user.email }}</p>
-                    <p>Phone Number: {{ this.$auth.user.phone_number }}</p>
-                    <p class="textMainColor">
-                      Bio: {{ this.$auth.user.about_me }}
-                    </p>
+                    <div class="flex alignCenter mb-3 lca">
+                      <i class="fas fa-envelope"></i>
+                      <p class="noMargin">{{ this.$auth.user.email }}</p>
+                    </div>
+                    <div class="flex alignCenter mb-3 lca">
+                      <i class="fas fa-phone"></i>
+                      <p class="noMargin">{{ this.$auth.user.phone_number }}</p>
+                    </div>
                   </div>
                 </v-col>
                 <v-col cols="12" sm="5" lg="5">
@@ -49,6 +52,15 @@
               </div>
             </div>
             <div class="mt-10">
+              <div class="row">
+                <v-col cols="12" sm="12">
+                  <div>
+                    <p class="textMainColor mt-3">
+                      Bio: {{ this.$auth.user.about_me }}
+                    </p>
+                  </div>
+                </v-col>
+              </div>
               <div class="row textCenter">
                 <v-col cols="6" sm="6">
                   <div class="mx-2 infoCards">
@@ -111,7 +123,7 @@
                             >
                               <a
                                 :href="singleArticle.article_link"
-                                _blank="true"
+                                target="_blank"
                                 >Read more</a
                               >
                             </p>

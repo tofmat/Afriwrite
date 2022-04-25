@@ -101,14 +101,16 @@
                         </div>
                       </template>
                     </v-radio>
-                    <v-radio color="green darken-3" value="by_milestone">
+                    <v-radio color="green darken-3" value="by_milestone" disabled>
                       <template v-slot:label>
                         <div>
-                          <p class="darkGreyColor">By Milestone</p>
+                          <p class="darkGreyColor">
+                            By Milestone (coming soon)
+                          </p>
                           <p>
                             You get paid the equivalent milestone amount when
                             you complete the particular milestone. Payment is
-                            made on approval of the mailestone by the client
+                            made on approval of the milestone by the client
                           </p>
                         </div>
                       </template>
@@ -117,7 +119,14 @@
                 </v-container>
 
                 <div
-                  class="flex alignCenter width70 mt-5 justifyBetween breakToColumn"
+                  class="
+                    flex
+                    alignCenter
+                    width70
+                    mt-5
+                    justifyBetween
+                    breakToColumn
+                  "
                   v-if="proposal.payment_mode === 'by_project'"
                 >
                   <div>
@@ -132,21 +141,18 @@
                   />
                 </div>
 
-                <div class="mt-5" v-if="proposal.payment_mode === 'by_milestone'">
+                <div
+                  class="mt-5"
+                  v-if="proposal.payment_mode === 'by_milestone'"
+                >
                   <h3 class="mb-5">Add as many milestones as you need</h3>
                   <v-simple-table>
                     <template v-slot:default>
                       <thead>
                         <tr>
-                          <th class="text-left">
-                            Description
-                          </th>
-                          <th class="text-left">
-                            Deliverable
-                          </th>
-                          <th class="text-left">
-                            Milestone Amount
-                          </th>
+                          <th class="text-left">Description</th>
+                          <th class="text-left">Deliverable</th>
+                          <th class="text-left">Milestone Amount</th>
                           <th class="textCenter"></th>
                         </tr>
                       </thead>
@@ -188,7 +194,7 @@
                           </td>
                         </tr>
                       </tbody>
-                      <div class="my-5 ">
+                      <div class="my-5">
                         <a @click="addItem()"
                           ><p class="mainColor">
                             <span><i class="fas fa-plus"></i></span> Add new
@@ -223,10 +229,7 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
-                      </div>
-                      <div>
-                        <h4>60.00 USD</h4>
+                        <h4>{{ singleJob.price }} NGN</h4>
                       </div>
                     </div>
                     <hr />
@@ -248,10 +251,7 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
-                      </div>
-                      <div>
-                        <h4>-10.00 USD</h4>
+                        <h4>-10.00 NGN</h4>
                       </div>
                     </div>
                     <hr />
@@ -275,10 +275,7 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
-                      </div>
-                      <div>
-                        <h4>50.00 USD</h4>
+                        <h4>{{ singleJob.price - 10 }} NGN</h4>
                       </div>
                     </div>
                   </div>
@@ -303,7 +300,14 @@
                 </v-col>
               </div>
               <div
-                class="flex alignCenter width70 mt-5 justifyBetween breakToColumn"
+                class="
+                  flex
+                  alignCenter
+                  width70
+                  mt-5
+                  justifyBetween
+                  breakToColumn
+                "
               >
                 <div>
                   <h3>How long will this project take?</h3>
@@ -374,11 +378,11 @@
               </div>
             </div>
             <div class="mt-10 flex justifyCenter">
-            <v-btn class="findBtn" type="submit" :loading = loading>Apply Now</v-btn>
-          </div>
+              <v-btn class="findBtn" type="submit" :loading="loading"
+                >Apply Now</v-btn
+              >
+            </div>
           </form>
-
-          
 
           <v-col cols="auto">
             <v-dialog
@@ -407,7 +411,9 @@
                     </v-card-text>
                   </div>
                   <div class="flex justifyCenter mobileColumn">
-                    <v-btn class="findBtn mx-3 my-1" to="/dashboard/jobfeed">My Job Feeds</v-btn>
+                    <v-btn class="findBtn mx-3 my-1" to="/dashboard/jobfeed"
+                      >My Job Feeds</v-btn
+                    >
                   </div>
                 </v-card>
               </template>
@@ -425,7 +431,7 @@ import { mapGetters, mapActions } from "vuex";
 import addMilestoneForm from "../../../../../components/addMilestoneForm";
 export default {
   components: {
-    addMilestoneForm
+    addMilestoneForm,
   },
   layout: "dashboard",
   data() {
@@ -446,11 +452,11 @@ export default {
           {
             description: "",
             deliverables: "",
-            amount: ""
-          }
+            amount: "",
+          },
         ],
-        file: null
-      }
+        file: null,
+      },
     };
   },
   methods: {
@@ -461,7 +467,7 @@ export default {
       this.proposal.milestones.push({
         description: "",
         milestone_amount: "",
-        expected_time: ""
+        expected_time: "",
       });
     },
     removeItem(val) {
@@ -485,7 +491,7 @@ export default {
           this.activities = this.singleJob.activities;
           this.savedJobs = this.singleJob.saved_jobs;
         })
-        .catch(err => {
+        .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
         });
@@ -515,8 +521,8 @@ export default {
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data"
-            }
+              "Content-Type": "multipart/form-data",
+            },
           }
         );
         this.$toast.success("You have successfully submitted a proposal!");
@@ -529,23 +535,23 @@ export default {
         // this.errors = error.response.data.error;
         this.$toast.error(error.response.data.error);
       }
-    }
+    },
   },
   mounted() {
     this.getSingleJobs();
   },
   computed: {
     ...mapGetters({
-      singleJob: "writer/singleJob"
-    })
+      singleJob: "writer/singleJob",
+    }),
   },
   filters: {
     slicee(data) {
       let str = data.toString();
       let res = str.slice(86);
       return res;
-    }
-  }
+    },
+  },
 };
 </script>
 

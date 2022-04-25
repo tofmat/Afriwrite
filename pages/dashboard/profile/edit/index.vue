@@ -6,20 +6,32 @@
         <div class="mt-10">
           <div class="row">
             <div class="profileImageEdit">
-              <div class="profileImage" v-if="this.$auth.user.avatar">
-                <img :src="`${this.$auth.user.avatar}`" alt="ProfilePic" />
-              </div>
-              <div class="profileImage" v-else>
-                <img
-                  src="../.././../../assets/images/emptyUser.png"
-                  alt="ProfilePic"
-                />
+              <div class="profileImg">
+                <div
+                  class="profileImage"
+                  v-if="this.$auth.user.profile_picture"
+                >
+                  <img
+                    :src="`${this.$auth.user.profile_picture}`"
+                    alt="ProfilePic"
+                  />
+                </div>
+                <div class="profileImage" v-else>
+                  <img
+                    src="../.././../../assets/images/emptyUser.png"
+                    alt="ProfilePic"
+                  />
+                </div>
+                <div class="profileLoadingSmall" v-if="this.profileLoading">
+                  <i class="fas fa-spinner"></i>
+                </div>
               </div>
               <label class="custom-file-upload noFlex">
                 <input
                   className="inputDefault"
                   type="file"
                   accept="image/png, image/jpeg"
+                  v-on:change="onChange"
                 />
                 <div class="profileImg">
                   <div class="editDp">
@@ -376,12 +388,44 @@ export default {
       },
       selected: false,
       loading: false,
+      profileLoading: false,
+      profilePicture: null,
     };
   },
   methods: {
     showArticleContent() {
       this.selected = !this.selected;
     },
+    onChange(event) {
+      this.profilePicture = event.target.files;
+    },
+    async updateProfilePicture() {
+      let formData = new FormData();
+      formData.append("profile_picture", this.profilePicture[0]);
+      try {
+        this.profileLoading = true;
+        const response = await this.$axios.post(
+          "/v1/user/update-profile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        this.$toast.success("Your profile picture has been uploaded");
+        this.profileLoading = false;
+        this.profilePicture = "";
+        window.location.reload();
+        return response;
+      } catch (error) {
+        this.profilePicture = "";
+        this.profileLoading = false;
+        this.errors = error.response.data.error;
+        this.$toast.error("An error occured, please try again");
+      }
+    },
+
     async updateProfile() {
       let editedProfileDetails = {
         username: this.profileDetails.username,
@@ -434,6 +478,12 @@ export default {
       });
     },
   },
+  watch: {
+    // whenever profilePicture changes, this function will run
+    profilePicture() {
+      this.updateProfilePicture();
+    },
+  },
 };
 </script>
 
@@ -447,10 +497,21 @@ export default {
   align-items: center;
   cursor: pointer;
 }
+.profileLoadingSmall {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  left: 40%;
+}
 .profileAccountImage {
   width: 80px !important;
   height: 80px !important;
   border-radius: 500px !important;
+}
+.profileImg {
+  position: relative;
 }
 .editDp {
   bottom: 0px;

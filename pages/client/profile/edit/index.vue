@@ -6,17 +6,32 @@
         <div class="mt-10">
           <div class="row">
             <div class="profileImageEdit">
-              <div class="profileImage">
-                <img
-                  src="../.././../../assets/images/emptyUser.png"
-                  alt="ProfilePic"
-                />
+              <div class="profileImg">
+                <div
+                  class="profileImage"
+                  v-if="this.$auth.user.profile_picture"
+                >
+                  <img
+                    :src="`${this.$auth.user.profile_picture}`"
+                    alt="ProfilePic"
+                  />
+                </div>
+                <div class="profileImage" v-else>
+                  <img
+                    src="../.././../../assets/images/emptyUser.png"
+                    alt="ProfilePic"
+                  />
+                </div>
+                <div class="profileLoadingSmall" v-if="this.profileLoading">
+                  <i class="fas fa-spinner"></i>
+                </div>
               </div>
               <label class="custom-file-upload noFlex">
                 <input
-                  className="inputDefault"
+                  class="inputDefault"
                   type="file"
                   accept="image/png, image/jpeg"
+                  v-on:change="onChange"
                 />
                 <div class="profileImg">
                   <div class="editDp">
@@ -55,22 +70,12 @@
                 ></textarea>
               </div>
             </v-col>
-            <v-col cols="6" sm="6" class="inputWithLabel">
-              <span>Gender</span>
-              <select
-                v-model="profileDetails.gender"
-                class="normalInput2 fullWidth"
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </v-col>
             <v-col cols="6" sm="6">
               <input
-                v-model="profileDetails.date_of_birth"
-                type="date"
+                v-model="profileDetails.country"
+                type="text"
                 class="normalInput2 fullWidth"
-                placeholder="Date of Birth"
+                placeholder="Country"
               />
             </v-col>
             <v-col cols="6" sm="6" class="inputWithLabel">
@@ -79,17 +84,23 @@
                 v-model="profileDetails.availability"
                 class="normalInput2 fullWidth"
               >
-                <option value="1">Available to work</option>
-                <option value="0">Not Availanle</option>
+                <option
+                  value="true"
+                  :selected="`${
+                    this.profileDetails.availability == 'true' ? true : false
+                  }`"
+                >
+                  Available to hire
+                </option>
+                <option
+                  value="false"
+                  :selected="`${
+                    this.profileDetails.availability == 'false' ? true : false
+                  }`"
+                >
+                  Not Available to hire
+                </option>
               </select>
-            </v-col>
-            <v-col cols="6" sm="6">
-              <input
-                v-model="profileDetails.country"
-                type="text"
-                class="normalInput2 fullWidth"
-                placeholder="Country"
-              />
             </v-col>
           </div>
         </div>
@@ -117,7 +128,7 @@ export default {
           `${this.$auth.user.username}` !== "null"
             ? `${this.$auth.user.username}`
             : "",
-        gender: `${this.$auth.user.gender}` !== "null" ? "" : "",
+        // gender: `${this.$auth.user.gender}` !== "null" ? "" : "",
         phone_number:
           `${this.$auth.user.phone_number}` !== "null"
             ? `${this.$auth.user.phone_number}`
@@ -126,14 +137,18 @@ export default {
           `${this.$auth.user.country}` !== "null"
             ? `${this.$auth.user.country}`
             : "",
-        date_of_birth:
-          `${this.$auth.user.date_of_birth}` !== "null"
-            ? `${this.$auth.user.date_of_birth}`
-            : "",
         availability:
           `${this.$auth.user.availability}` !== "null"
             ? `${this.$auth.user.availability}`
             : "",
+        // date_of_birth:
+        //   `${this.$auth.user.date_of_birth}` !== "null"
+        //     ? `${this.$auth.user.date_of_birth}`
+        //     : "",
+        // availability:
+        //   `${this.$auth.user.availability}` !== "null"
+        //     ? `${this.$auth.user.availability}`
+        //     : "",
         profile_picture:
           `${this.$auth.user.profile_picture}` !== "null"
             ? `${this.$auth.user.profile_picture}`
@@ -144,15 +159,55 @@ export default {
             : "",
       },
       loading: false,
+      profileLoading: false,
+      profilePicture: null,
     };
   },
   methods: {
+    onChange(event) {
+      this.profilePicture = event.target.files;
+    },
+    async updateProfilePicture() {
+      let formData = new FormData();
+      formData.append("profile_picture", this.profilePicture[0]);
+      try {
+        this.profileLoading = true;
+        const response = await this.$axios.post(
+          "/v1/user/update-profile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        this.$toast.success("Your profile picture has been uploaded");
+        this.profileLoading = false;
+        this.profilePicture = "";
+        window.location.reload();
+        return response;
+      } catch (error) {
+        this.profilePicture = "";
+        this.profileLoading = false;
+        this.errors = error.response.data.error;
+        this.$toast.error("An error occured, please try again");
+      }
+    },
     async updateProfile() {
+      let editedProfileDetails = {
+        username: this.profileDetails.username,
+        gender: this.profileDetails.gender,
+        phone_number: this.profileDetails.phone_number,
+        country: this.profileDetails.country,
+        availability: this.profileDetails.availability,
+        // profile_picture: this.profileDetails.profile_picture,
+        about_me: this.profileDetails.about_me,
+      };
       try {
         this.loading = true;
         const response = await this.$axios.post(
           `/v1/user/update-profile`,
-          this.profileDetails
+          editedProfileDetails
         );
         this.loading = false;
         this.$toast.success("Your profile has been updated.");
@@ -161,6 +216,12 @@ export default {
         this.loading = false;
         this.$toast.error("There was an error updating your profile");
       }
+    },
+  },
+  watch: {
+    // whenever profilePicture changes, this function will run
+    profilePicture() {
+      this.updateProfilePicture();
     },
   },
 };
@@ -216,6 +277,14 @@ export default {
   border: 1px solid rgba(0, 137, 82, 0.2);
   border-radius: 50%;
 }
+.profileLoadingSmall {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  left: 40%;
+}
 .textArea2 {
   background: #ececec;
   border-radius: 5px;
@@ -262,6 +331,9 @@ export default {
 }
 .profilePicture img {
   width: 200px;
+}
+.profileImg {
+  position: relative;
 }
 .profileInfoHolder {
   padding: 15px 15px;

@@ -9,6 +9,7 @@
 @media (max-width: 1000px) {
   .mobileDisplay {
     display: block !important;
+    z-index: 999999 !important;
   }
   .noMobile {
     display: none !important;
