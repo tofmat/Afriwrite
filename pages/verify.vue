@@ -28,7 +28,7 @@
                     </div>
                   </div>
                 </form>
-                <div class="flex loginBtns">
+                <div class="flex loginBtns" v-if="this.$auth.loggedIn">
                   <v-btn
                     class="myBtn findBtn"
                     to="/dashboard/jobfeed"
@@ -40,6 +40,11 @@
                     to="/client/jobs"
                     v-if="this.$auth.user.role === 'client'"
                     >PROCEED TO DASHBOARD</v-btn
+                  >
+                </div>
+                <div class="flex loginBtns" v-else>
+                  <v-btn class="myBtn findBtn" to="/signin"
+                    >PROCEED TO LOGIN</v-btn
                   >
                 </div>
               </div>
@@ -117,7 +122,7 @@ export default {
   min-height: 100vh;
 }
 .signupField {
-  padding: 60px 0;
+  padding: 120px 0;
 }
 .formInput label {
   margin-bottom: 10px;
@@ -196,9 +201,9 @@ export default {
   background-color: blue;
 }
 .signUpHead {
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   color: #008952;
 }
 .faceBtn {
