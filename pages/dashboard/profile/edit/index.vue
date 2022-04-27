@@ -543,7 +543,7 @@ export default {
   -webkit-appearance: auto !important;
 }
 .profileImage {
-  padding: 30px 35px;
+  padding: 5px 7px;
 
   border: 1px solid rgba(0, 137, 82, 0.2);
   border-radius: 50%;
@@ -559,8 +559,9 @@ export default {
   padding: 10px;
 }
 .profileImage img {
-  width: 50px !important;
-  height: 50px !important;
+  width: 70px !important;
+  height: 70px !important;
+  border-radius: 50%;
 }
 .normalInput2 {
   background: #ececec;

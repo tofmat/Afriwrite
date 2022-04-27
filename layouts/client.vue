@@ -502,6 +502,7 @@ body {
 .profileImage2 img {
   width: 50px !important;
   height: 50px !important;
+  border-radius: 50%;
 }
 .openNavFull {
   position: static;

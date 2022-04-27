@@ -516,6 +516,7 @@ body {
 .profileImage2 img {
   width: 50px !important;
   height: 50px !important;
+  border-radius: 50%;
 }
 .pad-10 {
   padding: 10px;

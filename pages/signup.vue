@@ -106,11 +106,11 @@ export default {
       clientSelectedRole: false,
       freelancerSelectedRole: false,
       userInfo: {
-        first_name: "Tosin",
-        last_name: "Ogunfowote",
-        email: "tofmatt@gmail.com",
+        first_name: "",
+        last_name: "",
+        email: "",
         role: "",
-        password: "Ogunfowote400",
+        password: "",
       },
     };
   },

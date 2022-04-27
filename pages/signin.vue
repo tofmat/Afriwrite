@@ -82,8 +82,8 @@ export default {
       errors: "",
       loading: false,
       userInfo: {
-        email: "tofmatt@gmail.com",
-        password: "Ogunfowote400",
+        email: "",
+        password: "",
       },
     };
   },
