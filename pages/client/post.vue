@@ -317,7 +317,7 @@ export default {
       title: "",
       description: "",
       project_duration: "",
-      category: "E-commerce Website Articles",
+      category: "",
       level_of_experience: "",
       number_of_words: "",
       price: "",

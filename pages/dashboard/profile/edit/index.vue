@@ -365,7 +365,7 @@ export default {
             : "",
         writing_niches:
           `${this.$auth.user.writing_niches}` !== "null"
-            ? `${this.$auth.user.writing_niches}`
+            ? [`${this.$auth.user.writing_niches}`]
             : "",
         additional_links:
           `${this.$auth.user.additional_links}` !== "null"
@@ -437,7 +437,7 @@ export default {
         profile_picture: this.profileDetails.profile_picture,
         about_me: this.profileDetails.about_me,
         languages: this.profileDetails.languages,
-        writing_niches: this.profileDetails.writing_niches,
+        writing_niches: [this.profileDetails.writing_niches],
         additional_links: this.profileDetails.additional_links,
         articles: this.profileDetails.articles[0].article_link
           ? this.profileDetails.articles

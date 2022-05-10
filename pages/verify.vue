@@ -18,22 +18,17 @@
                 <p class="signUpHead" v-if="error">
                   Email address can not be verified at the moment!
                 </p>
-                <form action="" class="signupInput">
-                  <div class="formInput flex alignCenter justifyCenter">
-                    <div class="">
-                      <img
-                        src="../assets/images/Group154.png"
-                        alt="Check Mail"
-                      />
-                    </div>
+                <div class="flex alignCenter justifyCenter">
+                  <div class="">
+                    <img src="../assets/images/Group154.png" alt="Check Mail" />
                   </div>
-                </form>
+                </div>
                 <div class="flex loginBtns" v-if="this.$auth.loggedIn">
                   <v-btn
                     class="myBtn findBtn"
-                    to="/dashboard/jobfeed"
+                    to="/dashboard/profile/edit"
                     v-if="this.$auth.user.role === 'writer'"
-                    >PROCEED TO DASHBOARD</v-btn
+                    >PROCEED TO EDIT PROFILE</v-btn
                   >
                   <v-btn
                     class="myBtn findBtn"
