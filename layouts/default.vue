@@ -15,7 +15,7 @@
         <div class="flex">
           <v-list-item
             v-for="nav in navItems"
-            :key="nav"
+            :key="nav.to"
             :to="nav.to"
             router
             exact

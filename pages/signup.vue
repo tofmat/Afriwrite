@@ -36,11 +36,13 @@
                       type="text"
                       placeholder="First Name"
                       v-model="userInfo.first_name"
+                      required
                     />
                     <input
                       type="text"
                       placeholder="Last Name"
                       v-model="userInfo.last_name"
+                      required
                     />
                   </div>
                   <div class="formInput flex columnFlex">
@@ -48,6 +50,7 @@
                       type="text"
                       placeholder="Email Address"
                       v-model="userInfo.email"
+                      required
                     />
                   </div>
                   <div class="formInput flex columnFlex">
@@ -55,6 +58,7 @@
                       type="password"
                       placeholder="Set a Password"
                       v-model="userInfo.password"
+                      required
                     />
                   </div>
                   <div class="formInput flex centerflex">
