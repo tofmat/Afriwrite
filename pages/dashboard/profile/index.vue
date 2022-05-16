@@ -135,63 +135,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="mt-10">
-                <div class="backWhite workHis">
-                  <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
-                  <hr class="fullWidth" />
-                  <div class="mt-4">
-                    <div>
-                      <v-row>
-                        <v-col cols="12" sm="8">
-                          <h3 class="mainColor">
-                            Storytelling expert with narrative skills and an eye
-                            for design
-                          </h3>
-                          <div class="flex alignCenter my-3 lca">
-                            <i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i>
-                            <h3>5.0</h3>
-                          </div>
-                          <p class="textItalics">
-                            As always, great work and working with you
-                          </p>
-                        </v-col>
-                        <v-col cols="12" sm="4" class="rightAlign">
-                          <h3>$60</h3>
-                          <h3>Fixed Price</h3>
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <hr class="fullWidth mt-4" />
-                    <div>
-                      <v-row>
-                        <v-col cols="12" sm="8">
-                          <h3 class="mainColor">
-                            Storytelling expert with narrative skills and an eye
-                            for design
-                          </h3>
-                          <div class="flex alignCenter my-3 lca">
-                            <i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i
-                            ><i class="fas fa-star yellowColor"></i>
-                            <h3>5.0</h3>
-                          </div>
-                          <p class="textItalics">
-                            As always, great work and working with you
-                          </p>
-                        </v-col>
-                        <v-col cols="12" sm="4" class="rightAlign">
-                          <h3>$60</h3>
-                          <h3>Fixed Price</h3>
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="3">
@@ -214,6 +157,15 @@
                 to="/dashboard/profile/edit"
               >
                 Edit Profile
+              </v-btn>
+            </div>
+            <div class="mt-3" v-if="userVerificationComplete">
+              <v-btn 
+                class="myBtn findBtn fullWidth"
+                @click="requestForTestLink"
+                :loading="loading"
+              >
+                Request For Verification Test Link
               </v-btn>
             </div>
             <hr class="fullWidth my-5" />
@@ -375,6 +327,15 @@
 import banks from "../../../static/banks";
 export default {
   layout: "dashboard",
+  computed:{
+    userVerificationComplete(){
+      if(this.user.writing_niches && this.user.skills && this.user.category && this.user.subcategory 
+        && (this.user.writer_stage_one_test_status === 'pending')
+      ){
+          return true
+      }
+    }
+  },
   data() {
     return {
       dialog: false,
@@ -391,6 +352,7 @@ export default {
         description: "",
       },
       loading: false,
+      user: this.$auth.user
     };
   },
   methods: {
@@ -418,6 +380,23 @@ export default {
         this.$toast.error(error.response.data.error);
       }
     },
+    async requestForTestLink(){
+      try {
+        this.loading = true;
+        const response = await this.$axios.post(
+          `/v1/auth/complete-registration`
+        );
+        this.$toast.success(
+          "Test Link has been sent to your email!"
+        );
+        this.loading = false;
+        return 
+      } catch (error) {
+        console.log(error.response)
+        this.loading = false;
+        this.$toast.error(error.response.data.error);
+      }
+    }
   },
   mounted() {
     // this.fetchAllBanks;
