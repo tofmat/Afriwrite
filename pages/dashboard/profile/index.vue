@@ -325,6 +325,7 @@
 
 <script>
 import banks from "../../../static/banks";
+
 export default {
   layout: "dashboard",
   computed:{
@@ -399,7 +400,6 @@ export default {
     }
   },
   mounted() {
-    // this.fetchAllBanks;
   },
 };
 </script>

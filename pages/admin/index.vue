@@ -67,12 +67,12 @@
                   }
                 "
               >
-                Verify Initial Test
+                Verify Writer Test
               </v-btn>
             </div>
             <hr class="fullWidth my-5" />
 
-            <div>
+            <!-- <div>
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
@@ -83,7 +83,7 @@
               >
                 Verify Final Test
               </v-btn>
-            </div>
+            </div> -->
             <hr class="fullWidth my-5" />
           </div>
         </v-col>
@@ -115,11 +115,11 @@
                               class="selectBank normalInput2 fullWidth"
                               v-model="testLink.test_stage"
                             >
-                              <option value="training_phase">
+                              <!-- <option value="training_phase">
                                 Training Phase
-                              </option>
-                              <option value="stage_one">Stage One Test</option>
-                              <option value="stage_two">Stage Two Test</option>
+                              </option> -->
+                              <option value="stage_one" selected>Stage One Test</option>
+                              <!-- <option value="stage_two">Stage Two Test</option> -->
                             </select>
                           </div>
                         </v-col>
@@ -160,7 +160,7 @@
               <v-card class="py-5">
                 <div class="centerflex columnFlex">
                   <v-card-text>
-                    <h2 class="mainColor textCenter">Verify Initial Test</h2>
+                    <h2 class="mainColor textCenter">Verify Writer Test</h2>
                     <p class="textCenter mt-3">
                       Please input the emails of the people that passed or
                       failed. A mail would be sent to them notifying them

@@ -64,6 +64,17 @@
           <v-list-item
             router
             exact
+            :href="messageURL"
+            target="_blank"
+            active-class="navActive"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Messages</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            router
+            exact
             active-class="navActive"
             @click="logoutUser()"
           >
@@ -138,7 +149,12 @@
             </v-list-item-icon>
             <v-list-item-title>Saved Jobs</v-list-item-title>
           </v-list-item>
-          <v-list-item link class="sideLinkCon">
+          <v-list-item 
+            link 
+            class="sideLinkCon"
+            :href="messageURL"
+            target="_blank"
+          >
             <v-list-item-icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -354,6 +370,8 @@
 </template>
 
 <script>
+
+import { Constants } from "../static/Constants"
 export default {
   middleware: "dashboard",
   data() {
@@ -375,10 +393,6 @@ export default {
           to: "dashboard/saved",
         },
         {
-          title: "Messages",
-          to: "/",
-        },
-        {
           title: "Proposals",
           to: "/dashboard/proposals",
         },
@@ -398,10 +412,6 @@ export default {
         //   title: "Reports",
         //   to: "/reports",
         // },
-        {
-          title: "Profile",
-          to: "/dashboard/profile",
-        },
       ],
       upNavItems: [
         {
@@ -425,6 +435,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Afriwrites",
+      user: this.$auth.user
     };
   },
   methods: {
@@ -463,6 +474,11 @@ export default {
         this.dialog = false;
       }
     },
+    messageURL(){
+      const { id, email } = this.user
+      const { CHAT_BASE_URL, CHAT_SIGNATURE_KEY } = Constants
+      return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&signature_key=${CHAT_SIGNATURE_KEY}`
+    }
   },
   mounted() {
     this.verifyEmail;

@@ -45,7 +45,7 @@
         <div class="mt-10 editProfileForm">
           <div class="row">
             <v-col cols="6" sm="6">
-              <span>Username </span>
+              <span>Username <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.username"
                 type="text"
@@ -54,7 +54,7 @@
               />
             </v-col>
             <v-col cols="6" sm="6">
-              <span>Phone Number </span>
+              <span>Phone Number <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.phone_number"
                 type="text"
@@ -64,7 +64,7 @@
             </v-col>
             <v-col cols="12" sm="12">
               <div class="mt-3">
-                <span>Your Bio </span>
+                <span>Your Bio <span class="text-danger">*</span> </span>
                 <textarea
                   v-model="profileDetails.about_me"
                   rows="5"
@@ -194,7 +194,7 @@
               </select>
             </v-col>
             <v-col cols="6" sm="6">
-              <span>Country</span>
+              <span>Country <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.country"
                 type="text"
@@ -381,7 +381,7 @@ export default {
   layout: "dashboard",
   computed:{
     requiredFieldsNotFilled(){
-      if(!this.profileDetails.category || !this.skills || !this.niches || !this.subcategory) return true
+      if(!this.profileDetails.category || !this.skills || !this.niches || !this.subcategory || !this.profileDetails.username || !this.profileDetails.phone_number || !this.profileDetails.about_me || !this.profileDetails.country) return true
     }
   },
   data() {
