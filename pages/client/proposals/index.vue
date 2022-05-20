@@ -103,12 +103,13 @@
                         <v-col cols="12" sm="2">
                           <v-btn
                             class="findBtn my-1 fullWidth"
-                            :to="`/client/proposals/${proposal.id}`"
+                            :to="`/client/proposals/${proposal.public_reference_id}`"
                             >View Details</v-btn
                           >
                           <v-btn
                             class="greyBtn my-1 fullWidth"
-                            :to="`/client/proposals/${proposal.id}`"
+                            :href="getMessageURL(proposal.writer.id)"
+                            target="_blank"
                             ><i class="far fa-comments mr-2 mainColor"></i>
                             Contact</v-btn
                           >
@@ -143,7 +144,7 @@
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   layout: "client",
   components: {
@@ -153,6 +154,7 @@ export default {
     return {
       apiLoading: false,
       allProposals: [],
+      user: this.$auth.user
     };
   },
   methods: {
@@ -174,9 +176,9 @@ export default {
     this.getJobs();
   },
   computed: {
-    ...mapGetters({
-      allProposals: "client/allProposals",
-    }),
+    // ...mapGetters({
+    //   allProposals: "client/allProposals",
+    // }),
   },
   filters: {
     dateSlice(data) {

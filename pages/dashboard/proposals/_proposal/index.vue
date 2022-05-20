@@ -25,7 +25,7 @@
                 <v-col cols="6" sm="4">
                   <div class="flex alignCenter justifyCenter">
                     <p class="mr-2">Budget</p>
-                    <h2>${{ singleJob.price }}</h2>
+                    <h2>&#8358;{{ singleJob.price }}</h2>
                   </div>
                 </v-col>
                 <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
@@ -79,7 +79,7 @@
                   <div>
                     <div class="sideGreenInfo">
                       <p>Clients Budget</p>
-                      <h2>${{ singleJob.price }} USD</h2>
+                      <h2>&#8358;{{ singleJob.price }} NGN</h2>
                     </div>
                   </div>
                 </v-col>
@@ -233,10 +233,10 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
+                        <h4>&#8358;</h4>
                       </div>
                       <div>
-                        <h4>60.00 USD</h4>
+                        <h4>60.00 NGN</h4>
                       </div>
                     </div>
                     <hr />
@@ -258,10 +258,10 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
+                        <h4>&#8358;</h4>
                       </div>
                       <div>
-                        <h4>-10.00 USD</h4>
+                        <h4>-10.00 NGN</h4>
                       </div>
                     </div>
                     <hr />
@@ -285,10 +285,10 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>$</h4>
+                        <h4>&#8358;</h4>
                       </div>
                       <div>
-                        <h4>50.00 USD</h4>
+                        <h4>50.00 NGN</h4>
                       </div>
                     </div>
                   </div>

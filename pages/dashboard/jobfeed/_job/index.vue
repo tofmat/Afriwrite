@@ -94,7 +94,7 @@
               <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
                 <div
                   v-if="
-                    this.$auth.user.writer_stage_two_test_status === 'pending'
+                    this.$auth.user.writer_stage_one_test_status === 'pending'
                   "
                 >
                   <v-btn

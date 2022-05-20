@@ -355,6 +355,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      group: '',
       navItems: [
         {
           title: "My Jobs",

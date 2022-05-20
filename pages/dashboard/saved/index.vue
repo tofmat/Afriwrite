@@ -3,7 +3,7 @@
     <h2 class="mainColor mb-5">Saved Jobs</h2>
     <input type="text" placeholder="search for Jobs" class="mb-10 mainSearch" />
     <div class="row">
-      <v-col cols="12" sm="12" lg="4" class="dashDef">
+      <!-- <v-col cols="12" sm="12" lg="4" class="dashDef">
         <div class="dashSlate">
           <div class="dashSearch">
             <h3>Filter By</h3>
@@ -25,8 +25,8 @@
             </div>
           </div>
         </div>
-      </v-col>
-      <v-col cols="12" sm="12" lg="8" class="">
+      </v-col> -->
+      <v-col cols="12" sm="12" lg="10" class="">
         <div class="jobInfo" v-if="apiLoading">
           <div class="row noMargin">
             <v-col cols="12" sm="9" class="jobDesc">

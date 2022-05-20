@@ -96,7 +96,7 @@
               <v-col cols="12" sm="2" class="jobControls">
                 <div class="jobControl">
                   <p>Proposed Amount</p>
-                  <h2>${{ job.price }}</h2>
+                  <h2>&#8358;{{ job.total_amount }}</h2>
                 </div>
                 <div class="jobControl">
                   <p>Number of words</p>
@@ -221,7 +221,7 @@ export default {
     return {
       apiLoading: false,
       apiLoadingDrafts: false,
-      // allJobs: [],
+      allJobs: [],
       allDrafts: [],
       deleteLoading: false,
     };
@@ -237,6 +237,7 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.allJobs = data.data;
+          console.log(data)
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -277,9 +278,9 @@ export default {
     this.getDrafts();
   },
   computed: {
-    ...mapGetters({
-      allJobs: "client/allJobs",
-    }),
+    // ...mapGetters({
+    //   allJobs: "client/allJobs",
+    // }),
   },
   filters: {
     changToString: function (value) {

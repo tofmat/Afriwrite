@@ -182,6 +182,7 @@ export default {
         job_proposal_id: "",
         description: "Thanks",
       },
+      totalAmount: ''
     };
   },
   methods: {
@@ -251,9 +252,9 @@ export default {
     this.getSingleContract();
   },
   computed: {
-    ...mapGetters({
-      singleContract: "writer/singleContract",
-    }),
+    // ...mapGetters({
+    //   singleContract: "writer/singleContract",
+    // }),
   },
   filters: {
     slicee(data) {

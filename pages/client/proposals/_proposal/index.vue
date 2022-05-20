@@ -84,7 +84,7 @@
                 >Decline Proposal</v-btn
               >
             </div>
-            <v-btn class="greyBtn mb-4 fullWidth" @click="contactRecipient"
+            <v-btn class="greyBtn mb-4 fullWidth" :href="getMessageURL(writerDetails.id)" target="_blank"
               ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
             >
             <v-btn class="greyBtn mb-4 fullWidth"
@@ -136,14 +136,10 @@ export default {
       proposalDate: "",
       dateWriterRegistered: "",
       jobDetails: "",
+      totalAmount: ""
     };
   },
   methods: {
-    contactRecipient() {
-      window.location.assign(
-        `http://afriwrites-chat-system.herokuapp.com/create-chat?user_id=${this.$auth.user.id}&recipient_id=${this.writerDetails.id}&email=${this.$auth.user.email}&signature_key=$2y$10$jXZolJaVBfwnAUM1qMR3Ju7MGvqFrrqW119gzcHZXgsKTQDnijl3y`
-      );
-    },
     getSingleProposal() {
       this.singleProposal = "";
       this.pageLoading = true;
@@ -156,6 +152,7 @@ export default {
           this.jobDetails = this.singleProposal.job;
           this.proposalDate = this.singleProposal.created_at;
           this.dateWriterRegistered = this.writerDetails.created_at;
+          // this.totalAmount = this.singleProposal.proposed_amount;
           this.totalAmount =
             this.singleProposal.proposed_amount *
             this.jobDetails.number_of_words;
@@ -183,7 +180,7 @@ export default {
               job_proposal_id: this.singleProposal.id,
             };
             await this.$axios.post(
-              `/v1/client/accept-job-proposal/${this.singleProposal.id}`,
+              `/v1/client/accept-job-proposal/${this.singleProposal.public_reference_id}`,
               paymentDetails
             );
             this.$toast.success(
@@ -221,9 +218,9 @@ export default {
     this.getSingleProposal();
   },
   computed: {
-    ...mapGetters({
-      singleProposal: "client/singleProposal",
-    }),
+    // ...mapGetters({
+    //   singleProposal: "client/singleProposal"
+    // }),
   },
   filters: {
     slicee(data) {

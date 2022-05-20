@@ -37,7 +37,17 @@ export const getters = {
   draftedJob(state) {
     return state.draftedJob
   },
-  
+  getProposalId: (state) => (public_reference_id) => {
+    console.log('getProposalId')
+    console.log(state.allProposals)
+		if(state.allProposals){
+			for(let i in state.allProposals){
+				if(state.allProposals[i].public_reference_id === public_reference_id){
+					return state.allProposals[i].id
+				}
+			}
+		}
+	},
 }
 
 export const mutations = {

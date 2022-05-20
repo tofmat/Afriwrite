@@ -16,16 +16,14 @@
               <div class="jobDetailsTexts">
                 <p>{{ singleJob.description }}</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn" v-for="niche in writingNiches" :key="niche">{{niche}}</v-btn>
                 </div>
               </div>
               <div class="row alignCenter jobTips mt-10">
                 <v-col cols="6" sm="4">
                   <div class="flex alignCenter justifyCenter">
                     <p class="mr-2">Budget</p>
-                    <h2>${{ singleJob.price }}</h2>
+                    <h2>&#8358;{{ singleJob.total_amount }}</h2>
                   </div>
                 </v-col>
                 <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
@@ -61,8 +59,8 @@
                   <h4>
                     {{ clientInfo.first_name }} {{ clientInfo.last_name }}
                   </h4>
-                  <h4>USA</h4>
-                  <p class="mb-5">20 Jobs posted</p>
+                  <h4>{{clientInfo.country}}</h4>
+                  <!-- <p class="mb-5">20 Jobs posted</p> -->
                 </div>
               </div>
             </v-col>
@@ -79,7 +77,7 @@
                   <div>
                     <div class="sideGreenInfo">
                       <p>Clients Budget</p>
-                      <h2>${{ singleJob.price }} USD</h2>
+                      <h2>&#8358;{{ singleJob.total_amount }} NGN</h2>
                     </div>
                   </div>
                 </v-col>
@@ -229,7 +227,7 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>{{ singleJob.price }} NGN</h4>
+                        <h4>{{ singleJob.total_amount }} NGN</h4>
                       </div>
                     </div>
                     <hr />
@@ -275,7 +273,7 @@
                         </h4>
                       </div>
                       <div>
-                        <h4>{{ singleJob.price - 10 }} NGN</h4>
+                        <h4>{{ singleJob.total_amount - 10 }} NGN</h4>
                       </div>
                     </div>
                   </div>
@@ -443,6 +441,7 @@ export default {
       activities: "",
       savedJobs: "",
       dialog: false,
+      writingNiches: [],
       proposal: {
         duration: "",
         cover_letter: "",
@@ -458,6 +457,11 @@ export default {
         file: null,
       },
     };
+  },
+  watch:{
+    singleJob(){
+      this.writingNiches = this.singleJob.writing_niches.length ? this.singleJob.writing_niches.split(',') : []
+    }
   },
   methods: {
     onChange(event) {
@@ -490,6 +494,7 @@ export default {
           this.clientInfo = this.singleJob.client;
           this.activities = this.singleJob.activities;
           this.savedJobs = this.singleJob.saved_jobs;
+          console.log(this.clientInfo)
         })
         .catch((err) => {
           this.apiLoading = false;
