@@ -259,34 +259,6 @@
             </v-list-item-icon>
             <v-list-item-title>Transactions</v-list-item-title>
           </v-list-item>
-          <!-- <v-list-item
-            link
-            class="sideLinkCon"
-            to="/dashboard/reports"
-            router
-            exact
-            active-class="navActive"
-          >
-            <v-list-item-icon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 21.123 21.117"
-              >
-                <g transform="translate(1.007 1)">
-                  <path
-                    d="M21.36,16.727A9.558,9.558,0,1,1,8.734,4.245"
-                    transform="translate(-2.999 -3.452)"
-                  />
-                  <path
-                    class="a"
-                    d="M27.558,12.558A9.558,9.558,0,0,0,18,3v9.558Z"
-                    transform="translate(-8.441 -3)"
-                  />
-                </g>
-              </svg>
-            </v-list-item-icon>
-            <v-list-item-title>Reports</v-list-item-title>
-          </v-list-item> -->
           <v-list-item
             link
             class="sideLinkCon"

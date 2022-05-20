@@ -221,7 +221,7 @@ export default {
     return {
       apiLoading: false,
       apiLoadingDrafts: false,
-      allJobs: [],
+      // allJobs: [],
       allDrafts: [],
       deleteLoading: false,
     };
