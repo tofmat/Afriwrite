@@ -65,7 +65,7 @@
            <v-list-item
             router
             exact
-            :href="messageURL"
+            :href="getMessageURL()"
             target="_blank"
             active-class="navActive"
           >
@@ -153,7 +153,7 @@
           <v-list-item 
             link 
             class="sideLinkCon"
-            :href="messageURL"
+            :href="getMessageURL()"
             target="_blank"
           >
             <v-list-item-icon>
@@ -343,8 +343,6 @@
 </template>
 
 <script>
-import { Constants } from "../static/Constants"
-
 export default {
   middleware: "client",
   data() {
@@ -359,27 +357,27 @@ export default {
       navItems: [
         {
           title: "My Jobs",
-          to: "client/jobs",
+          to: "/client/jobs",
         },
         {
           title: "Post Job",
-          to: "client/post",
+          to: "/client/post",
         },
         {
           title: "Proposals",
-          to: "client/proposals",
+          to: "/client/proposals",
         },
         {
           title: "All Contracts",
-          to: "client/contracts",
+          to: "/client/contracts",
         },
         {
           title: "Profile",
-          to: "client/profile",
+          to: "/client/profile",
         },
         {
           title: "Transaction",
-          to: "client/transactions",
+          to: "/client/transactions",
         },
       ],
       upNavItems: [
@@ -443,11 +441,6 @@ export default {
         this.dialog = false;
       }
     },
-    messageURL(){
-      const { id, email } = this.user
-      const { CHAT_BASE_URL, CHAT_SIGNATURE_KEY } = Constants
-      return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&signature_key=${CHAT_SIGNATURE_KEY}`
-    }
   },
   mounted() {
     this.verifyEmail;

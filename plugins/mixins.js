@@ -5,10 +5,14 @@ import Vue from 'vue'
 
 const mixins = {
   methods:{
-    getMessageURL(recipientId){
+    getMessageURL(recipientId=null){
       const { id, email } = this.$auth.user
       const { CHAT_BASE_URL, CHAT_SIGNATURE_KEY } = Constants
-      return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&recipient_id=${recipientId}&signature_key=${CHAT_SIGNATURE_KEY}`
+
+      if(recipientId != null){
+        return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&recipient_id=${recipientId}&signature_key=${CHAT_SIGNATURE_KEY}`
+      }
+      return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&signature_key=${CHAT_SIGNATURE_KEY}`
     }
   }
 }

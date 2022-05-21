@@ -64,7 +64,7 @@
           <v-list-item
             router
             exact
-            :href="messageURL"
+            :href="getMessageURL()"
             target="_blank"
             active-class="navActive"
           >
@@ -152,7 +152,7 @@
           <v-list-item 
             link 
             class="sideLinkCon"
-            :href="messageURL"
+            :href="getMessageURL()"
             target="_blank"
           >
             <v-list-item-icon>
@@ -342,8 +342,6 @@
 </template>
 
 <script>
-
-import { Constants } from "../static/Constants"
 export default {
   middleware: "dashboard",
   data() {
@@ -447,11 +445,6 @@ export default {
         this.dialog = false;
       }
     },
-    messageURL(){
-      const { id, email } = this.user
-      const { CHAT_BASE_URL, CHAT_SIGNATURE_KEY } = Constants
-      return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&signature_key=${CHAT_SIGNATURE_KEY}`
-    }
   },
   mounted() {
     this.verifyEmail;
