@@ -23,7 +23,7 @@
                   <v-col cols="6" sm="3">
                     <div class="flex alignCenter justifyCenter">
                       <p class="mr-2">Budget</p>
-                      <h2>N{{ singleJob.price }}</h2>
+                      <h2>N{{ singleJob.total_amount }}</h2>
                     </div>
                   </v-col>
                   <v-col cols="6" sm="3">
@@ -169,9 +169,7 @@
                         </span>
                       </h4>
                       <div class="workDiv fullWidth my-3 scrollable-x" to="#">
-                        https://www.afriwrite.com/jobs/{{
-                          singleJob.public_reference_id
-                        }}
+                        {{ publicJobPostLink }}
                       </div>
                       <p class="mainColor arrowCursor" @click="copyJobLink()">
                         Copy link
@@ -221,17 +219,27 @@ export default {
         .dispatch("writer/getSingleJob", this.$route.params.job)
         .then(({ data }) => {
           this.apiLoading = false;
-          this.singleJob = data.data;
-          this.singleJobMedia = this.singleJob.media;
-          this.clientInfo = this.singleJob.client;
-          this.lastViewedByCLient = this.singleJob.last_viewed_by_client;
-          this.clientCreatedAt = this.clientInfo.created_at;
-          this.activities = this.singleJob.activities;
-          this.savedJobs = this.singleJob.saved_jobs;
+          if(data && data != null){
+            this.singleJob = data.data;
+            this.singleJobMedia = this.singleJob.media;
+            this.clientInfo = this.singleJob.client;
+            this.lastViewedByCLient = this.singleJob.last_viewed_by_client;
+            this.clientCreatedAt = this.clientInfo.created_at;
+            this.activities = this.singleJob.activities;
+            this.savedJobs = this.singleJob.saved_jobs;
+          }else{
+            this.$toast.success("This job is not available any longer");
+            setTimeout(() => {
+              window.location = "/dashboard/jobfeed"
+            }, 2000)
+          }
         })
         .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
+          setTimeout(() => {
+            window.location = "/dashboard/jobfeed"
+          }, 2000)
         });
     },
     async saveJob(job_id) {
@@ -252,9 +260,7 @@ export default {
       }
     },
     copyJobLink() {
-      navigator.clipboard.writeText(
-        `https://www.afriwrite.com/jobs/${this.singleJob.public_reference_id}`
-      );
+      navigator.clipboard.writeText(this.publicJobPostLink);
       this.$toast.success("Link copied");
     },
     async deleteSavedJob(job_id) {
@@ -275,11 +281,15 @@ export default {
   },
   mounted() {
     this.getSingleJobs();
+    console.log(this.$route.params.job)
   },
   computed: {
-    ...mapGetters({
-      singleJob: "writer/singleJob",
-    }),
+    // ...mapGetters({
+    //   singleJob: "writer/singleJob",
+    // }),
+    publicJobPostLink(){
+      return `${window.location.host}/jobs/${this.singleJob.public_reference_id}`
+    }
   },
   filters: {
     slicee(data) {

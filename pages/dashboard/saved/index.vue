@@ -88,9 +88,9 @@
                 </div>
                 <p>{{ job.job.description | descriptionSlice }} ...</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn" v-for="niche in getWritingNiches(job.job.writing_niches)" :key="niche">
+                    {{niche}}
+                  </v-btn>
                 </div>
               </v-col>
               <v-col cols="12" sm="3" class="jobControls">
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -155,14 +155,17 @@ export default {
         this.$toast.error("There was an error removing from saved jobs");
       }
     },
+    getWritingNiches(niches){
+      return niches.split(',')
+    }
   },
   mounted() {
     this.getSavedJobs();
   },
   computed: {
-    ...mapGetters({
-      savedJobs: "writer/savedJobs",
-    }),
+    // ...mapGetters({
+    //   savedJobs: "writer/savedJobs",
+    // }),
   },
   filters: {
     descriptionSlice(data) {

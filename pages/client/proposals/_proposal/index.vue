@@ -18,7 +18,7 @@
               </div>
               <div class="mr-10 infoCards">
                 <h3 class="mb-2 mainColor">
-                  N{{ singleProposal.proposed_amount }}/word
+                  N{{ singleProposal.price_per_word }}/word
                 </h3>
                 <p class="darkGreyColor">Bid</p>
               </div>
@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
 export default {
   scrollToTop: true,
@@ -152,9 +152,8 @@ export default {
           this.jobDetails = this.singleProposal.job;
           this.proposalDate = this.singleProposal.created_at;
           this.dateWriterRegistered = this.writerDetails.created_at;
-          // this.totalAmount = this.singleProposal.proposed_amount;
           this.totalAmount =
-            this.singleProposal.proposed_amount *
+            this.singleProposal.price_per_word *
             this.jobDetails.number_of_words;
         })
         .catch((err) => {

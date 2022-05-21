@@ -275,7 +275,7 @@
               </div>
               <div>
                 <div class="my-2">
-                  <h4>Price per word ($)</h4>
+                  <h4>Price per word (&#8358;)</h4>
                   <small>Afriwrite recommended price per word is N20.</small>
                   <div class="flex alignCenter my-1">
                     <input

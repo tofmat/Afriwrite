@@ -22,8 +22,8 @@
               <div class="row alignCenter jobTips mt-10">
                 <v-col cols="6" sm="4">
                   <div class="flex alignCenter justifyCenter">
-                    <p class="mr-2">Budget</p>
-                    <h2>&#8358;{{ singleJob.total_amount }}</h2>
+                    <p class="mr-2">Price per word</p>
+                    <h2>&#8358;{{ singleJob.price }}</h2>
                   </div>
                 </v-col>
                 <v-col cols="6" sm="4" class="flex alignCenter justifyCenter">
@@ -129,11 +129,11 @@
                 >
                   <div>
                     <h3>Proposed Amount</h3>
-                    <p>Total amount you would like to get paid (Per Word)</p>
+                    <p>Amount you would like to get paid (Per Word)</p>
                   </div>
                   <input
                     type="tel"
-                    v-model="proposal.proposed_amount"
+                    v-model="proposal.price_per_word"
                     placeholder="N5"
                     class="normalInput"
                   />
@@ -445,7 +445,7 @@ export default {
       proposal: {
         duration: "",
         cover_letter: "",
-        proposed_amount: "",
+        price_per_word: "",
         payment_mode: "by_project",
         milestones: [
           {
@@ -516,7 +516,7 @@ export default {
       }
       formData.append("duration", this.proposal.duration);
       formData.append("cover_letter", this.proposal.cover_letter);
-      formData.append("proposed_amount", this.proposal.proposed_amount);
+      formData.append("price_per_word", this.proposal.price_per_word);
       formData.append("payment_mode", this.proposal.payment_mode);
       formData.append("milestones[]", this.proposal.milestones);
       try {

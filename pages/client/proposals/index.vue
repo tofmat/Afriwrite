@@ -91,7 +91,7 @@
                           </h4>
                           <small>{{ proposal.writer.role }}</small>
                           <p class="noMargin">
-                            Bid: N{{ proposal.proposed_amount }}/word
+                            Bid: &#8358;{{ proposal.price_per_word }}/word
                           </p>
                           <p class="noMargin">
                             Duration: {{ proposal.duration }}Days

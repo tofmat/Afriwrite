@@ -363,7 +363,7 @@ export default {
         },
         {
           title: "Saved Jobs",
-          to: "dashboard/saved",
+          to: "/dashboard/saved",
         },
         {
           title: "Proposals",

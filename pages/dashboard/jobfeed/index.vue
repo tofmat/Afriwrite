@@ -111,7 +111,7 @@
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   components: {
     skeletonBox,
@@ -163,9 +163,9 @@ export default {
     this.getJobs();
   },
   computed: {
-    ...mapGetters({
-      allJobs: "writer/allJobs",
-    }),
+    // ...mapGetters({
+    //   allJobs: "writer/allJobs",
+    // }),
   },
   filters: {
     descriptionSlice(data) {

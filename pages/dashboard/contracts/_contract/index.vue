@@ -13,7 +13,7 @@
             <div class="flex alignCenter mobileColumn mt-5">
               <div class="mr-10 infoCards">
                 <h3 class="mb-2 mainColor">
-                  N{{ singleContract.proposed_amount }}/word
+                  N{{ singleContract.price_per_word }}/word
                 </h3>
                 <p class="darkGreyColor">Bid</p>
               </div>
@@ -126,9 +126,16 @@
                 v-if="singleContract.status === 'processing_payment'"
                 >Payment Processing</v-btn
               >
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                v-if="singleContract.status === 'completed'"
+                >Project Completed</v-btn
+              >
             </div>
-            <v-btn class="greyBtn mb-4 fullWidth" @click="contactRecipient"
-              ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
+            <v-btn class="greyBtn mb-4 fullWidth" 
+                target="_blank"
+                :href="getMessageURL(clientDetails.id)"
+              ><i class="far fa-comments mr-2 mainColor"></i> Contact Client</v-btn
             >
             <!-- <v-btn class="greyBtn mb-4 fullWidth"
               ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
@@ -204,7 +211,7 @@ export default {
           this.dateWriterRegistered = this.clientDetails.created_at;
           this.proposalDate = this.singleContract.created_at;
           this.totalAmount =
-            this.singleContract.proposed_amount *
+            this.singleContract.price_per_word *
             this.jobDetails.number_of_words;
         })
         .catch((err) => {
@@ -240,6 +247,9 @@ export default {
         );
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for payment.");
+        setTimeout(() => {
+          window.reload()
+        }, 2000)
       } catch (error) {
         this.approveLoading = false;
         this.$toast.error(
@@ -248,7 +258,12 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
+
     this.getSingleContract();
   },
   computed: {

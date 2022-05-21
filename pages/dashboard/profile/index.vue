@@ -267,7 +267,7 @@
                               <option
                                 :value="bank.code"
                                 v-for="bank in allBanks"
-                                :key="bank.code"
+                                :key="bank.id"
                               >
                                 {{ bank.name }}
                               </option>
