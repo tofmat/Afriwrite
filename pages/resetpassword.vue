@@ -4,7 +4,7 @@
       <div class="signupField">
         <v-container>
           <div class="flex centerflex signupEvery">
-            <div class="signupImage">
+            <div class="signupImage noMobile">
               <img src="../assets/images/typewriter.png" alt="" />
             </div>
             <div class="signupForm">

@@ -142,11 +142,11 @@ export default {
         },
         {
           title: "About Us",
-          to: "/about",
+          to: "#",
         },
         {
           title: "View Freelancers",
-          to: "/browse",
+          to: "#",
         },
         {
           title: "Sign In",
@@ -166,6 +166,8 @@ export default {
 .footerSocials img {
   margin: 0 10px;
   cursor: pointer;
+  width: 25px;
+  height: 25px;
 }
 .footerText {
   text-align: center;
