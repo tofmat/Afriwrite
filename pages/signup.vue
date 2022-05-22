@@ -4,7 +4,7 @@
       <div class="signupField">
         <v-container>
           <div class="flex centerflex signupEvery">
-            <div class="signupImage">
+            <div class="signupImage noMobile">
               <img src="../assets/images/typewriter.png" alt="" />
             </div>
             <div class="signupForm">
@@ -61,7 +61,7 @@
                       required
                     />
                   </div>
-                  <div class="formInput flex centerflex">
+                  <div class="formInput flex flexMobile centerflex">
                     <v-btn
                       class="myBtn jobBtn"
                       :class="{ selectedRole: freelancerSelectedRole }"
@@ -184,8 +184,9 @@ export default {
   box-shadow: none !important;
 }
 .signUp {
-  background-color: #f5f6fa;
+  background-color: #fff;
 }
+
 .findBtn {
   padding: 10px 20px !important;
   background-color: #008952 !important;
@@ -203,9 +204,7 @@ export default {
 .fullHeight {
   min-height: 100vh;
 }
-.signupField {
-  padding: 140px 0;
-}
+
 .formInput label {
   margin-bottom: 10px;
 }
@@ -290,9 +289,6 @@ export default {
   color: #1877f2 !important;
 }
 @media (max-width: 1300px) {
-  /* .signupField {
-      padding: 60px 50px;
-    } */
   .loginBtns {
     flex-direction: column;
   }
@@ -301,9 +297,6 @@ export default {
   }
 }
 @media (max-width: 1000px) {
-  /* .signupField {
-      padding: 60px 50px;
-    } */
   .loginBtns {
     flex-direction: column;
   }
@@ -317,12 +310,17 @@ export default {
 @media (max-width: 700px) {
   .signupForm {
     width: 100%;
+    margin-top: 20px;
+    padding: 20px;
   }
   .signupImage img {
     width: 200px;
   }
-  .signupField {
-    padding: 80px 0;
+  .flexMobile {
+    flex-direction: column;
+  }
+  .flexMobile button {
+    margin: 10px 0;
   }
 }
 @media (max-width: 500px) {
@@ -330,7 +328,7 @@ export default {
     padding: 0 10px;
   }
   .signupForm {
-    padding: 0 10px;
+    padding: 30px 10px;
   }
   .noShowSmall {
     display: none;

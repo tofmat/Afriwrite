@@ -34,7 +34,7 @@ export default {};
 
 <style>
 .signUp {
-  background-color: #f5f6fa;
+  background-color: #fff;
 }
 .findBtn {
   padding: 10px 20px !important;
@@ -53,9 +53,7 @@ export default {};
 .fullHeight {
   min-height: 100vh;
 }
-.signupField {
-  padding: 140px 0;
-}
+
 .formInput label {
   margin-bottom: 10px;
 }
@@ -145,9 +143,6 @@ export default {};
   color: #1877f2 !important;
 }
 @media (max-width: 1300px) {
-  /* .signupField {
-      padding: 60px 50px;
-    } */
   .loginBtns {
     flex-direction: column;
   }
@@ -156,9 +151,6 @@ export default {};
   }
 }
 @media (max-width: 1000px) {
-  /* .signupField {
-      padding: 60px 50px;
-    } */
   .loginBtns {
     flex-direction: column;
   }
@@ -175,9 +167,6 @@ export default {};
   }
   .signupImage img {
     width: 200px;
-  }
-  .signupField {
-    padding: 120px 0;
   }
 }
 @media (max-width: 500px) {

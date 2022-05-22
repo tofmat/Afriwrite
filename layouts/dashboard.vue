@@ -40,7 +40,7 @@
       v-model="drawer"
       absolute
       temporary
-      class="pad-10 noDesktop mobileDisplay"
+      class="pad-10 noDesktop mobileDisplay sideDrawer"
     >
       <a href="/"
         ><img
@@ -149,8 +149,8 @@
             </v-list-item-icon>
             <v-list-item-title>Saved Jobs</v-list-item-title>
           </v-list-item>
-          <v-list-item 
-            link 
+          <v-list-item
+            link
             class="sideLinkCon"
             :href="getMessageURL()"
             target="_blank"
@@ -353,7 +353,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      group: '',
+      group: "",
       navItems: [
         {
           title: "My Job Feed",
@@ -406,7 +406,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Afriwrites",
-      user: this.$auth.user
+      user: this.$auth.user,
     };
   },
   methods: {
@@ -521,6 +521,9 @@ body {
   background-color: white !important;
   color: #008952 !important;
   box-shadow: none !important;
+}
+.sideDrawer {
+  position: fixed;
 }
 .openNavFull {
   position: static;
