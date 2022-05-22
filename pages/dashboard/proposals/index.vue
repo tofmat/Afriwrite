@@ -110,7 +110,7 @@
                                 v-else
                                 class="findBtn my-1 fullWidth"
                                 @click="saveProposals(job)"
-                                :to="`/dashboard/proposals/${job.job.public_reference_id}`"
+                                :to="`/dashboard/proposals/${job.public_reference_id}/edit`"
                                 >Edit Proposal</v-btn
                               >
                               <v-btn
@@ -196,9 +196,9 @@ export default {
     this.getJobs();
   },
   computed: {
-    ...mapGetters({
-      allProposals: "writer/allProposals",
-    }),
+    // ...mapGetters({
+    //   allProposals: "writer/allProposals",
+    // }),
   },
   filters: {
     dateSlice(data) {

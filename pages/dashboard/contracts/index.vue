@@ -106,12 +106,13 @@
                             <v-col cols="12" sm="3">
                               <v-btn
                                 class="findBtn my-1 fullWidth"
-                                :to="`/dashboard/contracts/${contract.id}`"
+                                :to="`/dashboard/contracts/${contract.public_reference_id}`"
                                 >View Details</v-btn
                               >
                               <v-btn
                                 class="greyBtn mb-4 fullWidth"
-                                :to="`/dashboard/contracts/${contract.id}`"
+                                target="_blank"
+                                :href="getMessageURL(contract.job.posted_by)"
                               >
                                 Contact Client</v-btn
                               >
@@ -140,7 +141,8 @@
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+
 export default {
   layout: "dashboard",
   components: {
@@ -162,6 +164,7 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.allContracts = data.data;
+          console.log(this.allContracts)
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -173,9 +176,9 @@ export default {
     this.getContracts();
   },
   computed: {
-    ...mapGetters({
-      allContracts: "writer/allContracts",
-    }),
+    // ...mapGetters({
+    //   allContracts: "writer/allContracts",
+    // }),
   },
   filters: {
     slicee(data) {

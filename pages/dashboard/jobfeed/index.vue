@@ -6,7 +6,7 @@
       <input class="submitSearch" type="submit" value="" />
     </div>
     <div class="row">
-      <v-col cols="12" sm="12" lg="3" class="dashDef">
+      <!-- <v-col cols="12" sm="12" lg="3" class="dashDef">
         <div class="dashSlate">
           <div class="dashSearch">
             <h3>Filter By</h3>
@@ -28,8 +28,8 @@
             </div>
           </div>
         </div>
-      </v-col>
-      <v-col cols="12" sm="12" lg="9" class="">
+      </v-col> -->
+      <v-col cols="12" sm="12" lg="12" class="">
         <div class="jobInfo" v-if="apiLoading">
           <div class="row noMargin">
             <v-col cols="12" sm="9" class="jobDesc">
@@ -111,7 +111,7 @@
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   components: {
     skeletonBox,
@@ -163,9 +163,9 @@ export default {
     this.getJobs();
   },
   computed: {
-    ...mapGetters({
-      allJobs: "writer/allJobs",
-    }),
+    // ...mapGetters({
+    //   allJobs: "writer/allJobs",
+    // }),
   },
   filters: {
     descriptionSlice(data) {

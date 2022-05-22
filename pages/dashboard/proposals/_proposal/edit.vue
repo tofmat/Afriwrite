@@ -2,7 +2,7 @@
   <div>
     <div class="dashDefaultContent">
       <div class="jobI">
-        <h2 class="mainColor mb-5">Submit a Proposal</h2>
+        <h2 class="mainColor mb-5">Edit your Proposal</h2>
 
         <div v-if="apiLoading">
           <spinner />
@@ -16,15 +16,13 @@
               <div class="jobDetailsTexts">
                 <p>{{ singleJob.description }}</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn" v-for="niche in writingNiches" :key="niche">{{niche}}</v-btn>
                 </div>
               </div>
               <div class="row alignCenter jobTips mt-10">
                 <v-col cols="6" sm="4">
                   <div class="flex alignCenter justifyCenter">
-                    <p class="mr-2">Budget</p>
+                    <p class="mr-2">Price per word</p>
                     <h2>&#8358;{{ singleJob.price }}</h2>
                   </div>
                 </v-col>
@@ -61,13 +59,13 @@
                   <h4>
                     {{ clientInfo.first_name }} {{ clientInfo.last_name }}
                   </h4>
-                  <h4>USA</h4>
-                  <p class="mb-5">20 Jobs posted</p>
+                  <h4>{{ clientInfo.country }}</h4>
+                  <!-- <p class="mb-5">20 Jobs posted</p> -->
                 </div>
               </div>
             </v-col>
           </div>
-          <form @submit.prevent="sendProposal()">
+          <form @submit.prevent="updateProposal()">
             <div class="terms mt-10">
               <div class="row">
                 <v-col cols="12" sm="12" lg="9">
@@ -79,7 +77,7 @@
                   <div>
                     <div class="sideGreenInfo">
                       <p>Clients Budget</p>
-                      <h2>&#8358;{{ singleJob.price }} NGN</h2>
+                      <h2>&#8358;{{ singleJob.total_amount }} NGN</h2>
                     </div>
                   </div>
                 </v-col>
@@ -135,11 +133,11 @@
                 >
                   <div>
                     <h3>Proposed Amount</h3>
-                    <p>Total amount you would like to get paid (Per Word)</p>
+                    <p>Amount you would like to get paid (Per Word)</p>
                   </div>
                   <input
                     type="tel"
-                    v-model="proposal.proposed_amount"
+                    v-model="proposal.price_per_word"
                     placeholder="N5"
                     class="normalInput"
                   />
@@ -392,7 +390,7 @@
             </div>
             <div class="mt-10 flex justifyCenter">
               <v-btn class="findBtn" type="submit" :loading="loading"
-                >Apply Now</v-btn
+                >Update</v-btn
               >
             </div>
           </form>
@@ -439,15 +437,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import addMilestoneForm from "../../../../components/addMilestoneForm";
 export default {
-  components: {
-    addMilestoneForm,
-  },
-  layout: "dashboard",
-  data() {
-    return {
+  data(){
+    return{
       singleJob: "",
       singleProposal: "",
       loading: false,
@@ -456,11 +448,12 @@ export default {
       activities: "",
       savedJobs: "",
       dialog: false,
+      writingNiches: [],
       proposal: {
         duration: "",
         cover_letter: "",
-        proposed_amount: "",
-        payment_mode: "by_project",
+        price_per_word: "",
+        payment_mode: "",
         milestones: [
           {
             description: "",
@@ -470,9 +463,17 @@ export default {
         ],
         file: null,
       },
-    };
+    }
   },
-  methods: {
+  watch:{
+    singleJob(){
+      this.writingNiches = this.singleJob.writing_niches.length ? this.singleJob.writing_niches.split(',') : []
+    }
+  },
+  mounted() {
+    this.getSingleProposal();
+  },
+  methods:{
     onChange(event) {
       this.proposal.file = event.target.files;
     },
@@ -492,23 +493,6 @@ export default {
     openDialog() {
       this.dialog = true;
     },
-    getSingleJobs() {
-      this.singleJob = "";
-      this.apiLoading = true;
-      this.$store
-        .dispatch("writer/getSingleJob", this.$route.params.proposal)
-        .then(({ data }) => {
-          this.apiLoading = false;
-          this.singleJob = data.data;
-          this.clientInfo = this.singleJob.client;
-          this.activities = this.singleJob.activities;
-          this.savedJobs = this.singleJob.saved_jobs;
-        })
-        .catch((err) => {
-          this.apiLoading = false;
-          this.$toast.success("There was an error getting the job");
-        });
-    },
     getSingleProposal() {
       this.singleProposal = "";
       this.apiLoading = true;
@@ -520,23 +504,19 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.singleProposal = data.data;
+          this.singleJob = data.data.job;
+          this.clientInfo = this.singleJob.client;
           this.proposal.cover_letter = this.singleProposal.cover_letter;
-          this.proposal.proposed_amount = this.singleProposal.proposed_amount;
+          this.proposal.price_per_word = this.singleProposal.price_per_word;
           this.proposal.duration = this.singleProposal.duration;
-          this.proposal.payment_mode = this.singleJob.payment_mode;
+          this.proposal.payment_mode = this.singleProposal.payment_mode;
         })
         .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
         });
     },
-    copyJobLink() {
-      navigator.clipboard.writeText(
-        `https://www.afriwrite.com/jobs/${this.singleJob.public_reference_id}`
-      );
-      this.$toast.success("Link copied");
-    },
-    async sendProposal() {
+    async updateProposal() {
       let formData = new FormData();
       if (this.proposal.file) {
         for (const i of Object.keys(this.proposal.file)) {
@@ -545,13 +525,13 @@ export default {
       }
       formData.append("duration", this.proposal.duration);
       formData.append("cover_letter", this.proposal.cover_letter);
-      formData.append("proposed_amount", this.proposal.proposed_amount);
+      formData.append("price_per_word", this.proposal.price_per_word);
       formData.append("payment_mode", this.proposal.payment_mode);
-      formData.append("milestones[]", this.proposal.milestones);
+      // formData.append("milestones[]", this.proposal.milestones);
       try {
         this.loading = true;
         const response = await this.$axios.post(
-          `/v1/writer/jobs/${this.singleJob.id}/submit-proposal`,
+          `/v1/writer/jobs/edit/job-proposal/${this.singleProposal.id}`,
           formData,
           {
             headers: {
@@ -559,7 +539,7 @@ export default {
             },
           }
         );
-        this.$toast.success("You have successfully submitted a proposal!");
+        this.$toast.success("You have successfully updated your proposal!");
         this.loading = false;
         this.dialog = true;
         this.proposal = "";
@@ -570,26 +550,8 @@ export default {
         this.$toast.error(error.response.data.error);
       }
     },
-  },
-  mounted() {
-    this.getSingleJobs();
-    this.getSingleProposal();
-  },
-  computed: {
-    ...mapGetters({
-      // singleJob: "writer/singleJob",
-      // singleProposal: "writer/singleProposal",
-      savedProposal: "writer/savedProposal",
-    }),
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-  },
-};
+  }
+}
 </script>
 
 <style>

@@ -3,7 +3,7 @@
     <h2 class="mainColor mb-5">Saved Jobs</h2>
     <input type="text" placeholder="search for Jobs" class="mb-10 mainSearch" />
     <div class="row">
-      <v-col cols="12" sm="12" lg="4" class="dashDef">
+      <!-- <v-col cols="12" sm="12" lg="4" class="dashDef">
         <div class="dashSlate">
           <div class="dashSearch">
             <h3>Filter By</h3>
@@ -25,8 +25,8 @@
             </div>
           </div>
         </div>
-      </v-col>
-      <v-col cols="12" sm="12" lg="8" class="">
+      </v-col> -->
+      <v-col cols="12" sm="12" lg="10" class="">
         <div class="jobInfo" v-if="apiLoading">
           <div class="row noMargin">
             <v-col cols="12" sm="9" class="jobDesc">
@@ -88,9 +88,9 @@
                 </div>
                 <p>{{ job.job.description | descriptionSlice }} ...</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn" v-for="niche in getWritingNiches(job.job.writing_niches)" :key="niche">
+                    {{niche}}
+                  </v-btn>
                 </div>
               </v-col>
               <v-col cols="12" sm="3" class="jobControls">
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 
 export default {
   layout: "dashboard",
@@ -155,14 +155,17 @@ export default {
         this.$toast.error("There was an error removing from saved jobs");
       }
     },
+    getWritingNiches(niches){
+      return niches.split(',')
+    }
   },
   mounted() {
     this.getSavedJobs();
   },
   computed: {
-    ...mapGetters({
-      savedJobs: "writer/savedJobs",
-    }),
+    // ...mapGetters({
+    //   savedJobs: "writer/savedJobs",
+    // }),
   },
   filters: {
     descriptionSlice(data) {

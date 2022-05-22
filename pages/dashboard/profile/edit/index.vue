@@ -45,7 +45,7 @@
         <div class="mt-10 editProfileForm">
           <div class="row">
             <v-col cols="6" sm="6">
-              <span>Username </span>
+              <span>Username <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.username"
                 type="text"
@@ -54,7 +54,7 @@
               />
             </v-col>
             <v-col cols="6" sm="6">
-              <span>Phone Number </span>
+              <span>Phone Number <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.phone_number"
                 type="text"
@@ -64,7 +64,7 @@
             </v-col>
             <v-col cols="12" sm="12">
               <div class="mt-3">
-                <span>Your Bio </span>
+                <span>Your Bio <span class="text-danger">*</span> </span>
                 <textarea
                   v-model="profileDetails.about_me"
                   rows="5"
@@ -98,15 +98,69 @@
               </select>
             </v-col>
             <v-col cols="6" sm="6">
-              <span>Writing Niche </span>
-              <input
-                v-model="profileDetails.writing_niches"
-                type="text"
+              <span>Category <span class="text-danger">*</span> </span>
+              <select
+                v-model="profileDetails.category"
                 class="normalInput2 fullWidth"
-                placeholder="Preffered Writing Niche"
-              />
+                placeholder="Choose only one category"
+                required
+                :disabled="isCategoryFilled"
+              >
+                <option
+                  v-for="category in Category"
+                  :key="category"
+                  :value="category"
+                >
+                  {{ category }}
+                </option>
+              </select>
             </v-col>
-            <v-col cols="4" sm="4">
+            <v-col cols="6" sm="6">
+              <span>Sub-Category <span class="text-danger">*</span> </span>
+              <v-select
+                v-model="subcategory"
+                :items="subCategoryItems"
+                :menu-props="{ maxHeight: '400' }"
+                multiple
+                chips
+                :readonly="isSubcategoryFilled"
+                hint="Choose sub-category based on your selected preference"
+                class="fullWidth"
+                persistent-hint
+                required
+              ></v-select>
+            </v-col>
+            <v-col cols="6" sm="6">
+              <span>Skills <span class="text-danger">*</span> </span>
+              <v-select
+                v-model="skills"
+                :items="skillItems"
+                :menu-props="{ maxHeight: '400' }"
+                multiple
+                chips
+                :readonly="isSkillsFillled"
+                hint="Choose as many as you want. You will be tested on this"
+                class="fullWidth"
+                persistent-hint
+                required
+              ></v-select>
+            </v-col>
+            <v-col cols="6" sm="6">
+              <span>Writing Niche <span class="text-danger">*</span> </span>
+              <v-select
+                v-model="niches"
+                :items="nicheItems"
+                :menu-props="{ maxHeight: '400' }"
+                multiple
+                chips
+                :readonly="isNichesFilled"
+                hint="Preffered Writing Niche"
+                class="fullWidth"
+                persistent-hint
+                required
+              ></v-select>
+            </v-col>
+            <v-col cols="6" sm="6">
               <span>DOB</span>
               <input
                 v-model="profileDetails.date_of_birth"
@@ -115,7 +169,7 @@
                 placeholder="Date of Birth"
               />
             </v-col>
-            <v-col cols="4" sm="4" class="inputWithLabel">
+            <v-col cols="6" sm="6" class="inputWithLabel">
               <span> Availability </span>
               <select
                 v-model="profileDetails.availability"
@@ -139,8 +193,8 @@
                 </option>
               </select>
             </v-col>
-            <v-col cols="4" sm="4">
-              <span>Country</span>
+            <v-col cols="6" sm="6">
+              <span>Country <span class="text-danger">*</span> </span>
               <input
                 v-model="profileDetails.country"
                 type="text"
@@ -312,6 +366,7 @@
             class="myBtn findBtn"
             @click="updateProfile"
             :loading="loading"
+            :disabled="requiredFieldsNotFilled"
           >
             Save Changes
           </v-btn>
@@ -324,9 +379,22 @@
 <script>
 export default {
   layout: "dashboard",
+  computed:{
+    requiredFieldsNotFilled(){
+      if(!this.profileDetails.category || !this.skills || !this.niches || !this.subcategory || !this.profileDetails.username || !this.profileDetails.phone_number || !this.profileDetails.about_me || !this.profileDetails.country) return true
+    }
+  },
   data() {
     return {
+      subcategory: [],
+      subCategoryItems: [],
+      skills: [],
+      niches: [],
       profileDetails: {
+        category:
+          `${this.$auth.user.category}` !== "null"
+            ? `${this.$auth.user.category}`
+            : "",
         username:
           `${this.$auth.user.username}` !== "null"
             ? `${this.$auth.user.username}`
@@ -366,7 +434,7 @@ export default {
         writing_niches:
           `${this.$auth.user.writing_niches}` !== "null"
             ? [`${this.$auth.user.writing_niches}`]
-            : "",
+            : [],
         additional_links:
           `${this.$auth.user.additional_links}` !== "null"
             ? `${this.$auth.user.additional_links}`
@@ -390,7 +458,84 @@ export default {
       loading: false,
       profileLoading: false,
       profilePicture: null,
+      isCategoryFilled: false,
+      isSubcategoryFilled: false,
+      isNichesFilled: false,
+      isSkillsFillled: false,
+      Category: [
+        "Article Writing",
+        "Website Copywriting",
+        "Sales and Marketing Copywriting",
+        "Career Writing",
+        "Academic Writing",
+        "Creative Writing",
+        "Social Media Writing"
+      ],
+      ArticleWritingCategory: [
+        "Affiliate Marketing Review Articles", 
+        "Blog Posts, Article Rewriting", 
+        "E-commerce Website Articles"
+      ],
+      WebsiteCopywritingCategory: [
+        "City Service Pages", 
+        "Product Descriptions", 
+        "Long-form Product Pages", 
+        "Homepages", 
+        "About Us Pages", 
+        "Contact Us Pages", 
+        "Job Descriptions"
+      ],
+      SalesCategory: [
+        "Marketing Emails", 
+        "White Papers", 
+        "Grants", 
+        "Case Studies", 
+        "E-books", 
+        "Press Releases"
+      ],
+      CareerWritingCategory: ["Resumes", "Cover Letters", "LinkedIn Profile Optimization"],
+      AcademicWritingCategory: ["Researches and Reports", "E-books", "Online Courses"],
+      CreativeWritingCategory: [
+        "Speeches", "Scripts", "Podcasts", "Biographies", "Fictional Novels", "Romance Novels", 
+        "Crime Novels", "Romance and Crime Novels", "Devotionals"
+      ],
+      SocialMediaWritingCategory: ["Social Media Captions", "Social Media Post Designs"],
+      skillItems:[
+        "Search Engine Optimization (SEO)", "In-depth Topic Research", "Keyword Research", 
+        "Image Optimization", "Meta Description", "Meta Tags", "Title Tags", "Slug Writing", 
+        "Blog Copywriting", "H1-H6 Headline Usage", "WordPress Content Upload", 
+        "WordPress Content Optimization", "WordPress Blog Management", "Blog Editing and Proofreading", 
+        "SurferSEO", "Grammarly Premium", "Copyscape", "Ahrefs", "SEMRush", "Ubersuggest"
+      ],
+      nicheItems: [
+        "Finance and Accounting", "Law and Legal Writing", "Cryptocurrency and Stocks", 
+        "Medical, Health, and Fitness", "News and Press Release", "Technology and Technical Writing", 
+        "Digital Marketing", "Social Media Marketing", "Food, Wine, and Drinks", "Real Estate", 
+        "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
+      ]
     };
+  },
+  mounted(){
+    const user = this.$auth.user ?? ''
+    if(user){
+      this.determineSubcategoryToDisplay(this.profileDetails.category)
+      if(user.subcategory){
+        this.subcategory = JSON.parse(user.subcategory)
+        this.isSubcategoryFilled = true
+      }
+
+      if(user.writing_niches){
+        this.niches = JSON.parse(user.writing_niches)
+        this.isNichesFilled = true
+      }
+
+      if(user.skills){
+        this.skills = JSON.parse(user.skills)
+        this.isSkillsFillled = true
+      } 
+
+      if(this.profileDetails.category) this.isCategoryFilled = true
+    }
   },
   methods: {
     showArticleContent() {
@@ -434,24 +579,42 @@ export default {
         country: this.profileDetails.country,
         date_of_birth: this.profileDetails.date_of_birth,
         availability: this.profileDetails.availability,
-        profile_picture: this.profileDetails.profile_picture,
         about_me: this.profileDetails.about_me,
         languages: this.profileDetails.languages,
-        writing_niches: [this.profileDetails.writing_niches],
         additional_links: this.profileDetails.additional_links,
+        category: this.profileDetails.category,
         articles: this.profileDetails.articles[0].article_link
           ? this.profileDetails.articles
           : [],
       };
+
+      if(this.subcategory.length > 0){
+        editedProfileDetails.subcategory = this.subcategory
+      }
+
+      if(this.skills.length > 0){
+        editedProfileDetails.skills = this.skills
+      }
+
+      if(this.niches.length > 0){
+        editedProfileDetails.writing_niches = this.niches
+      }
+
+
       try {
         this.loading = true;
-        const response = await this.$axios.post(
+        const { data } = await this.$axios.post(
           `/v1/user/update-profile`,
           editedProfileDetails
         );
-        this.loading = false;
-        this.$toast.success("Your profile has been updated.");
-        window.location.assign("/dashboard/profile");
+
+        if(data){
+          this.loading = false;
+          this.$toast.success("Your profile has been updated.");
+          setTimeout(() =>{
+            window.location.assign("/dashboard/profile");
+          }, 1000)
+        }
       } catch (error) {
         this.loading = false;
         this.$toast.error("There was an error updating your profile");
@@ -477,12 +640,47 @@ export default {
         external_link: "",
       });
     },
+    determineSubcategoryToDisplay(category){
+      switch(category){
+        case "Article Writing":
+          this.subCategoryItems = this.ArticleWritingCategory
+          break
+        case "Website Copywriting":
+          this.subCategoryItems = this.WebsiteCopywritingCategory
+          break
+        case "Sales and Marketing Copywriting":
+          this.subCategoryItems = this.SalesCategory
+          break
+        case "Career Writing":
+          this.subCategoryItems = this.CareerWritingCategory
+          break
+        case "Academic Writing":
+          this.subCategoryItems = this.AcademicWritingCategory
+          break
+        case "Creative Writing":
+          this.subCategoryItems = this.CreativeWritingCategory
+          break
+        case "Social Media Writing":
+          this.subCategoryItems = this.SocialMediaWritingCategory
+        break
+      }
+    }
   },
   watch: {
     // whenever profilePicture changes, this function will run
     profilePicture() {
       this.updateProfilePicture();
     },
+    'profileDetails.category'(){
+      this.determineSubcategoryToDisplay(this.profileDetails.category)
+    },
+    niches(){
+      if(this.niches.length > 5){
+        this.$toast.error('You cannot select more than 5 niches')
+        this.niches = this.niches.slice(0, 5)
+        return
+      }
+    }
   },
 };
 </script>
@@ -538,6 +736,9 @@ export default {
 }
 .editProfileForm span {
   color: #787878;
+}
+.editProfileForm span.text-danger {
+  color: red !important; 
 }
 .editProfileForm select {
   -webkit-appearance: auto !important;

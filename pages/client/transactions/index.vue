@@ -36,10 +36,10 @@
         <span><h2 class="darkGreyColor">Withdraw</h2><p class="textItalics">Select mode of withdrawal</p></span>
         <div class="flex alignCenter justifyCenter breakToColumn">
           <div>
-            <v-btn class="myBtn paymentButton mx-3"> <img src="../assets/images/paypal.png" alt="paypal log" class="mr-2"> Paypal</v-btn>
+            <v-btn class="myBtn paymentButton mx-3"> <img src="../../../assets/images/paypal.png" alt="paypal log" class="mr-2"> Paypal</v-btn>
           </div>
           <div>
-            <v-btn class="myBtn paymentButton mx-3"> <img src="../assets/images/wire-transfer.png" alt="bank log" class="mr-2"> Bank Transfer</v-btn>
+            <v-btn class="myBtn paymentButton mx-3"> <img src="../../../assets/images/wire-transfer.png" alt="bank log" class="mr-2"> Bank Transfer</v-btn>
           </div>
         </div>
       </div>

@@ -112,12 +112,13 @@
                               </p>
                               <v-btn
                                 class="findBtn my-1 fullWidth"
-                                :to="`/client/contracts/${contract.proposals[0].id}`"
+                                :to="`/client/contracts/${contract.proposals[0].public_reference_id}`"
                                 >View Details</v-btn
                               >
                               <v-btn
                                 class="greyBtn mb-4 fullWidth"
-                                :to="`/client/contracts/${contract.proposals[0].id}`"
+                                target="_blank"
+                                :href="getMessageURL(contract.proposals[0].writer_id)"
                               >
                                 Contact</v-btn
                               >
@@ -194,9 +195,9 @@ export default {
     this.getContracts();
   },
   computed: {
-    ...mapGetters({
-      allContracts: "client/allContracts",
-    }),
+    // ...mapGetters({
+    //   allContracts: "client/allContracts",
+    // }),
   },
   filters: {
     slicee(data) {

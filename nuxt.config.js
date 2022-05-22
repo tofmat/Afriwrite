@@ -41,7 +41,10 @@ export default {
   css: ["./assets/styles/responsive.css", "./assets/styles/default.css"],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ["~/plugins/axios"],
+  plugins: [
+    "~/plugins/axios",
+    '~/plugins/mixins',
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -94,6 +97,7 @@ export default {
 
   axios: {
     baseURL: "https://afriwrites-backend-api.herokuapp.com/api"
+    // baseURL: 'http://127.0.0.1:8000/api',
   },
 
   auth: {

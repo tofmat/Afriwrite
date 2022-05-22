@@ -64,6 +64,17 @@
           <v-list-item
             router
             exact
+            :href="getMessageURL()"
+            target="_blank"
+            active-class="navActive"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Messages</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            router
+            exact
             active-class="navActive"
             @click="logoutUser()"
           >
@@ -138,7 +149,12 @@
             </v-list-item-icon>
             <v-list-item-title>Saved Jobs</v-list-item-title>
           </v-list-item>
-          <v-list-item link class="sideLinkCon">
+          <v-list-item 
+            link 
+            class="sideLinkCon"
+            :href="getMessageURL()"
+            target="_blank"
+          >
             <v-list-item-icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -243,34 +259,6 @@
             </v-list-item-icon>
             <v-list-item-title>Transactions</v-list-item-title>
           </v-list-item>
-          <!-- <v-list-item
-            link
-            class="sideLinkCon"
-            to="/dashboard/reports"
-            router
-            exact
-            active-class="navActive"
-          >
-            <v-list-item-icon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 21.123 21.117"
-              >
-                <g transform="translate(1.007 1)">
-                  <path
-                    d="M21.36,16.727A9.558,9.558,0,1,1,8.734,4.245"
-                    transform="translate(-2.999 -3.452)"
-                  />
-                  <path
-                    class="a"
-                    d="M27.558,12.558A9.558,9.558,0,0,0,18,3v9.558Z"
-                    transform="translate(-8.441 -3)"
-                  />
-                </g>
-              </svg>
-            </v-list-item-icon>
-            <v-list-item-title>Reports</v-list-item-title>
-          </v-list-item> -->
           <v-list-item
             link
             class="sideLinkCon"
@@ -365,6 +353,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      group: '',
       navItems: [
         {
           title: "My Job Feed",
@@ -372,11 +361,7 @@ export default {
         },
         {
           title: "Saved Jobs",
-          to: "dashboard/saved",
-        },
-        {
-          title: "Messages",
-          to: "/",
+          to: "/dashboard/saved",
         },
         {
           title: "Proposals",
@@ -398,10 +383,6 @@ export default {
         //   title: "Reports",
         //   to: "/reports",
         // },
-        {
-          title: "Profile",
-          to: "/dashboard/profile",
-        },
       ],
       upNavItems: [
         {
@@ -425,6 +406,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Afriwrites",
+      user: this.$auth.user
     };
   },
   methods: {

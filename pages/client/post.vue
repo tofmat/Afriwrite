@@ -56,12 +56,11 @@
               ></textarea>
               <h3 class="mt-3">Choose Category</h3>
               <p>
-                Select the category this job falls under (You can select more
-                than one)
+                Select the category this job falls under 
               </p>
               <v-autocomplete
                 v-model="jobInfo.category"
-                :items="items"
+                :items="categoryItems"
                 outlined
                 dense
                 chips
@@ -69,6 +68,40 @@
                 small-chips
                 label="Categories"
               ></v-autocomplete>
+              <h3 class="mt-3">Choose Niches</h3>
+              <p>
+                Select the writing niches you want for the job (You can select more
+                than one)
+              </p>
+              <v-select
+                v-model="jobInfo.writing_niches"
+                :items="nicheItems"
+                :menu-props="{ maxHeight: '400' }"
+                multiple
+                chips
+                persistent-hint
+                color="green darken-3"
+                required
+                outlined
+                label="Select Niches"
+              ></v-select>
+              <h3 class="mt-3">Choose Skills</h3>
+              <p>
+                Select the skills that you want the freelancer to have(You can select more
+                than one)
+              </p>
+              <v-select
+                v-model="jobInfo.skills"
+                :items="skillItems"
+                :menu-props="{ maxHeight: '400' }"
+                multiple
+                chips
+                persistent-hint
+                color="green darken-3"
+                required
+                outlined
+                label="Select Skills"
+              ></v-select>
               <h3 class="my-3">Attach additional project files (optional)</h3>
               <div class="dragAndDrop">
                 <p class="textCenter">
@@ -242,7 +275,7 @@
               </div>
               <div>
                 <div class="my-2">
-                  <h4>Price per word ($)</h4>
+                  <h4>Price per word (&#8358;)</h4>
                   <small>Afriwrite recommended price per word is N20.</small>
                   <div class="flex alignCenter my-1">
                     <input
@@ -302,7 +335,7 @@ export default {
     errors: "",
     loading: false,
     draftLoading: false,
-    items: [
+    categoryItems: [
       "Article Writing",
       "Website Copywriting",
       "Sales and Marketing Copy",
@@ -323,7 +356,22 @@ export default {
       price: "",
       duration_of_job_in_days: "",
       file: null,
+      writing_niches: [],
+      skills: []
     },
+    skillItems:[
+      "Search Engine Optimization (SEO)", "In-depth Topic Research", "Keyword Research", 
+      "Image Optimization", "Meta Description", "Meta Tags", "Title Tags", "Slug Writing", 
+      "Blog Copywriting", "H1-H6 Headline Usage", "WordPress Content Upload", 
+      "WordPress Content Optimization", "WordPress Blog Management", "Blog Editing and Proofreading", 
+      "SurferSEO", "Grammarly Premium", "Copyscape", "Ahrefs", "SEMRush", "Ubersuggest"
+    ],
+    nicheItems: [
+      "Finance and Accounting", "Law and Legal Writing", "Cryptocurrency and Stocks", 
+      "Medical, Health, and Fitness", "News and Press Release", "Technology and Technical Writing", 
+      "Digital Marketing", "Social Media Marketing", "Food, Wine, and Drinks", "Real Estate", 
+      "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
+    ]
   }),
   methods: {
     onPickFile() {
@@ -346,6 +394,8 @@ export default {
       formData.append("category", this.jobInfo.category);
       formData.append("level_of_experience", this.jobInfo.level_of_experience);
       formData.append("number_of_words", this.jobInfo.number_of_words);
+      formData.append("writing_niches", this.jobInfo.writing_niches);
+      formData.append("skills", this.jobInfo.skills);
       formData.append(
         "duration_of_job_in_days",
         this.jobInfo.duration_of_job_in_days
@@ -363,7 +413,7 @@ export default {
         );
         this.$toast.success("Your Job has been added successfully");
         this.loading = false;
-        this.jobInfo = "";
+        this.resetForm();
         return response;
       } catch (error) {
         this.jobInfo = "";
@@ -371,6 +421,19 @@ export default {
         this.errors = error.response.data.error;
         this.$toast.error("An error occured, check all fields and try again");
       }
+    },
+    resetForm(){
+      this.jobInfo.title = ""
+      this.jobInfo.description = ""
+      this.jobInfo.project_duration = ""
+      this.jobInfo.category = ""
+      this.jobInfo.level_of_experience = ""
+      this.jobInfo.number_of_words = ""
+      this.jobInfo.price = ""
+      this.jobInfo.duration_of_job_in_days = ""
+      this.jobInfo.file = null
+      this.jobInfo.writing_niches = []
+      this.jobInfo.skills = []
     },
     async addDraftJob() {
       let formData = new FormData();
@@ -420,7 +483,7 @@ export default {
         );
         this.$toast.success("Your Job has been saved to draft successfully");
         this.draftLoading = false;
-        this.jobInfo = "";
+        this.resetForm();
         return response;
       } catch (error) {
         // this.jobInfo = ''

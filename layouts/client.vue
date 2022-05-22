@@ -62,6 +62,17 @@
               <v-list-item-title v-text="nav.title" />
             </v-list-item-content>
           </v-list-item>
+           <v-list-item
+            router
+            exact
+            :href="getMessageURL()"
+            target="_blank"
+            active-class="navActive"
+          >
+            <v-list-item-content>
+              <v-list-item-title>Messages</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item
             router
             exact
@@ -139,7 +150,12 @@
             </v-list-item-icon>
             <v-list-item-title>Post Job</v-list-item-title>
           </v-list-item>
-          <v-list-item link class="sideLinkCon">
+          <v-list-item 
+            link 
+            class="sideLinkCon"
+            :href="getMessageURL()"
+            target="_blank"
+          >
             <v-list-item-icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -337,34 +353,31 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      group: '',
       navItems: [
         {
           title: "My Jobs",
-          to: "client/jobs",
+          to: "/client/jobs",
         },
         {
           title: "Post Job",
-          to: "client/post",
-        },
-        {
-          title: "Messages",
-          to: "/",
+          to: "/client/post",
         },
         {
           title: "Proposals",
-          to: "client/proposals",
+          to: "/client/proposals",
         },
         {
           title: "All Contracts",
-          to: "client/contracts",
+          to: "/client/contracts",
         },
         {
           title: "Profile",
-          to: "client/profile",
+          to: "/client/profile",
         },
         {
           title: "Transaction",
-          to: "client/transactions",
+          to: "/client/transactions",
         },
       ],
       upNavItems: [
@@ -389,6 +402,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Vuetify.js",
+      user: this.$auth.user
     };
   },
   methods: {

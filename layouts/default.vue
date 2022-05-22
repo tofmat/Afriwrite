@@ -15,7 +15,7 @@
         <div class="flex">
           <v-list-item
             v-for="nav in navItems"
-            :key="nav"
+            :key="nav.to"
             :to="nav.to"
             router
             exact
@@ -69,7 +69,7 @@
 
     <v-footer dark class="mainFooter">
       <v-container>
-        <v-row>
+        <v-row style="justify-content: center;">
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
@@ -85,39 +85,19 @@
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
+                  <li>Privacy Policy</li>
+                  <li>Terms of Service</li>
+                  <li>Invite a Friend</li>
+              </ul>
+            </div>
+          </v-col>
+          <v-col cols="6" sm="3">
+            <div class="footerList">
+              <ul>
                 <li>Support</li>
-                <li>Why Afriwrite</li>
+                <li>About Us</li>
                 <li>Work with us</li>
                 <li>Help & Support</li>
-                <li>Trust & Safety</li>
-              </ul>
-            </div>
-          </v-col>
-          <v-col cols="6" sm="3">
-            <div class="footerList">
-              <ul>
-                <li>About</li>
-                <li>Careers</li>
-                <li>Press & News</li>
-                <li>Partnerships</li>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
-                <li>Intellectual Property Claims</li>
-                <li>Investor Relations</li>
-              </ul>
-            </div>
-          </v-col>
-          <v-col cols="6" sm="3">
-            <div class="footerList">
-              <ul>
-                <li>Community</li>
-                <li>Events</li>
-                <li>Blog</li>
-                <li>Forums</li>
-                <li>Community Standards</li>
-                <li>Podcasts</li>
-                <li>Affiliates</li>
-                <li>Invite a Friend</li>
               </ul>
             </div>
           </v-col>
@@ -149,6 +129,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      group: '',
       navItems: [
         {
           title: "Why Afriwrites",
