@@ -73,7 +73,7 @@
 
     <v-footer dark class="mainFooter">
       <v-container>
-        <!-- <v-row style="justify-content: center">
+        <v-row style="justify-content: center; margin-top: 30px;">
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
@@ -105,8 +105,8 @@
               </ul>
             </div>
           </v-col>
-        </v-row> -->
-        <!-- <hr /> -->
+        </v-row>
+        <hr />
         <div class="flex justifyBetween alignCenter">
           <div class="footLogo">
             <img src="../assets/images/afriNewLogo.svg" alt="footerLogo" />
