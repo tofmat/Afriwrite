@@ -1,4 +1,4 @@
-import { Constants } from "../static/Constants"
+import { Constants } from "../static/constants"
 
 import Vue from 'vue'
 
