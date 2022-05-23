@@ -8,7 +8,7 @@
       style="position: relative"
     >
       <a href="/"
-        ><img src="../assets/images/afriNewLogo.png" class="logoImage"
+        ><img src="../assets/images/afriNewLogoGreen.svg" class="logoImage"
       /></a>
       <v-spacer></v-spacer>
       <v-item-group mandatory class="noMobile">
@@ -22,16 +22,20 @@
             class="theItem"
           >
             <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? '' : ''">{{ nav.title }}</v-title>
+              <v-title :class="active ? 'navActive' : ''">{{
+                nav.title
+              }}</v-title>
             </v-item>
           </v-list-item>
         </div>
       </v-item-group>
-      <v-btn class="px-5 noMobile navBtn" to="jobfeed"> Join Now</v-btn>
-      <v-app-bar-nav-icon
-        @click="drawer = true"
-        class="noDesktop mobileDisplay mobileNavBar"
-      ></v-app-bar-nav-icon>
+      <v-btn class="px-5 mx-2 noMobile findBtn" to="/signup"> Join Now</v-btn>
+      <div>
+        <v-app-bar-nav-icon
+          @click="drawer = true"
+          class="noDesktop mobileDisplay"
+        ></v-app-bar-nav-icon>
+      </div>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -40,10 +44,9 @@
       temporary
       class="pad-10 noDesktop mobileDisplay"
     >
-      <img
-        src="../assets/images/afriNewLogo.png"
-        class="logoImage mobileLogo"
-      />
+      <a href="/"
+        ><img src="../assets/images/afriNewLogoGreen.svg" class="logoImage"
+      /></a>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="navActive">
           <v-list-item
@@ -62,6 +65,7 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <v-btn class="px-5 mx-2 findBtn" to="jobfeed"> Join Now</v-btn>
     </v-navigation-drawer>
     <v-main>
       <nuxt />
@@ -69,7 +73,7 @@
 
     <v-footer dark class="mainFooter">
       <v-container>
-        <v-row style="justify-content: center;">
+        <v-row style="justify-content: center; margin-top: 30px;">
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
@@ -85,9 +89,9 @@
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
-                  <li>Privacy Policy</li>
-                  <li>Terms of Service</li>
-                  <li>Invite a Friend</li>
+                <li>Privacy Policy</li>
+                <li>Terms of Service</li>
+                <li>Invite a Friend</li>
               </ul>
             </div>
           </v-col>
@@ -105,7 +109,7 @@
         <hr />
         <div class="flex justifyBetween alignCenter">
           <div class="footLogo">
-            <img src="../assets/images/footerLogo.svg" alt="footerLogo" />
+            <img src="../assets/images/afriNewLogo.svg" alt="footerLogo" />
           </div>
           <div class="footerSocials">
             <img src="../assets/images/feather-facebook.svg" alt="footerLogo" />
@@ -117,6 +121,7 @@
             <img src="../assets/images/feather-linkedin.svg" alt="footerLogo" />
           </div>
         </div>
+        <p class="footerText">Afriwrite 2022</p>
       </v-container>
     </v-footer>
   </v-app>
@@ -129,27 +134,23 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      group: '',
+      group: "",
       navItems: [
         {
-          title: "Why Afriwrites",
+          title: "Home",
           to: "/",
         },
         {
-          title: "Browse Jobs",
-          to: "/browse",
+          title: "About Us",
+          to: "#",
         },
         {
           title: "View Freelancers",
-          to: "/view",
-        },
-        {
-          title: "Blog",
-          to: "/blog",
+          to: "#",
         },
         {
           title: "Sign In",
-          to: "signin",
+          to: "/signin",
         },
       ],
       miniVariant: false,
@@ -163,11 +164,19 @@ export default {
 
 <style>
 .footerSocials img {
-  margin: 0 5px;
+  margin: 0 10px;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+.footerText {
+  text-align: center;
+  color: grey;
+  margin-top: 10px;
 }
 .mainFooter {
   background-color: #263238 !important;
-  padding: 30px 0;
+  padding: 10px 0;
 }
 .mainFooter hr {
   width: 100%;
@@ -176,6 +185,7 @@ export default {
 }
 .navheader {
   white-space: nowrap;
+  color: #787878;
 }
 .logoImage {
   width: 200px;
@@ -192,9 +202,8 @@ export default {
   width: 60% !important;
 }
 .headNav {
-  background-color: #008952 !important;
+  background: white !important;
   padding: 0 20px;
-
   position: fixed !important;
   z-index: 10000 !important;
 }
@@ -227,8 +236,15 @@ export default {
   .headNav {
     padding: 5px 10px;
   }
+  .headNav {
+    justify-content: space-between;
+  }
   .footLogo img {
-    width: 100px;
+    width: 150px;
+  }
+  .footerSocials img {
+    width: 20px !important;
+    height: 20px !important;
   }
 }
 </style>
