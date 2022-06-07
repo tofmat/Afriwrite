@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-container class="firstHead"> -->
   <div>
     <v-container class="firstHead">
       <v-row align="center">
