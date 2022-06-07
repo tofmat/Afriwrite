@@ -89,8 +89,16 @@
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
+                <li>
+                  <a href="/privacy-policy">
+                    Privacy Policy
+                  </a>    
+                </li>
+                <li>
+                  <a href="terms-of-use">
+                    Terms of Service
+                  </a>    
+                </li>
                 <li>Invite a Friend</li>
               </ul>
             </div>
@@ -99,7 +107,11 @@
             <div class="footerList">
               <ul>
                 <li>Support</li>
-                <li>About Us</li>
+                <li>
+                  <a href="/about-us">
+                    About Us
+                  </a>
+                </li>
                 <li>Work with us</li>
                 <li>Help & Support</li>
               </ul>
@@ -142,7 +154,7 @@ export default {
         },
         {
           title: "About Us",
-          to: "#",
+          to: "/about-us",
         },
         {
           title: "View Freelancers",
