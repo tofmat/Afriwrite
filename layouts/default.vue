@@ -95,7 +95,7 @@
                   </a>    
                 </li>
                 <li>
-                  <a href="terms-of-use">
+                  <a href="/terms-of-use">
                     Terms of Service
                   </a>    
                 </li>
