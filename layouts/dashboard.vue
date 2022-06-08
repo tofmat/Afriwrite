@@ -6,7 +6,7 @@
       elevate-on-scroll
       scroll-target="#scrolling-techniques-7"
       height="inherit"
-      class="headNav greenBack"
+      class="headNav"
       absolute
     >
       <a href="/"
@@ -456,9 +456,11 @@ export default {
 body {
   background-color: white;
 }
-.greenBack {
-  background-color: #008952 !important;
+
+.v-toolbar__content {
+  background: #008952 !important;
 }
+/* 008952 */
 .sideLinkCon {
   margin: 7px 0;
   display: flex !important;

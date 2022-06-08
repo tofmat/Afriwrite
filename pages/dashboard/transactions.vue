@@ -157,6 +157,15 @@ export default {
         },
       ],
     }
+  },
+  beforeMount(){
+    this.getTransactionHistory()
+  },
+  methods:{
+    async getTransactionHistory(){
+      const response = await this.$axios.get(`/v1/user/transaction-history`);
+      console.log(response)
+    }
   }
 
 }
@@ -188,7 +197,7 @@ export default {
   color: rgba(237, 0, 0, 1);
 }
 .infoCard3 {
-  background-color: rgba(255, 168, 0, 0.05);
+  background-color: rgba(255, 168, 0, 0.05); 
 }
 .infoCard3 h3 {
   background-color: rgba(255, 168, 0, 0.1);
