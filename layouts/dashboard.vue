@@ -6,7 +6,7 @@
       elevate-on-scroll
       scroll-target="#scrolling-techniques-7"
       height="inherit"
-      class="headNav"
+      class="headNav greenBack"
       absolute
     >
       <a href="/"
@@ -457,7 +457,7 @@ body {
   background-color: white;
 }
 
-.v-toolbar__content {
+.greenBack .v-toolbar__content {
   background: #008952 !important;
 }
 /* 008952 */

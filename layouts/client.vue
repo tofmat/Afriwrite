@@ -240,29 +240,6 @@
           <v-list-item
             link
             class="sideLinkCon"
-            to="/client/transactions"
-            router
-            exact
-            active-class="navActive"
-          >
-            <v-list-item-icon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 15.673 26.076"
-              >
-                <g transform="translate(1.056 1)">
-                  <path
-                    d="M16.81,15.067c-3.036-.789-4.013-1.605-4.013-2.876,0-1.458,1.351-2.474,3.611-2.474,2.381,0,3.264,1.137,3.344,2.809h2.956a5.332,5.332,0,0,0-4.294-5.1V4.5H14.4V7.389c-2.595.562-4.681,2.247-4.681,4.829,0,3.09,2.555,4.628,6.287,5.524,3.344.8,4.013,1.98,4.013,3.224,0,.923-.655,2.394-3.611,2.394-2.755,0-3.839-1.231-3.986-2.809H9.48c.161,2.929,2.354,4.574,4.922,5.123v2.9h4.013V25.7c2.608-.495,4.681-2.006,4.681-4.748C23.1,17.153,19.846,15.856,16.81,15.067Z"
-                    transform="translate(-9.48 -4.5)"
-                  />
-                </g>
-              </svg>
-            </v-list-item-icon>
-            <v-list-item-title>Transactions</v-list-item-title>
-          </v-list-item>
-          <v-list-item
-            link
-            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -374,10 +351,6 @@ export default {
         {
           title: "Profile",
           to: "/client/profile",
-        },
-        {
-          title: "Transaction",
-          to: "/client/transactions",
         },
       ],
       upNavItems: [

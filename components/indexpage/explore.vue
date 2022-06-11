@@ -8,7 +8,7 @@
         <v-col cols="12" sm="3">
           <div class="exploreText">
             <h1 class="textCenter">Hire from our pool of Talents</h1>
-            <v-btn class="px-5 mr-2 mt-5 greyBtn2" to="jobfeed">
+            <v-btn class="px-5 mr-2 mt-5 greyBtn2" to="/signup">
               Find Work</v-btn
             >
           </div></v-col
