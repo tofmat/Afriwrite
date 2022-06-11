@@ -21,15 +21,25 @@
             exact
             class="theItem"
           >
-            <v-item v-slot="{ active }" class="navheader px-2">
+            <v-item v-slot="{ active }" class="navheader px-2"  >
               <v-title :class="active ? 'navActive' : ''">{{
                 nav.title
               }}</v-title>
             </v-item>
           </v-list-item>
+          <v-list-item  :to="goToDashboard" router  v-if="user">
+            <v-item v-slot="{ active }" class="navheader px-2">
+              <v-title :class="active ? 'navActive' : ''">My Dashboard</v-title>
+            </v-item>
+          </v-list-item>
+          <v-list-item  :to="goToDashboard" router v-else>
+            <v-item v-slot="{ active }" class="navheader px-2">
+              <v-title :class="active ? 'navActive' : ''">Sign In</v-title>
+            </v-item>
+          </v-list-item>
         </div>
       </v-item-group>
-      <v-btn class="px-5 mx-2 noMobile findBtn" to="/signup"> Join Now</v-btn>
+      <v-btn class="px-5 mx-2 noMobile findBtn" to="/signup"  v-if="!user"> Join Now</v-btn>
       <div>
         <v-app-bar-nav-icon
           @click="drawer = true"
@@ -56,16 +66,23 @@
             router
             exact
           >
-            <!-- <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action> -->
             <v-list-item-content>
               <v-list-item-title v-text="nav.title" />
             </v-list-item-content>
           </v-list-item>
+           <v-list-item  :to="goToDashboard" router  v-if="user">
+            <v-list-item-content>
+                <v-list-item-title>My Dashboard</v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
+          <v-list-item  :to="goToDashboard" router v-else>
+            <v-list-item-content>
+              <v-list-item-title>Sign In</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
-      <v-btn class="px-5 mx-2 findBtn" to="jobfeed"> Join Now</v-btn>
+      <v-btn class="px-5 mx-2 findBtn" to="/signup" v-if="!user"> Join Now</v-btn>
     </v-navigation-drawer>
     <v-main>
       <nuxt />
@@ -146,6 +163,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      user: this.$auth.user,
       group: "",
       navItems: [
         {
@@ -160,10 +178,6 @@ export default {
           title: "View Freelancers",
           to: "#",
         },
-        {
-          title: "Sign In",
-          to: "/signin",
-        },
       ],
       miniVariant: false,
       right: true,
@@ -171,6 +185,16 @@ export default {
       title: "Vuetify.js",
     };
   },
+  computed:{
+    goToDashboard(){
+      if(this.user){
+        return this.user.role === 'writer' ? '/dashboard/jobfeed' : '/client/jobs'
+      }else{
+        return '/signin'
+      }
+      
+    }
+  }
 };
 </script>
 

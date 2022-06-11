@@ -456,9 +456,11 @@ export default {
 body {
   background-color: white;
 }
-.greenBack {
-  background-color: #008952 !important;
+
+.greenBack .v-toolbar__content {
+  background: #008952 !important;
 }
+/* 008952 */
 .sideLinkCon {
   margin: 7px 0;
   display: flex !important;
