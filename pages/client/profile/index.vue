@@ -79,63 +79,6 @@
                 </v-col>
               </div>
             </div>
-            <!-- <div class="mt-10">
-              <div class="backWhite workHis">
-                <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
-                <hr class="fullWidth" />
-                <div class="mt-4">
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="8">
-                        <h3 class="mainColor">
-                          Storytelling expert with narrative skills and an eye
-                          for design
-                        </h3>
-                        <div class="flex alignCenter my-3 lca">
-                          <i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i>
-                          <h3>5.0</h3>
-                        </div>
-                        <p class="textItalics">
-                          As always, great work and working with you
-                        </p>
-                      </v-col>
-                      <v-col cols="12" sm="4" class="rightAlign">
-                        <h3>$60</h3>
-                        <h3>Fixed Price</h3>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <hr class="fullWidth mt-4" />
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="8">
-                        <h3 class="mainColor">
-                          Storytelling expert with narrative skills and an eye
-                          for design
-                        </h3>
-                        <div class="flex alignCenter my-3 lca">
-                          <i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i>
-                          <h3>5.0</h3>
-                        </div>
-                        <p class="textItalics">
-                          As always, great work and working with you
-                        </p>
-                      </v-col>
-                      <v-col cols="12" sm="4" class="rightAlign">
-                        <h3>$60</h3>
-                        <h3>Fixed Price</h3>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="3">
