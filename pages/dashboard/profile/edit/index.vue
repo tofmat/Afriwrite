@@ -612,7 +612,7 @@ export default {
           this.loading = false;
           this.$toast.success("Your profile has been updated.");
           setTimeout(() =>{
-            window.location.assign("/dashboard/profile");
+            this.$router.push("/dashboard/profile");
           }, 1000)
         }
       } catch (error) {

@@ -6,6 +6,7 @@ export default function({ $auth, redirect, store }) {
   } else if (user && user.role === "writer") {
     redirect("/dashboard/jobfeed");
   } else {
-    redirect("/signin");
+    store.dispatch("setFormerRoute", route.fullPath, { root: true })
+    redirect('/signin');
   }
 }

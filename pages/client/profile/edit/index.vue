@@ -211,7 +211,7 @@ export default {
         );
         this.loading = false;
         this.$toast.success("Your profile has been updated.");
-        window.location.assign("/client/profile");
+        this.$router.push("/client/profile");
       } catch (error) {
         this.loading = false;
         this.$toast.error("There was an error updating your profile");

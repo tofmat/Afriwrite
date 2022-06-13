@@ -421,7 +421,7 @@ export default {
       document.cookie =
         "auth._token.local" +
         "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      window.location.assign("/signin");
+      this.$router.push("/signin");
     },
     async sendNewMail() {
       try {

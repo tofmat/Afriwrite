@@ -150,7 +150,7 @@ export default {
         );
         this.deleteLoading = false;
         this.$toast.success("This job has been deleted.");
-        window.location = "/client/jobs";
+        this.$router.push("/client/jobs") 
       } catch (error) {
         this.deleteLoading = false;
         this.$toast.error("There was an error deleting this job");

@@ -186,7 +186,7 @@ export default {
               "This proposal has been accepted and can be found in contracts"
             );
             this.loading = false;
-            window.location = "/client/contracts";
+            this.$router.push("/client/contracts")
           } catch {
             this.loading = false;
             this.$toast.error("There was an error accepting this proposal");
@@ -206,7 +206,7 @@ export default {
           `/v1/client/decline-job-proposal/${this.singleProposal.id}`
         );
         this.$toast.success("This proposal has been declined");
-        window.location = "/client/proposals";
+        this.$router.push("/client/proposals")
       } catch (error) {
         this.declineloading = false;
         this.$toast.error("There was an error declining this proposal");

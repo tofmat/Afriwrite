@@ -230,7 +230,7 @@ export default {
           }else{
             this.$toast.success("This job is not available any longer");
             setTimeout(() => {
-              window.location = "/dashboard/jobfeed"
+              this.$router.push("/dashboard/jobfeed")
             }, 2000)
           }
         })
@@ -238,7 +238,7 @@ export default {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
           setTimeout(() => {
-            window.location = "/dashboard/jobfeed"
+            this.$router.push("/dashboard/jobfeed")
           }, 2000)
         });
     },
@@ -288,7 +288,7 @@ export default {
     //   singleJob: "writer/singleJob",
     // }),
     publicJobPostLink(){
-      return `${window.location.host}/jobs/${this.singleJob.public_reference_id}`
+      return `${window.location.host}/job/${this.singleJob.public_reference_id}`
     }
   },
   filters: {

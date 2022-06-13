@@ -193,11 +193,6 @@ export default {
     };
   },
   methods: {
-    contactRecipient() {
-      window.location.assign(
-        `http://afriwrites-chat-system.herokuapp.com/create-chat?user_id=${this.$auth.user.id}&recipient_id=${this.clientDetails.id}&email=${this.$auth.user.email}&signature_key=$2y$10$jXZolJaVBfwnAUM1qMR3Ju7MGvqFrrqW119gzcHZXgsKTQDnijl3y`
-      );
-    },
     getSingleContract() {
       this.singleContract = "";
       this.pageLoading = true;
