@@ -289,8 +289,11 @@ export default {
       }
     },
   },
-  mounted() {
-    // this.fetchAllBanks;
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
   },
 };
 </script>

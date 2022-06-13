@@ -34,17 +34,17 @@
               </div> -->
             </div>
             <div class="mt-5">
-              <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
+              <p><b>Date Submitted:</b> {{ proposalDate | dateSlice }}</p>
               <p v-if="singleContract.payment_mode === 'by_project'">
-                <span class="mainColor">Payment Method:</span> Project based
+                <span class=""><b>Payment Method:</b></span> Project based
                 payment
               </p>
               <p v-else>
-                <span class="mainColor">Payment Method:</span> Milestone based
+                <span class=""><b>Payment Method:</b></span> Milestone based
                 payment
               </p>
               <p>
-                Payment Status:
+                <b>Payment Status:</b>
                 {{ singleContract.disbursed_writer_payment_status }}
               </p>
             </div>

@@ -73,7 +73,8 @@
                               class="jobDesc flex flexColumn justifyCenter"
                             >
                               <h3>{{ contract.created_at | dateSlice }}</h3>
-                              <p>Contract started</p>
+                              <p v-if="contract.status === 'completed'">Contract Ended</p>
+                              <p v-else>Contract started</p>
                             </v-col>
                             <v-col cols="12" sm="6" class="jobDesc">
                               <div

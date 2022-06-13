@@ -186,10 +186,55 @@
             </div>
             <hr class="fullWidth my-5" />
             <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/category.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />CATEGORY</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ this.$auth.user.category }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/writing2.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />WRITING NICHES</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ writing_niches }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/civil.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />SKILLS</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ skills }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
               <div>
                 <h4 class="darkGreyColor noMargin mb-2">
                   <span
-                    ><i class="far fa-file-alt mr-2 mb-2"></i> Profile Link
+                    ><i class="far fa-file-alt mr-2 mb-2"></i> PROFILE LINK
                   </span>
                 </h4>
                 <div class="workDiv fullWidth my-3 scrollable-x" to="#">
@@ -335,6 +380,12 @@ export default {
       ){
           return true
       }
+    },
+    writing_niches(){
+      return  this.$auth.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+    },
+    skills(){
+      return  this.$auth.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
     }
   },
   data() {
@@ -399,7 +450,11 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
   },
 };
 </script>
