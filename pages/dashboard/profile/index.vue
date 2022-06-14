@@ -409,11 +409,11 @@ export default {
           return true
       }
     },
-    writing_niches(){
-      return  this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+   writing_niches(){
+      return  this.user.writing_niches ? this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
     },
     skills(){
-      return  this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+      return  this.user.skills ? this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
     },
     profileLink(){
       return `${window.location.host}/profile/${this.user.public_reference_id}`
