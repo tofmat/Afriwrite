@@ -129,5 +129,10 @@ export default {
         // autoFetchUser: true
       }
     }
+  },
+
+  // for netlify giving 404 page
+  generate: {
+    fallback: true
   }
 };
