@@ -100,14 +100,12 @@
                           {{ work.job_title }}
                         </h3>
                         <div class="flex alignCenter my-3 lca">
-                          <i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i
-                          ><i class="fas fa-star yellowColor"></i>
-                          <h3>5.0</h3>
+                          <star-rating v-model="work.feedback_rating" :increment="0.1" :active-color="'#008952'"
+                            :read-only="true" :fixed-points="2"
+                          ></star-rating>
                         </div>
                         <p class="textItalics">
-                          As always, great work and working with you
+                          {{ work.feedback_comment }}
                         </p>
                       </v-col>
                       <v-col cols="12" sm="4" class="rightAlign">
@@ -179,7 +177,7 @@
                     this.dialog = true;
                   }
                 "
-              >
+              > 
                 Add account Number
               </v-btn>
             </div>
@@ -459,6 +457,7 @@ export default {
         );
         this.loading = false;
         this.dialog = false;
+        location.reload()
         return response;
       } catch (error) {
         this.loading = false;

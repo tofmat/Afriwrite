@@ -360,11 +360,11 @@ export default {
       navItems: [
         {
           title: "My Jobs",
-          to: "client/jobs",
+          to: "/client/jobs",
         },
         {
           title: "Post Job",
-          to: "client/post",
+          to: "/client/post",
         },
         {
           title: "Messages",
@@ -372,19 +372,19 @@ export default {
         },
         {
           title: "Proposals",
-          to: "client/proposals",
+          to: "/client/proposals",
         },
         {
           title: "All Contracts",
-          to: "client/contracts",
+          to: "/client/contracts",
         },
         {
           title: "Profile",
-          to: "client/profile",
+          to: "/client/profile",
         },
         {
           title: "Transaction",
-          to: "client/transactions",
+          to: "/client/transactions",
         },
         // {
         //   title: "Reports",
@@ -392,7 +392,7 @@ export default {
         // },
         {
           title: "Logout",
-          to: "client/profile",
+          to: "/client/profile",
         },
       ],
       upNavItems: [
