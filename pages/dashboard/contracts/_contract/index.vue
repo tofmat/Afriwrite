@@ -34,17 +34,17 @@
               </div> -->
             </div>
             <div class="mt-5">
-              <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
+              <p><b>Date Submitted:</b> {{ proposalDate | dateSlice }}</p>
               <p v-if="singleContract.payment_mode === 'by_project'">
-                <span class="mainColor">Payment Method:</span> Project based
+                <span class=""><b>Payment Method:</b></span> Project based
                 payment
               </p>
               <p v-else>
-                <span class="mainColor">Payment Method:</span> Milestone based
+                <span class=""><b>Payment Method:</b></span> Milestone based
                 payment
               </p>
               <p>
-                Payment Status:
+                <b>Payment Status:</b>
                 {{ singleContract.disbursed_writer_payment_status }}
               </p>
             </div>
@@ -193,11 +193,6 @@ export default {
     };
   },
   methods: {
-    contactRecipient() {
-      window.location.assign(
-        `http://afriwrites-chat-system.herokuapp.com/create-chat?user_id=${this.$auth.user.id}&recipient_id=${this.clientDetails.id}&email=${this.$auth.user.email}&signature_key=$2y$10$jXZolJaVBfwnAUM1qMR3Ju7MGvqFrrqW119gzcHZXgsKTQDnijl3y`
-      );
-    },
     getSingleContract() {
       this.singleContract = "";
       this.pageLoading = true;

@@ -76,6 +76,7 @@
                             <img
                               :src="proposal.writer.profile_picture"
                               alt="user"
+                              style="border-radius: 50%; width: 70px;"
                             />
                           </div>
                           <div v-else>

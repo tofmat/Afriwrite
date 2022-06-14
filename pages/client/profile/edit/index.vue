@@ -199,8 +199,7 @@ export default {
         gender: this.profileDetails.gender,
         phone_number: this.profileDetails.phone_number,
         country: this.profileDetails.country,
-        availability: this.profileDetails.availability,
-        // profile_picture: this.profileDetails.profile_picture,
+        availability: JSON.parse(this.profileDetails.availability),
         about_me: this.profileDetails.about_me,
       };
       try {
@@ -211,10 +210,10 @@ export default {
         );
         this.loading = false;
         this.$toast.success("Your profile has been updated.");
-        window.location.assign("/client/profile");
+        this.$router.push("/client/profile");
       } catch (error) {
         this.loading = false;
-        this.$toast.error("There was an error updating your profile");
+        this.$toast.error(error.response.data.error ?? "There was an error updating your profile");
       }
     },
   },

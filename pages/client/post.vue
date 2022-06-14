@@ -74,7 +74,7 @@
                 than one)
               </p>
               <v-select
-                v-model="jobInfo.writing_niches"
+                v-model="niches"
                 :items="nicheItems"
                 :menu-props="{ maxHeight: '400' }"
                 multiple
@@ -91,7 +91,7 @@
                 than one)
               </p>
               <v-select
-                v-model="jobInfo.skills"
+                v-model="skills"
                 :items="skillItems"
                 :menu-props="{ maxHeight: '400' }"
                 multiple
@@ -344,8 +344,8 @@ export default {
       "Creative Writing ",
       "Social Media Writing",
     ],
-    values: ["Articles", "Blogging"],
-    value: null,
+    skills: [],
+    niches: [],
     jobInfo: {
       title: "",
       description: "",
@@ -373,6 +373,17 @@ export default {
       "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
     ]
   }),
+  watch:{
+    'jobInfo.writing_niches'(){
+      var sliceNiches = this.jobInfo.writing_niches
+      console.log(sliceNiches.splice(), 'niche')
+    },
+    // 'jobInfo.skills'(){
+    //   this.jobInfo.skills = this.jobInfo.skills.splice()
+
+    //   console.log(this.jobInfo.skills, 'skills')
+    // }
+  },
   methods: {
     onPickFile() {
       this.$refs.fileInput.click();
@@ -387,6 +398,15 @@ export default {
           formData.append("file[" + i + "]", this.jobInfo.file[i]);
         }
       }
+
+      if(this.skills.length > 0){
+        this.jobInfo.skills = this.skills
+      }
+
+      if(this.niches.length > 0){
+        this.jobInfo.writing_niches = this.niches
+      }
+      
       formData.append("title", this.jobInfo.title);
       formData.append("description", this.jobInfo.description);
       formData.append("price", this.jobInfo.price);

@@ -9,9 +9,9 @@
                 <v-col cols="12" sm="3" lg="2" class="profilePicture">
                   <div class="profileImage">
                     <img
-                      :src="this.$auth.user.profile_picture"
+                      :src="user.profile_picture"
                       alt="ProfilePic"
-                      v-if="this.$auth.user.profile_picture"
+                      v-if="user.profile_picture"
                     />
                     <img
                       src=".././../../assets/images/emptyUser.png"
@@ -23,21 +23,21 @@
                 <v-col cols="12" sm="8" lg="5">
                   <div class="nameAndLocation">
                     <h1 class="darkGreyColor">
-                      {{ this.$auth.user.first_name }}
-                      {{ this.$auth.user.last_name }}
+                      {{ user.first_name }}
+                      {{ user.last_name }}
                     </h1>
-                    <p>{{ this.$auth.user.username }}</p>
+                    <p>{{ user.username }}</p>
                     <div class="flex alignCenter mb-3 lca">
                       <i class="fas fa-map-marker-alt"></i>
-                      <p class="noMargin">{{ this.$auth.user.country }}</p>
+                      <p class="noMargin">{{ user.country }}</p>
                     </div>
                     <div class="flex alignCenter mb-3 lca">
                       <i class="fas fa-envelope"></i>
-                      <p class="noMargin">{{ this.$auth.user.email }}</p>
+                      <p class="noMargin">{{ user.email }}</p>
                     </div>
                     <div class="flex alignCenter mb-3 lca">
                       <i class="fas fa-phone"></i>
-                      <p class="noMargin">{{ this.$auth.user.phone_number }}</p>
+                      <p class="noMargin">{{ user.phone_number }}</p>
                     </div>
                   </div>
                 </v-col>
@@ -56,7 +56,7 @@
                 <v-col cols="12" sm="12">
                   <div>
                     <p class="textMainColor mt-3">
-                      Bio: {{ this.$auth.user.about_me }}
+                      Bio: {{ user.about_me }}
                     </p>
                   </div>
                 </v-col>
@@ -76,7 +76,7 @@
                 </v-col>
                 <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
-                    <h3 class="mb-2 mainColor">0</h3>
+                    <h3 class="mb-2 mainColor">{{ user.jobs.length }}</h3>
                     <p class="darkGreyColor">Jobs</p>
                   </div>
                 </v-col>
@@ -88,7 +88,39 @@
                 </v-col>
               </div>
             </div>
-            <div class="mt-10" v-if="this.$auth.user.portfolio.length > 0">
+            <div class="mt-10">
+              <div class="backWhite workHis">
+                <h2 class="mb-4 darkGreyColor">Work history and feedback</h2>
+                <hr class="fullWidth" />
+                <div class="mt-4">
+                  <div v-for="work in user.jobs" :key="work.id">
+                    <v-row>
+                      <v-col cols="12" sm="8">
+                        <h3 class="mainColor">
+                          {{ work.job_title }}
+                        </h3>
+                        <div class="flex alignCenter my-3 lca">
+                          <i class="fas fa-star yellowColor"></i
+                          ><i class="fas fa-star yellowColor"></i
+                          ><i class="fas fa-star yellowColor"></i
+                          ><i class="fas fa-star yellowColor"></i>
+                          <h3>5.0</h3>
+                        </div>
+                        <p class="textItalics">
+                          As always, great work and working with you
+                        </p>
+                      </v-col>
+                      <v-col cols="12" sm="4" class="rightAlign">
+                        <h3>&#8358; {{ work.proposed_amount }}</h3>
+                        <h3>Fixed Price</h3>
+                      </v-col>
+                    </v-row>
+                    <hr class="fullWidth mt-4 mb-5" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-10" v-if="user.portfolio.length > 0">
               <div class="allArticle">
                 <h2 class="mb-4 darkGreyColor">Past written Articles</h2>
                 <hr class="fullWidth" />
@@ -98,7 +130,7 @@
                       <v-col
                         cols="12"
                         sm="4"
-                        v-for="singleArticle in this.$auth.user.portfolio"
+                        v-for="singleArticle in user.portfolio"
                         :key="singleArticle.id"
                       >
                         <div class="articleSingle">
@@ -139,7 +171,7 @@
         </v-col>
         <v-col cols="12" sm="12" lg="3">
           <div class="sideB rightSideDash">
-            <div v-if="!this.$auth.user.recipient_code">
+            <div v-if="!user.recipient_code">
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
@@ -179,23 +211,68 @@
                   />AVAILABILITY</span
                 >
               </p>
-              <h3 class="mainColor" v-if="this.$auth.user.availability == true">
+              <h3 class="mainColor" v-if="user.availability == true">
                 Currently Available
               </h3>
               <h3 v-else class="mainColor">Not Available</h3>
             </div>
             <hr class="fullWidth my-5" />
             <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/category.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />CATEGORY</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ user.category }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/writing2.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />WRITING NICHES</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ writing_niches }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/civil.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />SKILLS</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ skills }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
               <div>
                 <h4 class="darkGreyColor noMargin mb-2">
                   <span
-                    ><i class="far fa-file-alt mr-2 mb-2"></i> Profile Link
+                    ><i class="far fa-file-alt mr-2 mb-2"></i> PROFILE LINK
                   </span>
                 </h4>
                 <div class="workDiv fullWidth my-3 scrollable-x" to="#">
                   <p class="mainColor noMargin">
                     https://www.afriwrite.com/profile/{{
-                      this.$auth.user.username
+                      user.username
                     }}
                   </p>
                 </div>
@@ -216,7 +293,7 @@
                 >
               </p>
               <p class="mainColor noMargin">
-                {{ this.$auth.user.languages }}
+                {{ user.languages }}
               </p>
             </div>
           </div>
@@ -335,6 +412,12 @@ export default {
       ){
           return true
       }
+    },
+    writing_niches(){
+      return  this.$auth.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+    },
+    skills(){
+      return  this.$auth.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
     }
   },
   data() {
@@ -399,7 +482,11 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
   },
 };
 </script>
