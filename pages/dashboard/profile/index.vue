@@ -271,12 +271,10 @@
                 </h4>
                 <div class="workDiv fullWidth my-3 scrollable-x" to="#">
                   <p class="mainColor noMargin">
-                    https://www.afriwrite.com/profile/{{
-                      user.username
-                    }}
+                    {{ profileLink }}
                   </p>
                 </div>
-                <p class="mainColor arrowCursor" @click="copyJobLink()">
+                <p class="mainColor arrowCursor" @click="copyLink(profileLink)">
                   Copy link
                 </p>
               </div>
@@ -414,10 +412,13 @@ export default {
       }
     },
     writing_niches(){
-      return  this.$auth.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+      return  this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
     },
     skills(){
-      return  this.$auth.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+      return  this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+    },
+    profileLink(){
+      return `${window.location.host}/profile/${this.user.public_reference_id}`
     }
   },
   data() {

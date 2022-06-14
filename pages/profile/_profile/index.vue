@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="row noMargin">
-        <v-col cols="12" sm="12" lg="12" class="">
+        <v-col cols="12" sm="12" lg="9" class="">
           <div class="dashMainContent">
             <div>
               <div class="row">
@@ -76,7 +76,7 @@
                 </v-col>
                 <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
-                    <!-- <h3 class="mb-2 mainColor">{{ user.jobs ? user.jobs.length : 0 }}</h3> -->
+                    <h3 class="mb-2 mainColor">{{ user.jobs ? user.jobs.length : 0 }}</h3>
                     <p class="darkGreyColor">Jobs</p>
                   </div>
                 </v-col>
@@ -120,7 +120,7 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="mt-10" v-if="user.portfolio.length > 0">
+            <div class="mt-10" v-if="user.portfolio && user.portfolio.length > 0">
               <div class="allArticle">
                 <h2 class="mb-4 darkGreyColor">Past written Articles</h2>
                 <hr class="fullWidth" />
@@ -166,7 +166,104 @@
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
+          </div>
+        </v-col>
+        <v-col cols="12" sm="12" lg="3">
+          <div class="sideB rightSideDash">
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/24hrs.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />AVAILABILITY</span
+                >
+              </p>
+              <h3 class="mainColor" v-if="user.availability == true">
+                Currently Available
+              </h3>
+              <h3 v-else class="mainColor">Not Available</h3>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/category.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />CATEGORY</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ user.category }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/writing2.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />WRITING NICHES</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ writing_niches }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/civil.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />SKILLS</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ skills }}
+              </p>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <div>
+                <h4 class="darkGreyColor noMargin mb-2">
+                  <span
+                    ><i class="far fa-file-alt mr-2 mb-2"></i> PROFILE LINK
+                  </span>
+                </h4>
+                <div class="workDiv fullWidth my-3 scrollable-x" to="#">
+                  <p class="mainColor noMargin">
+                    {{ profileLink }}
+                  </p>
+                </div>
+                <p class="mainColor arrowCursor" @click="copyLink(profileLink)">
+                  Copy link
+                </p>
+              </div>
+            </div>
+            <hr class="fullWidth my-5" />
+            <div class="profileInfoHolder">
+              <p class="darkGreyColor noMargin mb-2">
+                <span
+                  ><img
+                    src="../../../assets/images/translate.svg"
+                    alt="availableicon"
+                    class="mr-2"
+                  />LANGUAGES</span
+                >
+              </p>
+              <p class="mainColor noMargin">
+                {{ user.languages }}
+              </p>
+            </div>
           </div>
         </v-col>
       </div>
@@ -180,32 +277,47 @@ export default {
   layout: "client",
   computed:{
     writing_niches(){
-      return  this.$auth.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+      return  this.user.writing_niches ? this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
     },
     skills(){
-      return  this.$auth.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '')
+      return  this.user.skills ? this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
+    },
+    profileLink(){
+      return `${window.location.host}/profile/${this.user.public_reference_id}`
     }
   },
   data() {
     return {
       dialog: false,
       loading: false,
-      user: this.$auth.user
+      user: {}
     };
   },
   methods: {
-    copyJobLink() {
-      navigator.clipboard.writeText(
-        `https://www.afriwrite.com/profile/${this.$auth.user.username}`
-      );
-      this.$toast.success("Link copied");
+    async getWriterProfile(public_reference_id) {
+      try {
+        this.loading = true;
+        const { data } = await this.$axios.get(`/get-writer-profile/${public_reference_id}`);
+
+        if(data && data.data != null){
+          this.user = data.data
+        }else{
+          this.$toast.error("User not found");
+          window.location.assign('/')
+        }
+        console.log(data)
+      } catch (error) {
+        this.loading = false;
+        console.log(error)
+        this.$toast.error(
+          "There was an error getting user profile. please try again"
+        );
+      }
     },
   },
-  async mounted() {
-    const { data } = await this.$auth.fetchUser()
-    if(data){
-      this.$auth.setUser(data.data)
-    }
+  async beforeMount() {
+    console.log(this.$route.params.profile)
+    this.getWriterProfile(this.$route.params.profile)
   },
 };
 </script>
