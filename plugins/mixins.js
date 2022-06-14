@@ -13,6 +13,10 @@ const mixins = {
         return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&recipient_id=${recipientId}&signature_key=${CHAT_SIGNATURE_KEY}`
       }
       return CHAT_BASE_URL+`/create-chat?user_id=${id}&email=${email}&signature_key=${CHAT_SIGNATURE_KEY}`
+    },
+    copyLink(link){
+      navigator.clipboard.writeText(link);
+      this.$toast.success("Link copied");
     }
   }
 }

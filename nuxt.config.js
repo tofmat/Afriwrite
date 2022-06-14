@@ -44,6 +44,7 @@ export default {
   plugins: [
     "~/plugins/axios",
     '~/plugins/mixins',
+    '~/plugins/star-rating',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

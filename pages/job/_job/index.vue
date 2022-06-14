@@ -77,11 +77,6 @@
 
             <v-col cols="12" sm="12" lg="3" class="alignOnMobile">
               <v-btn class="findBtn mb-4 fullWidth" @click="submitProposal">Submit a Proposal</v-btn>
-              <!-- <v-btn class="greyBtn fullWidth"> <i class="fas fa-bookmark mr-2 mt-1"></i> Save Job</v-btn>
-              <div class="flex alignCenter fullWidth mt-1">
-                <div class="darkGreyColor savedDiv"> <i class="fas fa-bookmark mr-2 mt-1"></i> Saved</div>
-                <i class="far fa-trash-alt ml-2 mainColor iconBack"></i>
-              </div> -->
               <div>
                 <div class="clientInfo mt-10">
                   <h4><span><i class="far fa-file-alt mr-2 mb-5"></i> ABOUT THE CLIENT </span></h4>
@@ -99,7 +94,7 @@
                     <v-btn class="workDiv fullWidth my-3 scrollable-x" to="#">
                         {{ publicJobPostLink }}
                     </v-btn>
-                    <p class="mainColor" @click="copyJobLink()">Copy link</p>
+                    <p class="mainColor" @click="copyLink(publicJobPostLink)">Copy link</p>
                   </div>
 
                 </div>
@@ -133,7 +128,6 @@ export default {
   },
   mounted(){
     this.getJob(this.$route.params.job)
-    console.log(this.$route.params)
   },
   methods:{
     async getJob(job_id) {
@@ -164,10 +158,6 @@ export default {
           "There was an error getting this job. please try again"
         );
       }
-    },
-    copyJobLink() {
-      navigator.clipboard.writeText(this.publicJobPostLink);
-      this.$toast.success("Link copied");
     },
     submitProposal(){
       this.$router.push(`/dashboard/jobfeed/${this.$route.params.job}/submit`)

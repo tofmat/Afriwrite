@@ -80,8 +80,9 @@
               <v-btn
                 class="findBtn mb-4 fullWidth"
                 v-if="singleContract.status === 'submitted_work_for_approval'"
-                @click="approveOneTimeJob()"
-                :loading="approveLoading"
+                @click="() => {
+                    this.oneTimeApprovalDialog = true;
+                  }"
                 >Approve for Payment</v-btn
               >
               <v-btn
@@ -120,6 +121,57 @@
               </div>
             </div>
           </v-col>
+          <v-col cols="auto">
+            <v-dialog
+              v-model="oneTimeApprovalDialog"
+              transition="dialog-top-transition"
+              max-width="600"
+            >
+              <template v-slot:default="oneTimeApprovalDialog">
+                <v-card class="py-5">
+                  <div class="centerflex columnFlex">
+                    <v-card-text>
+                      <h3 class="darkGreyColor textCenter">
+                        What's your experience working with the freelancer?
+                      </h3>
+                      <div class="mt-5">
+                      <div class="row">
+                        <v-col cols="12" sm="12">
+                          <div class="d-flex">
+                          <span class="mt-3 mr-4">Rating:</span>
+                          <star-rating v-model="review.rating" :increment="0.1" :active-color="'#008952'"></star-rating>
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="12">
+                          <span>Comment:</span>
+                          <v-textarea
+                            v-model.trim="review.comment"
+                            auto-grow
+                            outlined
+                            rows="3"
+                            row-height="15"
+                            class="mt-3"
+                            placeholder="Please comment on the freelancer performance"
+                          ></v-textarea>
+                        </v-col>
+                      </div>
+                    </div>
+                    </v-card-text>
+                  </div>
+                  <div class="flex justifyCenter mobileColumn">
+                    <v-btn class="findBtn mx-3 my-1" to="#" :disabled="reviewInfoNotFilled"
+                      :loading="approveLoading" @click="approveOneTimeJob"
+                    >
+                      Approve for Payment
+                    </v-btn>
+                  </div>
+                  <v-card-actions class="justify-end">
+                    <v-btn text @click="oneTimeApprovalDialog.value = false">Close</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-dialog>
+          </v-col>
         </div>
       </div>
     </div>
@@ -127,7 +179,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 
 export default {
   scrollToTop: true,
@@ -137,6 +188,7 @@ export default {
   },
   data() {
     return {
+      oneTimeApprovalDialog: false,
       loading: false,
       declineloading: false,
       singleContract: "",
@@ -146,7 +198,11 @@ export default {
       dateWriterRegistered: "",
       approveLoading: false,
       jobDetails: "",
-      totalAmount: ""
+      totalAmount: "",
+      review: {
+        rating: 0,
+        comment: ''
+      }
     };
   },
   methods: {
@@ -176,10 +232,13 @@ export default {
       try {
         this.approveLoading = true;
         const response = await this.$axios.post(
-          `/v1/client/approve-completed-one-time-work/${this.singleContract.id}`
+          `/v1/client/approve-completed-one-time-work/${this.singleContract.id}`, 
+          this.review
         );
         this.approveLoading = false;
         this.$toast.success("This job has been approved for payment.");
+        this.oneTimeApprovalDialog = false
+        setTimeout(() => { location.reload() }, 2000)
       } catch (error) {
         this.approveLoading = false;
         this.$toast.error(
@@ -192,9 +251,9 @@ export default {
     this.getSingleContract();
   },
   computed: {
-    // ...mapGetters({
-    //   singleContract: "client/singleContract",
-    // }),
+    reviewInfoNotFilled(){
+      if(!this.review.comment) return true
+    }
   },
   filters: {
     slicee(data) {

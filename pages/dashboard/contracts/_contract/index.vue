@@ -91,25 +91,7 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="
-                  singleContract.status === 'approved_for_payment' &&
-                  !this.$auth.user.recipient_code
-                "
-                @click="
-                  () => {
-                    this.$toast.error(
-                      'Please add your account number to be abe to request for payment. Do this in your profile'
-                    );
-                  }
-                "
-                >Request for Payment</v-btn
-              >
-              <v-btn
-                class="findBtn mb-4 fullWidth"
-                v-if="
-                  singleContract.status === 'approved_for_payment' &&
-                  this.$auth.user.recipient_code
-                "
+                v-if="singleContract.status === 'approved_for_payment'"
                 @click="requestPayment()"
                 :loading="approveLoading"
                 >Request for Payment</v-btn
@@ -223,6 +205,9 @@ export default {
         );
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for review.");
+        setTimeout(() =>{
+          location.reload()
+        }, 2000)
       } catch (error) {
         this.approveLoading = false;
         this.$toast.error(
@@ -231,6 +216,14 @@ export default {
       }
     },
     async requestPayment() {
+      // if user has not created a recipient_code yet, do not proceed to payment
+      if(!this.$auth.user.recipient_code){
+        this.$toast.error(
+          'Please add your account number to be abe to request for payment. Do this in your profile'
+        );
+        return
+      }
+
       this.paymentDetails.recipient_code = this.$auth.user.recipient_code;
       this.paymentDetails.job_proposal_id = this.singleContract.id;
       this.paymentDetails.description = "I want to request for payment";
@@ -243,7 +236,7 @@ export default {
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for payment.");
         setTimeout(() => {
-          window.reload()
+          location.reload()
         }, 2000)
       } catch (error) {
         this.approveLoading = false;
