@@ -374,10 +374,10 @@ export default {
     ]
   }),
   watch:{
-    'jobInfo.writing_niches'(){
-      var sliceNiches = this.jobInfo.writing_niches
-      console.log(sliceNiches.splice(), 'niche')
-    },
+    // 'jobInfo.writing_niches'(){
+    //   var sliceNiches = this.jobInfo.writing_niches
+    //   console.log(sliceNiches.splice(), 'niche')
+    // },
     // 'jobInfo.skills'(){
     //   this.jobInfo.skills = this.jobInfo.skills.splice()
 
@@ -399,13 +399,13 @@ export default {
         }
       }
 
-      if(this.skills.length > 0){
-        this.jobInfo.skills = this.skills
-      }
+      // if(this.skills.length > 0){
+      //   this.jobInfo.skills = this.skills
+      // }
 
-      if(this.niches.length > 0){
-        this.jobInfo.writing_niches = this.niches
-      }
+      // if(this.niches.length > 0){
+      //   this.jobInfo.writing_niches = this.niches
+      // }
       
       formData.append("title", this.jobInfo.title);
       formData.append("description", this.jobInfo.description);
