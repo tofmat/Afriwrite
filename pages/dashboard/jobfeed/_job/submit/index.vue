@@ -531,13 +531,6 @@ export default {
           formData.append("file[" + i + "]", this.proposal.file[i]);
         }
       }
-
-      // for( let i = 0; i < this.step_six.images.length; i++ ){
-      //         let file = this.step_six.images[i]
-      //         formData.append('images[' + i + ']', file)
-      //       }
-
-      // formData.append("duration", this.proposal.duration);
       formData.append("cover_letter", this.proposal.cover_letter);
 
       if(this.proposal.duration){
@@ -547,8 +540,8 @@ export default {
       if(this.proposal.price_per_word){
         formData.append("price_per_word", this.proposal.price_per_word);
       }
+
       formData.append("payment_mode", this.proposal.payment_mode);
-      // formData.append("milestones[]", this.proposal.milestones);
 
       if (this.proposal.milestones && this.proposal.milestones.length) {
         for (let j = 0; j < this.proposal.milestones.length; j++) {
