@@ -17,7 +17,15 @@ const mixins = {
     copyLink(link){
       navigator.clipboard.writeText(link);
       this.$toast.success("Link copied");
-    }
+    },
+    logoutUser() {
+      console.log("Heyooo");
+      localStorage.removeItem("auth._token.local");
+      document.cookie =
+        "auth._token.local" +
+        "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      window.location.assign("/signin");
+    },
   }
 }
 
