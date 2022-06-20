@@ -12,11 +12,17 @@
           <v-col cols="12" sm="9">
             <div class="flex alignCenter mobileColumn">
               <div class="mr-10">
-                <img src="../../../../assets/images/Ellipse29.png" alt="user" />
+                <img
+                v-if="writerDetails.profile_picture"
+                  :src="writerDetails.profile_picture"
+                  alt="user"
+                  style="border-radius: 50%; width: 70px;"
+                />
+                <img src="../../../../assets/images/Ellipse29.png" alt="user" v-else/>
                 <h3>{{ writerDetails.first_name }}</h3>
-                <p>{{ writerDetails.role }}</p>
+                <p>{{ writerDetails.role }}</p> 
               </div>
-              <div class="mr-10 infoCards">
+              <div class="mr-10 infoCards" v-if="singleProposal.price_per_word != 'null'">
                 <h3 class="mb-2 mainColor">
                   N{{ singleProposal.price_per_word }}/word
                 </h3>
@@ -41,6 +47,7 @@
               {{ singleProposal.cover_letter }}
             </p>
             <div
+              class="mb-5"
               v-if="singleProposal.assets && singleProposal.assets.length > 0"
             >
               <h3>Attachments</h3>
@@ -111,6 +118,58 @@
               </div>
             </div>
           </v-col>
+
+            <div class="milestones mt-5" col="12" v-show="payment_milestones.length">
+              <h3 class="mb-3">Milestones</h3>
+              <hr/>
+              <v-simple-table>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left">S/N</th>
+                          <th class="text-left">Description</th>
+                          <th class="text-left">Expected Delivery Time</th>
+                          <th class="text-left">Word Count</th>
+                          <th class="text-left">Milestone Amount</th>
+                          <th class="textCenter">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="(milestones, index) in payment_milestones"
+                          :key="milestones.id"
+                        >
+                          <td>
+                            {{ index+1 }}
+                          </td>
+                          <td>
+                            {{ milestones.description }}
+                          </td>
+                          <td>
+                            {{ milestones.expected_time }}
+                          </td>
+                          <td>
+                            {{ milestones.number_of_words }}
+                          </td>
+                          <td>
+                              &#8358; {{ milestones.milestone_amount }}
+                          </td>
+                          <td>
+                            <span class="text-warning" v-if="pendingStatus.includes(milestones.status)">
+                            {{ milestones.status }}
+                            </span>
+                            <span class="text-success" v-if="milestones.status === 'completed'">
+                            {{ milestones.status }}
+                            </span>
+                            <span class="text-danger" v-if="failedStatus.includes(milestones.status)">
+                            {{ milestones.status }}
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+            </div>
         </div>
       </div>
     </div>
@@ -136,7 +195,16 @@ export default {
       proposalDate: "",
       dateWriterRegistered: "",
       jobDetails: "",
-      totalAmount: ""
+      totalAmount: 0,
+      payment_milestones: [],
+      pendingStatus: [
+        'pending',
+        'accepted',
+        'submitted_work_for_approval',
+        'approved_for_payment',
+        'processing_payment'
+      ],
+      failedStatus: ['rejected', 'failed']
     };
   },
   methods: {
@@ -152,9 +220,22 @@ export default {
           this.jobDetails = this.singleProposal.job;
           this.proposalDate = this.singleProposal.created_at;
           this.dateWriterRegistered = this.writerDetails.created_at;
-          this.totalAmount =
-            this.singleProposal.price_per_word *
-            this.jobDetails.number_of_words;
+          if(this.singleProposal.payment_mode === 'by_project'){
+            this.totalAmount = this.singleProposal.price_per_word * this.jobDetails.number_of_words;
+          }
+
+          if(this.singleProposal.payment_mode === 'by_milestone'){
+            let total_amount = 0
+            this.singleProposal.payment_milestones.forEach(function (milestone) {
+              return total_amount += parseInt(milestone.milestone_amount);
+            })
+
+            this.totalAmount = total_amount
+            this.payment_milestones = this.singleProposal.payment_milestones
+          }
+
+          
+          console.log(data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -258,5 +339,17 @@ export default {
 
 .clientInfo h4 {
   color: #4d4d4d;
+}
+
+.text-warning{
+  color: #FF8800;
+}
+
+.text-success{
+  color: #007E33;
+}
+
+.text-danger{
+  color: #CC0000;
 }
 </style>

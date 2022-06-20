@@ -91,7 +91,7 @@
                             {{ proposal.writer.first_name }}
                           </h4>
                           <small>{{ proposal.writer.role }}</small>
-                          <p class="noMargin">
+                          <p class="noMargin" v-if="proposal.price_per_word != 'null'">
                             Bid: &#8358;{{ proposal.price_per_word }}/word
                           </p>
                           <p class="noMargin">
