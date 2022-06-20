@@ -187,7 +187,7 @@
                   <div class="jobControl">
                     <v-btn
                       class="greyBtn my-1 fullWidth"
-                      :to="`/client/drafts/${job.id}`"
+                      :to="`/client/drafts/${job.public_reference_id}`"
                       >Continue Editing</v-btn
                     >
                     <v-btn

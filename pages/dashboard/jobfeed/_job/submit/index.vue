@@ -425,7 +425,7 @@
 
 <script>
 import spinner from "../../../../../components/spinner.vue";
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import addMilestoneForm from "../../../../../components/addMilestoneForm";
 export default {
   components: {
@@ -546,16 +546,14 @@ export default {
     this.getSingleJobs();
   },
   computed: {
-    ...mapGetters({
-      singleJob: "writer/singleJob",
-    }),
+    // ...mapGetters({
+    //   singleJob: "writer/singleJob",
+    // }),
   },
 };
 </script>
 
 <style>
-.projectAmount {
-}
 .width40 {
   width: 30%;
 }

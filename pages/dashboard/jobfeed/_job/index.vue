@@ -280,7 +280,6 @@ export default {
   },
   mounted() {
     this.getSingleJobs();
-    console.log(this.$route.params.job)
   },
   computed: {
     publicJobPostLink(){

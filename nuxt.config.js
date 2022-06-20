@@ -45,7 +45,7 @@ export default {
     "~/plugins/axios",
     '~/plugins/mixins',
     '~/plugins/star-rating',
-    '~/plugins/filters'
+    '~/plugins/filters.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -108,8 +108,8 @@ export default {
   build: {},
 
   axios: {
-    // baseURL: "https://afriwrites-backend-api.herokuapp.com/api"
-    baseURL: 'http://127.0.0.1:8000/api',
+    baseURL: "https://afriwrites-backend-api.herokuapp.com/api"
+    // baseURL: 'http://127.0.0.1:8000/api',
   },
 
   auth: {
