@@ -57,7 +57,17 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxtjs/toast"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxtjs/toast", "@nuxtjs/sentry"],
+
+  sentry: {
+    dsn: '', // Enter your project's DSN here
+    // Additional Module Options go here
+    // https://sentry.nuxtjs.org/sentry/options
+    config: {
+      // Add native Sentry config here
+      // https://docs.sentry.io/platforms/javascript/guides/vue/configuration/options/
+    },
+  },
 
   toast: {
     position: "top-right",
@@ -97,8 +107,8 @@ export default {
   build: {},
 
   axios: {
-    baseURL: "https://afriwrites-backend-api.herokuapp.com/api"
-    // baseURL: 'http://127.0.0.1:8000/api',
+    // baseURL: "https://afriwrites-backend-api.herokuapp.com/api"
+    baseURL: 'http://127.0.0.1:8000/api',
   },
 
   auth: {
