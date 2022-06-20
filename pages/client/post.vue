@@ -454,6 +454,12 @@ export default {
       this.jobInfo.file = null
       this.jobInfo.writing_niches = []
       this.jobInfo.skills = []
+      this.niches = []
+      this.skills = []
+
+      // scroll to the top of the page
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     },
     async addDraftJob() {
       let formData = new FormData();

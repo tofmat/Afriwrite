@@ -63,7 +63,7 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       class="mainColor"
-                      >{{ media.file | slicee }}</a
+                      >{{ media.file | fileNameSlicee }}</a
                     >
                   </div>
                 </v-col>
@@ -150,7 +150,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   scrollToTop: true,
@@ -253,23 +252,6 @@ export default {
     }
 
     this.getSingleContract();
-  },
-  computed: {
-    // ...mapGetters({
-    //   singleContract: "writer/singleContract",
-    // }),
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
   },
 };
 </script>

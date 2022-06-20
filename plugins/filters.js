@@ -6,9 +6,18 @@ export default () => {
      return `$${value}`
   })
 
-  Vue.filter('slicee', function(data) {
+  Vue.filter('fileNameSlicee', function(data) {
     let str = data.toString();
-    let res = str.slice(86);
-    return res;
+    return str.slice(86);
+  })
+
+  Vue.filter('descriptionSlice', function(data) {
+    return data.slice(0, 100);
+  })
+
+
+  Vue.filter('dateSlice', function(data) {
+    let str = data.toString();
+    return str.slice(0, 10);
   })
 }

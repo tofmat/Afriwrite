@@ -550,13 +550,6 @@ export default {
       singleJob: "writer/singleJob",
     }),
   },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-  },
 };
 </script>
 

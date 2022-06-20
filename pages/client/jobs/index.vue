@@ -80,7 +80,7 @@
                 sm="3"
                 class="jobDesc flex flexColumn justifyCenter"
               >
-                <h3>Initiated on {{ job.created_at | slicee }}</h3>
+                <h3>Initiated on {{ job.created_at | dateSlice }}</h3>
                 <p>{{ job.created_at | formatDate }}</p>
               </v-col>
               <v-col cols="12" sm="7" class="jobDesc">
@@ -175,7 +175,7 @@
                   sm="3"
                   class="jobDesc flex flexColumn justifyCenter"
                 >
-                  <h3>Initiated on {{ job.created_at | slicee }}</h3>
+                  <h3>Initiated on {{ job.created_at | dateSlice }}</h3>
                   <p>{{ job.created_at | formatDate }}</p>
                 </v-col>
                 <v-col cols="12" sm="7" class="jobDesc">
@@ -287,11 +287,6 @@ export default {
       if (!value) return "";
       return (value = value.toString());
     },
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
     formatDate(date) {
       const getDuration = (timeStamp, form) => {
         const second = 1000;
@@ -321,10 +316,6 @@ export default {
           .filter((value) => parseInt(value) !== 0);
         return durations[0];
       }
-    },
-    descriptionSlice(data) {
-      let response = data.slice(0, 100);
-      return response;
     },
   },
 };

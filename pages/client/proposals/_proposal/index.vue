@@ -57,7 +57,7 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       class="mainColor"
-                      >{{ media.file | slicee }}</a
+                      >{{ media.file | fileNameSlicee }}</a
                     >
                   </div>
                 </v-col>
@@ -222,16 +222,6 @@ export default {
     // }),
   },
   filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
     paystackFees: function (value) {
       let newvalue = Math.floor(value);
       if (newvalue > 126000) {

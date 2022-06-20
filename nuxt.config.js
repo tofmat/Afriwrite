@@ -45,6 +45,7 @@ export default {
     "~/plugins/axios",
     '~/plugins/mixins',
     '~/plugins/star-rating',
+    '~/plugins/filters'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -60,7 +61,7 @@ export default {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxtjs/toast", "@nuxtjs/sentry"],
 
   sentry: {
-    dsn: '', // Enter your project's DSN here
+    dsn: 'https://15a0818515a842308d24875d4c72ca34@o344693.ingest.sentry.io/6517812', // Enter your project's DSN here
     // Additional Module Options go here
     // https://sentry.nuxtjs.org/sentry/options
     config: {

@@ -201,20 +201,6 @@ export default {
     // }),
   },
   filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
-    descriptionSlice(data) {
-      let response = data.slice(0, 100);
-      return response;
-    },
     paystackFees: function (value) {
       let newvalue = Math.floor(value);
       if (newvalue > 126000) {
