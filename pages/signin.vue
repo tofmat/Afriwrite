@@ -87,9 +87,7 @@ export default {
       },
     };
   },
-  mounted(){
-        console.log(this.$store.state)
-  },
+  mounted(){},
   methods: {
     async loginUser(loginInfo) {
       this.errors = "";
@@ -99,13 +97,20 @@ export default {
         const response = await this.$auth.loginWith("local", {
           data: loginInfo,
         });
-        if(this.$store.state.formerRoute){
-          this.$router.push(this.$store.state.formerRoute);
-          this.$store.dispatch('clearFormerRoute', null, { root: true })
-        }else if (this.$auth.user.role === "client") {
-          this.$router.push("/client/jobs");
+        if (this.$auth.user.role === "client") {
+          if(this.$store.state.formerRoute != ''){
+            this.$router.push(this.$store.state.formerRoute);
+            this.$store.dispatch('clearFormerRoute', null, { root: true })
+          }else{
+            this.$router.push("/client/jobs");
+          }
         } else if (this.$auth.user.role === "writer") {
-          this.$router.push("/dashboard/jobfeed");
+          if(this.$store.state.formerRoute != ''){
+            this.$router.push(this.$store.state.formerRoute);
+            this.$store.dispatch('clearFormerRoute', null, { root: true })
+          }else{
+            this.$router.push("/dashboard/jobfeed");
+          }
         } else if (this.$auth.user.role === "admin") {
           this.$router.push("/admin");
         }

@@ -51,7 +51,7 @@
                         rel="noopener noreferrer"
                         class="mainColor"
                       >
-                        {{ media.file | slicee }}
+                        {{ media.file | fileNameSlicee }}
                       </a>
                     </div>
                   </v-col>

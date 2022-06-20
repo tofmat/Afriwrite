@@ -582,13 +582,6 @@ export default {
       savedProposal: "writer/savedProposal",
     }),
   },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-  },
 };
 </script>
 

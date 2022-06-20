@@ -60,7 +60,7 @@
                           target="_blank"
                           rel="noopener noreferrer"
                           class="mainColor"
-                          >{{ media.file | slicee }}</a
+                          >{{ media.file | fileNameSlicee }}</a
                         >
                       </div>
                     </v-col>
@@ -189,7 +189,6 @@
 <script>
 import spinner from "../../../../components/spinner.vue";
 import skeletonBox from "../../../../components/skeletonBox";
-import { mapGetters } from "vuex";
 export default {
   scrollToTop: true,
   apiLoading: false,
@@ -281,27 +280,11 @@ export default {
   },
   mounted() {
     this.getSingleJobs();
-    console.log(this.$route.params.job)
   },
   computed: {
-    // ...mapGetters({
-    //   singleJob: "writer/singleJob",
-    // }),
     publicJobPostLink(){
       return `${window.location.host}/job/${this.singleJob.public_reference_id}`
     }
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
   },
 };
 </script>

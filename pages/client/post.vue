@@ -73,18 +73,17 @@
                 Select the writing niches you want for the job (You can select more
                 than one)
               </p>
-              <v-select
+              <v-autocomplete
                 v-model="niches"
                 :items="nicheItems"
-                :menu-props="{ maxHeight: '400' }"
-                multiple
-                chips
-                persistent-hint
-                color="green darken-3"
-                required
                 outlined
+                dense
+                chips
+                color="green darken-3"
+                small-chips
                 label="Select Niches"
-              ></v-select>
+                multiple
+              ></v-autocomplete>
               <h3 class="mt-3">Choose Skills</h3>
               <p>
                 Select the skills that you want the freelancer to have(You can select more
@@ -100,6 +99,7 @@
                 color="green darken-3"
                 required
                 outlined
+                dense
                 label="Select Skills"
               ></v-select>
               <h3 class="my-3">Attach additional project files (optional)</h3>
@@ -373,17 +373,6 @@ export default {
       "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
     ]
   }),
-  watch:{
-    // 'jobInfo.writing_niches'(){
-    //   var sliceNiches = this.jobInfo.writing_niches
-    //   console.log(sliceNiches.splice(), 'niche')
-    // },
-    // 'jobInfo.skills'(){
-    //   this.jobInfo.skills = this.jobInfo.skills.splice()
-
-    //   console.log(this.jobInfo.skills, 'skills')
-    // }
-  },
   methods: {
     onPickFile() {
       this.$refs.fileInput.click();
@@ -399,13 +388,13 @@ export default {
         }
       }
 
-      // if(this.skills.length > 0){
-      //   this.jobInfo.skills = this.skills
-      // }
+      if(this.skills.length > 0){
+        this.jobInfo.skills = this.skills
+      }
 
-      // if(this.niches.length > 0){
-      //   this.jobInfo.writing_niches = this.niches
-      // }
+      if(this.niches.length > 0){
+        this.jobInfo.writing_niches = this.niches
+      }
       
       formData.append("title", this.jobInfo.title);
       formData.append("description", this.jobInfo.description);
@@ -414,8 +403,8 @@ export default {
       formData.append("category", this.jobInfo.category);
       formData.append("level_of_experience", this.jobInfo.level_of_experience);
       formData.append("number_of_words", this.jobInfo.number_of_words);
-      formData.append("writing_niches", this.jobInfo.writing_niches);
-      formData.append("skills", this.jobInfo.skills);
+      formData.append("writing_niches", JSON.stringify(this.jobInfo.writing_niches));
+      formData.append("skills", JSON.stringify(this.jobInfo.skills));
       formData.append(
         "duration_of_job_in_days",
         this.jobInfo.duration_of_job_in_days
@@ -454,6 +443,12 @@ export default {
       this.jobInfo.file = null
       this.jobInfo.writing_niches = []
       this.jobInfo.skills = []
+      this.niches = []
+      this.skills = []
+
+      // scroll to the top of the page
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     },
     async addDraftJob() {
       let formData = new FormData();
