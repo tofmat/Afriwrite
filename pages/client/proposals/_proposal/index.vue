@@ -168,7 +168,7 @@
                         </tr>
                       </tbody>
                     </template>
-                  </v-simple-table>
+              </v-simple-table>
             </div>
         </div>
       </div>
@@ -233,8 +233,6 @@ export default {
             this.totalAmount = total_amount
             this.payment_milestones = this.singleProposal.payment_milestones
           }
-
-          
           console.log(data.data);
         })
         .catch((err) => {
