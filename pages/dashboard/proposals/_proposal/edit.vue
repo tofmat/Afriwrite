@@ -87,7 +87,7 @@
                 <h3>How do you want to get paid?</h3>
                 <v-container class="px-0 radioTerms" fluid>
                   <v-radio-group v-model="proposal.payment_mode">
-                    <v-radio color="green darken-3" value="by_project">
+                    <v-radio color="green darken-3" value="by_project" readonly>
                       <template v-slot:label>
                         <div>
                           <p class="darkGreyColor">By Project</p>
@@ -102,12 +102,12 @@
                     <v-radio
                       color="green darken-3"
                       value="by_milestone"
-                      disabled
+                      readonly
                     >
                       <template v-slot:label>
                         <div>
                           <p class="darkGreyColor">
-                            By Milestone (coming soon)
+                            By Milestone
                           </p>
                           <p>
                             You get paid the equivalent milestone amount when
@@ -153,57 +153,54 @@
                       <thead>
                         <tr>
                           <th class="text-left">Description</th>
-                          <th class="text-left">Deliverable</th>
+                          <th class="text-left">Expected Delivery Time</th>
+                          <th class="text-left">Word Count</th>
                           <th class="text-left">Milestone Amount</th>
-                          <th class="textCenter"></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          v-for="singleItem in proposal.milestones"
+                          v-for="(singleItem, index) in proposal.milestones"
                           :key="singleItem.id"
                         >
                           <td>
                             <v-text-field
-                              v-model="singleItem.description"
-                              placeholder="Description of this milestone"
+                              v-model="proposal.milestones[index].description"
+                              placeholder="Description job to be delivered in this milestone"
                               required
                             ></v-text-field>
                           </td>
                           <td>
                             <v-text-field
-                              v-model="singleItem.expected_time"
-                              placeholder="What would you deliver in this milestone ?"
+                              v-model="proposal.milestones[index].expected_time"
+                              placeholder="When would you deliver this milestone?"
                               required
+                              type="date"
                             ></v-text-field>
                           </td>
                           <td>
                             <v-text-field
-                              placeholder="Price per unit"
-                              v-model="singleItem.milestone_amount"
+                              placeholder="Number of words in this milestone"
+                              v-model="proposal.milestones[index].number_of_words"
                               required
+                              type="number"
+                            >
+                            </v-text-field>
+                          </td>
+                          <td>
+                            <v-text-field
+                              placeholder="Price per word in this milestone"
+                              v-model="proposal.milestones[index].price_per_word"
+                              required
+                              type="number"
                             >
                               <v-icon slot="prepend" color="green">
                                 mdi-currency-ngn
                               </v-icon>
                             </v-text-field>
                           </td>
-                          <td class="textCenter">
-                            <i
-                              class="far fa-times-circle"
-                              @click="removeItem(singleItem)"
-                            ></i>
-                          </td>
                         </tr>
                       </tbody>
-                      <div class="my-5">
-                        <a @click="addItem()"
-                          ><p class="mainColor">
-                            <span><i class="fas fa-plus"></i></span> Add new
-                            Milestone
-                          </p></a
-                        >
-                      </div>
                     </template>
                   </v-simple-table>
                 </div>
@@ -459,9 +456,10 @@ export default {
             description: "",
             deliverables: "",
             amount: "",
+            id: ""
           },
         ],
-        file: null,
+        file: [],
       },
     }
   },
@@ -475,7 +473,8 @@ export default {
   },
   methods:{
     onChange(event) {
-      this.proposal.file = event.target.files;
+      // this.proposal.file = event.target.files;
+      this.proposal.file.push(event.target.files[0]);
     },
     addItem() {
       this.proposal.milestones.push({
@@ -510,6 +509,8 @@ export default {
           this.proposal.price_per_word = this.singleProposal.price_per_word;
           this.proposal.duration = this.singleProposal.duration;
           this.proposal.payment_mode = this.singleProposal.payment_mode;
+          this.proposal.milestones = this.singleProposal.payment_milestones
+          console.log(this.singleProposal)
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -519,15 +520,27 @@ export default {
     async updateProposal() {
       let formData = new FormData();
       if (this.proposal.file) {
-        for (const i of Object.keys(this.proposal.file)) {
+        for (let i = 0; i < this.proposal.file.length; i++) {
+          console.log(this.proposal.file[i])
           formData.append("file[" + i + "]", this.proposal.file[i]);
         }
       }
-      formData.append("duration", this.proposal.duration);
+
+      if(this.proposal.duration){
+        formData.append("duration", this.proposal.duration);
+      }
+
+      if(this.proposal.price_per_word){
+        formData.append("price_per_word", this.proposal.price_per_word);
+      }
       formData.append("cover_letter", this.proposal.cover_letter);
-      formData.append("price_per_word", this.proposal.price_per_word);
       formData.append("payment_mode", this.proposal.payment_mode);
-      // formData.append("milestones[]", this.proposal.milestones);
+
+      if (this.proposal.milestones && this.proposal.milestones.length) {
+        for (let j = 0; j < this.proposal.milestones.length; j++) {
+          formData.append("milestones[" + j + "]", JSON.stringify(this.proposal.milestones[j]));
+        }
+      }
       try {
         this.loading = true;
         const response = await this.$axios.post(

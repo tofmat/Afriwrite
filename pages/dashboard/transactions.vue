@@ -105,6 +105,8 @@ export default {
         const { transactions, statistics } = data.data
         this.transactions = transactions
         this.statistics = statistics
+
+        console.log(data.data)
       }
 
       if(error){
