@@ -155,10 +155,11 @@
                 class="findBtn mb-4 fullWidth"
                 v-if="singleContract.status === 'submitted_work_for_approval'"
                 @click="() => {
-                    this.oneTimeApprovalDialog = true;
-                  }"
-                >Approve for Payment</v-btn
+                  this.submitReviewDialog = true;
+                }"
               >
+                Approve for Payment
+              </v-btn>
               <v-btn
                 class="findBtn mb-4 fullWidth"
                 disabled
@@ -168,9 +169,13 @@
             </div>
             <v-btn
               class="findBtn mb-4 fullWidth"
-              v-if="singleContract.status === 'completed'"
-              >Submit a Review</v-btn
+              v-if="singleContract.status === 'completed' && singleContract.payment_mode === 'by_milestone' && !singleContract.feedback_comment"
+              @click="() => {
+                this.submitReviewDialog = true;
+              }"
             >
+              Submit a Review
+            </v-btn>
             <v-btn class="greyBtn mb-4 fullWidth"
                 target="_blank"
                 :href="getMessageURL(writerDetails.id)"
@@ -202,11 +207,11 @@
           </v-col>
           <v-col cols="auto">
             <v-dialog
-              v-model="oneTimeApprovalDialog"
+              v-model="submitReviewDialog"
               transition="dialog-top-transition"
               max-width="600"
             >
-              <template v-slot:default="oneTimeApprovalDialog">
+              <template v-slot:default="submitReviewDialog">
                 <v-card class="py-5">
                   <div class="centerflex columnFlex">
                     <v-card-text>
@@ -239,13 +244,13 @@
                   </div>
                   <div class="flex justifyCenter mobileColumn">
                     <v-btn class="findBtn mx-3 my-1" to="#" :disabled="reviewInfoNotFilled"
-                      :loading="approveLoading" @click="approveOneTimeJob"
+                      :loading="approveLoading" @click="approveProject"
                     >
-                      Approve for Payment
+                      {{ singleContract.payment_mode === 'by_project' ? 'Approve for Payment' : 'Submit a Review' }}
                     </v-btn>
                   </div>
                   <v-card-actions class="justify-end">
-                    <v-btn text @click="oneTimeApprovalDialog.value = false">Close</v-btn>
+                    <v-btn text @click="submitReviewDialog.value = false">Close</v-btn>
                   </v-card-actions>
                 </v-card>
               </template>
@@ -267,7 +272,7 @@ export default {
   },
   data() {
     return {
-      oneTimeApprovalDialog: false,
+      submitReviewDialog: false,
       loading: false,
       declineloading: false,
       singleContract: "",
@@ -355,7 +360,7 @@ export default {
         );
         this.approveLoading = false;
         this.$toast.success("This job has been approved for payment.");
-        this.oneTimeApprovalDialog = false
+        this.submitReviewDialog = false
         setTimeout(() => { location.reload() }, 2000)
       } catch (error) {
         this.approveLoading = false;
@@ -381,7 +386,31 @@ export default {
           "There was an error submitting this milestone for review"
         );
       }
-      console.log(contractId, milestoneId)
+    },
+    approveProject(){
+      if(this.singleContract.payment_mode === 'by_project'){
+        this.approveOneTimeJob()
+      }else if(this.singleContract.payment_mode === 'by_milestone'){
+        this.submitReview()
+      }
+    },
+    async submitReview(){
+      try {
+        this.approveLoading = true;
+        const response = await this.$axios.post(
+          `/v1/client/submit-review/${this.singleContract.id}`, 
+          this.review
+        );
+        this.approveLoading = false;
+        this.$toast.success("Review submitted successfully.");
+        this.submitReviewDialog = false
+        setTimeout(() => { location.reload() }, 2000)
+      } catch (error) {
+        this.approveLoading = false;
+        this.$toast.error(
+          "There was an error submitting this review"
+        );
+      }
     }
   },
   mounted() {
