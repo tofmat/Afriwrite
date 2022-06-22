@@ -151,7 +151,7 @@
                           <th class="text-left">Description</th>
                           <th class="text-left">Expected Delivery Time</th>
                           <th class="text-left">Word Count</th>
-                          <th class="text-left">Milestone Amount</th>
+                          <th class="text-left">Price Per Word</th>
                           <th class="textCenter"></th>
                         </tr>
                       </thead>
@@ -244,7 +244,7 @@
                     </div>
                     <hr />
 
-                    <div class="flex projectAmount my-5 justifyBetween">
+                    <!-- <div class="flex projectAmount my-5 justifyBetween">
                       <div class="width40">
                         <h4 class="darkGreyColor">
                           AfriWrites Service Charge
@@ -287,7 +287,7 @@
                       <div>
                         <h4>{{ singleJob.total_amount - 10 }} NGN</h4>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

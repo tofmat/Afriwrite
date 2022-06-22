@@ -241,7 +241,7 @@
                     </div>
                     <hr />
 
-                    <div class="flex projectAmount my-5 justifyBetween">
+                    <!-- <div class="flex projectAmount my-5 justifyBetween">
                       <div class="width40">
                         <h4 class="darkGreyColor">
                           AfriWrites Service Charge
@@ -290,7 +290,7 @@
                       <div>
                         <h4>50.00 NGN</h4>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

@@ -68,12 +68,12 @@
                     <p class="darkGreyColor">Hourly Rate</p>
                   </div>
                 </v-col>
-                <v-col cols="6" sm="6" class="">
+                <!-- <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
                     <h3 class="mb-2 mainColor">Null</h3>
                     <p class="darkGreyColor">Null</p>
                   </div>
-                </v-col>
+                </v-col> -->
                 <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
                     <h3 class="mb-2 mainColor">{{ user.jobs.length }}</h3>

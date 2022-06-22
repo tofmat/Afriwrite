@@ -94,9 +94,6 @@
             <v-btn class="greyBtn mb-4 fullWidth" :href="getMessageURL(writerDetails.id)" target="_blank"
               ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
             >
-            <v-btn class="greyBtn mb-4 fullWidth"
-              ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
-            >
             <div>
               <div class="clientInfo">
                 <h4>
@@ -282,7 +279,7 @@ export default {
       try {
         this.declineloading = true;
         const response = await this.$axios.post(
-          `/v1/client/decline-job-proposal/${this.singleProposal.id}`
+          `/v1/client/decline-job-proposal/${this.singleProposal.public_reference_id}`
         );
         this.$toast.success("This proposal has been declined");
         this.$router.push("/client/proposals")
