@@ -86,7 +86,7 @@ export default {
         const { data } = await this.$axios.get(
           `/get-verified-writers-profile`, {
             headers: {
-              PUBLIC_JOB_POSTING_KEY: Constants.PUBLIC_JOB_POSTING_KEY
+              PUBLICJOBPOSTINGKEY: Constants.PUBLIC_JOB_POSTING_KEY
             }
           },
         );
@@ -97,7 +97,7 @@ export default {
           this.freelancers = data.data
         }else{
           this.$toast.error("An error occurred. please try again");
-          window.location.assign('/')
+          // window.location.assign('/')
         }
       } catch (error) {
         this.loading = false;
@@ -105,7 +105,7 @@ export default {
         this.$toast.error(
           "An error occurred. please try again"
         );
-        window.location.assign('/')
+        // window.location.assign('/')
       }
     }
   }

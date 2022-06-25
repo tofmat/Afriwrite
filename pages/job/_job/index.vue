@@ -136,7 +136,7 @@ export default {
         const { data } = await this.$axios.get(
           `/public-job-post`, {
             headers: {
-              PUBLIC_JOB_POSTING_KEY: Constants.PUBLIC_JOB_POSTING_KEY
+              PUBLICJOBPOSTINGKEY: Constants.PUBLIC_JOB_POSTING_KEY
             },
             params: {
               public_reference_id: job_id
@@ -146,7 +146,7 @@ export default {
 
         if(data && data.data != null){
           this.job = data.data
-          this.job.writing_niches = this.job.writing_niches.split(',')
+          this.job.writing_niches = JSON.parse(this.job.writing_niches)
         }else{
           this.$toast.error("Job not found");
           window.location.assign('/')
