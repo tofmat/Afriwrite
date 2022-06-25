@@ -9,7 +9,7 @@
             Writers and clients.
           </p>
           <div class="headButtons">
-            <v-btn class="px-5 mr-2 findBtn2" to="/signup"> Find Talent</v-btn>
+            <v-btn class="px-5 mr-2 findBtn2" to="/profile/freelancers"> Find Talent</v-btn>
             <v-btn class="px-5 mr-2 greyBtn2" to="/signup"> Find Work</v-btn>
           </div>
         </v-col>

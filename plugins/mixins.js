@@ -26,6 +26,9 @@ const mixins = {
         "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       window.location.assign("/signin");
     },
+    formatStringData(data){
+      return data ? data.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
+    }
   }
 }
 

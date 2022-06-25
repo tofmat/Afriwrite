@@ -14,9 +14,7 @@
                 <div class="jobDetailsTexts">
                   <p>{{ singleJob.description }}</p>
                   <div class="flex alignCenter scrollable-x">
-                    <v-btn class="tagBtn">Writing</v-btn>
-                    <v-btn class="tagBtn">Content writing</v-btn>
-                    <v-btn class="tagBtn">Proof reading</v-btn>
+                    <v-btn class="tagBtn" v-for="niche in niches" :key="niche">{{ niche }}</v-btn>
                   </div>
                 </div>
                 <div class="row alignCenter jobTips mt-10">
@@ -102,6 +100,7 @@ export default {
       loading: false,
       apiLoading: false,
       deleteLoading: false,
+      niches: []
     };
   },
   methods: {
@@ -114,6 +113,7 @@ export default {
           this.apiLoading = false;
           this.singleJob = data.data;
           this.singleJobMedia = this.singleJob.media;
+          this.niches = JSON.parse(this.singleJob.writing_niches)
         })
         .catch((err) => {
           this.apiLoading = false;

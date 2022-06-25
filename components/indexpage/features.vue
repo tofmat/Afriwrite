@@ -14,14 +14,13 @@
             <div class="featureWrapper my-2">
               <img src="../../assets/images/satisfaction.png" alt="HeadImage" />
               <h1>100% Satisfaction</h1>
-              <p>
-                Our writers are some of the best freelance writers in Africa.
-                They have been tested, trained, and retested before they can
-                work with us. Moreover, we have put in place a "content quality
-                control system" that includes a group of Proofreaders and
-                Correctors who can help you when there's dispute between you and
-                the freelancer you hire. All these ensure your job is done the
-                way you want it.
+              <p align="justify">
+                The freelance writers on this platform are some of the best on the African continent. 
+                They have been tested before they gained access to this platform. Moreover, 
+                we've put in place some features (such as the escrow payment and after-service 
+                feedback & rating) that encourage writers to meet the needs of their clients. 
+                You can also make use of the Disputes Resolution feature or contact our Problems 
+                Resolution Center when things are getting out of hand with your writer or client. 
               </p>
             </div>
           </div>
@@ -31,24 +30,21 @@
           <div class="featureWrapper my-2">
             <img src="../../assets/images/vetted.png" alt="HeadImage" />
             <h1>Professionally Vetted Writing</h1>
-            <p>
-              All writing projects posted on this platform have specific
-              guidelines/instructions the freelancer must follow. Job-givers can
-              either adopt one of our guidelines, edit our guidelines to suit
-              their needs, or attach their own guidelines to the job when
-              posting. This ensures writers work within specific instructions,
-              which may enhance content readability, SEO, and attractiveness.
+            <p align="justify">
+              All writing projects posted on this platform must come with specific guidelines/instructions 
+              the freelancers must follow. Job givers must give necessary guidelines to the freelancers 
+              before signing contracts. This ensures writers work with specific instructions, which may 
+              enhance content readability, SEO, attractiveness, overall quality, and acceptability. 
             </p>
           </div>
           <div class="featureWrapper mt-8">
             <img src="../../assets/images/protection.png" alt="HeadImage" />
             <h1>Writers and Client’s Interest Protection</h1>
-            <p>
-              At AfriWrites, we bridge the gap between Elite African Freelance
-              Writers and their clients from every part of the world. All
-              writers on this platform have passed through rigorous website
-              content writing trainings and passed the tests of their abilities
-              in their specific writing niches.
+            <p align="justify">
+              At AfriWrites, we bridge the gap between Elite African Freelance Writers and their Clients 
+              from every part of the world. All writers and clients have been assessed before they are given 
+              access to the platform, and we know we've put proper checks in place to ensure the interests 
+              of all parties are protected. 
             </p>
           </div>
         </v-col>

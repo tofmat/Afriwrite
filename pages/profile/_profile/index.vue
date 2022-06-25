@@ -211,7 +211,7 @@
                 >
               </p>
               <p class="mainColor noMargin">
-                {{ writing_niches }}
+                {{ formatStringData(user.writing_niches) }}
               </p>
             </div>
             <hr class="fullWidth my-5" />
@@ -226,7 +226,7 @@
                 >
               </p>
               <p class="mainColor noMargin">
-                {{ skills }}
+                {{ formatStringData(user.skills) }}
               </p>
             </div>
             <hr class="fullWidth my-5" />
@@ -274,12 +274,6 @@
 export default {
   layout: "client",
   computed:{
-    writing_niches(){
-      return  this.user.writing_niches ? this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
-    },
-    skills(){
-      return  this.user.skills ? this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
-    },
     profileLink(){
       return `${window.location.host}/profile/${this.user.public_reference_id}`
     }
@@ -303,10 +297,8 @@ export default {
           this.$toast.error("User not found");
           window.location.assign('/')
         }
-        console.log(data)
       } catch (error) {
         this.loading = false;
-        console.log(error)
         this.$toast.error(
           "There was an error getting user profile. please try again"
         );
@@ -314,7 +306,6 @@ export default {
     },
   },
   async beforeMount() {
-    console.log(this.$route.params.profile)
     this.getWriterProfile(this.$route.params.profile)
   },
 };
