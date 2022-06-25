@@ -70,6 +70,13 @@
                   <i class="fas fa-bookmark mr-2 mt-1"></i> View
                   Proposals</v-btn
                 >
+                <div class="mt-3">
+                    <h4><span><i class="far fa-file-alt mr-2 mb-2"></i> Job Link </span></h4>
+                    <v-btn class="workDiv fullWidth my-3 scrollable-x" to="#">
+                        {{ publicJobPostLink }}
+                    </v-btn>
+                    <p class="mainColor" @click="copyLink(publicJobPostLink)">Copy link</p>
+                  </div>
               </v-col>
             </div>
           </div>
@@ -159,6 +166,11 @@ export default {
   mounted() {
     this.getSingleJobs();
   },
+  computed: {
+    publicJobPostLink(){
+      return `${window.location.host}/job/${this.singleJob.public_reference_id}`
+    }
+  }
 };
 </script>
 

@@ -86,7 +86,7 @@ export default {
         const { data } = await this.$axios.get(
           `/get-verified-writers-profile`, {
             headers: {
-              PUBLIC_JOB_POSTING_KEY: Constants.PUBLIC_JOB_POSTING_KEY
+              PUBLICJOBPOSTINGKEY: Constants.PUBLIC_JOB_POSTING_KEY
             }
           },
         );
