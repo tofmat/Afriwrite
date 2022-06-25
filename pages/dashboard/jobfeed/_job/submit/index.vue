@@ -473,11 +473,8 @@ export default {
   },
   watch:{
     singleJob(){
-      this.writingNiches = this.singleJob.writing_niches.length ? this.singleJob.writing_niches.split(',') : []
+      this.writingNiches = this.singleJob.writing_niches.length ? JSON.parse(this.singleJob.writing_niches) : []
     },
-    // 'proposal.file'(){
-    //   console.log(this.proposal.file)
-    // }
   },
   methods: {
     onChange(event) {

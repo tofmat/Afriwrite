@@ -150,7 +150,7 @@
             <img src="../assets/images/feather-linkedin.svg" alt="footerLogo" />
           </div>
         </div>
-        <p class="footerText">Afriwrite 2022</p>
+        <p class="footerText">Afriwrite {{ date }}</p>
       </v-container>
     </v-footer>
   </v-app>
@@ -165,6 +165,7 @@ export default {
       fixed: false,
       user: this.$auth.user,
       group: "",
+      date: new Date().getFullYear(),
       navItems: [
         {
           title: "Home",
@@ -176,7 +177,7 @@ export default {
         },
         {
           title: "View Freelancers",
-          to: "#",
+          to: "/profile/freelancers",
         },
       ],
       miniVariant: false,

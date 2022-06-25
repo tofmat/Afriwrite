@@ -14,9 +14,7 @@
                 <div class="jobDetailsTexts">
                   <p>{{ singleJob.description }}</p>
                   <div class="flex alignCenter scrollable-x">
-                    <v-btn class="tagBtn">{{
-                      singleJob.project_duration
-                    }}</v-btn>
+                    <v-btn class="tagBtn" v-for="niche in niches" :key="niche">{{ niche }}</v-btn>
                   </div>
                 </div>
                 <div class="row alignCenter jobTips mt-10">
@@ -208,6 +206,7 @@ export default {
       apiLoading: false,
       singleJobMedia: [],
       lastViewedByCLient: "",
+      niches: []
     };
   },
   methods: {
@@ -226,6 +225,7 @@ export default {
             this.clientCreatedAt = this.clientInfo.created_at;
             this.activities = this.singleJob.activities;
             this.savedJobs = this.singleJob.saved_jobs;
+            this.niches = JSON.parse(this.singleJob.writing_niches)
           }else{
             this.$toast.success("This job is not available any longer");
             setTimeout(() => {
