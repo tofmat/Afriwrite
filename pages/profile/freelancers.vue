@@ -1,14 +1,79 @@
 <template>
   <div class="signUp">
     <div class="fullHeight">
-      <div class="signupField">
+      <div class="signupField mt__50">
         <v-container>
           <div>
             <h1 class="flex centerflex mb-3">View Our Freelancers</h1>
+            <div v-if="loading">
+              <div class="row noMargin lightGreyBack mb-3">
+                <v-col cols="12" sm="1">
+                  <skeleton-box
+                    width="80px"
+                    height="70px"
+                    class="roundRadius"
+                  />
+                </v-col>
+                <v-col cols="12" sm="9">
+                  <div>
+                    <skeleton-box width="10%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="5%" height="10px" />
+                  </div>
+                  <div>
+                    <skeleton-box width="30%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="40%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="90%" />
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-btn class="findBtn my-1 mt-5 fullWidth" to="#" disabled
+                    >View Profile</v-btn
+                  >
+                </v-col>
+              </div>
+              <div class="row noMargin lightGreyBack mb-3">
+                <v-col cols="12" sm="1">
+                  <skeleton-box
+                    width="80px"
+                    height="70px"
+                    class="roundRadius"
+                  />
+                </v-col>
+                <v-col cols="12" sm="9">
+                  <div>
+                    <skeleton-box width="10%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="5%" height="10px" />
+                  </div>
+                  <div>
+                    <skeleton-box width="30%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="40%" />
+                  </div>
+                  <div>
+                    <skeleton-box width="90%" />
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="2">
+                  <v-btn class="findBtn my-1 mt-5 fullWidth" to="#" disabled
+                    >View Profile</v-btn
+                  >
+                </v-col>
+              </div>
+            </div>
             <div
               class="row noMargin lightGreyBack mb-5"
               v-for="writer in freelancers"
               :key="writer.public_reference_id"
+              v-else
             >
               <v-col cols="12" sm="1">
                 <div v-if="writer.profile_picture">
@@ -50,7 +115,6 @@
               </v-col>
               <v-col cols="12" sm="2">
                 <v-btn
-                  v-if="user && user.role === 'client'"
                   class="greyBtn my-1 fullWidth mt-5"
                   :to="`/profile/${writer.public_reference_id}`"
                   ><i class="far fa-comments mr-2 mainColor"></i>
@@ -91,7 +155,8 @@ export default {
           },
         );
 
-        console.log(data.data)
+        // console.log(data.data)
+        this.loading = false
 
         if(data && data.data != null){
           this.freelancers = data.data
@@ -111,3 +176,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.roundRadius {
+  border-radius: 50%;
+}
+
+.mt__50{
+  margin-top: -50px;
+}
+</style>
