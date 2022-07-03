@@ -17,23 +17,7 @@
         class="noDesktop mobileDisplay mobileNavBar"
       ></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-item-group mandatory class="noMobile">
-        <div class="flex">
-          <v-list-item
-            router
-            exact
-            @click="logoutUser()"
-            class="theItem"
-          >
-            <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? '' : ''">Logout</v-title>
-            </v-item>
-          </v-list-item>
-        </div>
-      </v-item-group>
-      <!-- <img src="../assets/images/bell.svg" class="mx-5" alt="notification" /> -->
-      <!-- <i class="far fa-bell fa-2x mx-5"></i> -->
-      <a href="/profile"
+      <a href="#"
         ><img
           src="../assets/images/Profil.png"
           alt="avatar"
@@ -83,6 +67,25 @@
           <v-list-item
             link
             class="sideLinkCon"
+            to="/admin/client-id-verification"
+            router
+            exact
+            active-class="navActive"
+          >
+            <v-list-item-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.59 27.12">
+                <g transform="translate(0.5 0.5)">
+                  <path
+                    d="M11.427,6.938V0H1.224A1.221,1.221,0,0,0,0,1.224V24.9A1.221,1.221,0,0,0,1.224,26.12H18.365A1.221,1.221,0,0,0,19.59,24.9V8.162H12.652A1.228,1.228,0,0,1,11.427,6.938Zm3.265,12.04a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V18.57a.614.614,0,0,1,.612-.612H14.08a.614.614,0,0,1,.612.612Zm0-3.265a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V15.3a.614.614,0,0,1,.612-.612H14.08a.614.614,0,0,1,.612.612Zm0-3.673v.408a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V12.04a.614.614,0,0,1,.612-.612H14.08A.614.614,0,0,1,14.692,12.04Zm4.9-5.821V6.53H13.06V0h.311a1.223,1.223,0,0,1,.867.357l4.994,5A1.22,1.22,0,0,1,19.59,6.219Z"
+                  />
+                </g>
+              </svg>
+            </v-list-item-icon>
+            <v-list-item-title>Client ID Verification</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -115,45 +118,6 @@
       <v-main class="dashContent">
         <div class="dashRealContent">
           <nuxt />
-
-          <v-col cols="auto">
-            <v-dialog
-              v-model="dialog"
-              transition="dialog-top-transition"
-              max-width="600"
-            >
-              <template v-slot:default="dialog">
-                <v-card class="py-5">
-                  <div class="centerflex columnFlex">
-                    <div class="">
-                      <img
-                        src="../assets/images/Group154.png"
-                        alt="Check Mail"
-                      />
-                    </div>
-                    <v-card-text>
-                      <h3 class="darkGreyColor textCenter">
-                        Verify your Email Address to continue
-                      </h3>
-                      <p class="textCenter mt-2">
-                        We have sent an Email to: ...xyz@gmail.com Please check
-                        your email and click the link to verify your account
-                      </p>
-                    </v-card-text>
-                  </div>
-                  <div class="flex justifyCenter mobileColumn">
-                    <v-btn class="findBtn mx-3 my-1" to="#">Open Email</v-btn>
-                    <v-btn class="greyBtn mx-3 my-1" to="#"
-                      >Resend Verification Mail</v-btn
-                    >
-                  </div>
-                  <v-card-actions class="justify-end">
-                    <v-btn text @click="dialog.value = false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </template>
-            </v-dialog>
-          </v-col>
         </div>
       </v-main>
     </v-sheet>
@@ -165,15 +129,14 @@ export default {
   middleware: "admin",
   data() {
     return {
-      dialog: false,
       clipped: false,
       drawer: false,
       fixed: false,
       navItems: [
-        // {
-        //   title: "My Jobs",
-        //   to: "/client/jobs",
-        // },
+        {
+          title: "Client ID Verification",
+          to: "/admin/client-id-verification",
+        },
         // {
         //   title: "Post Job",
         //   to: "/client/post",
@@ -205,24 +168,6 @@ export default {
         {
           title: "Logout",
           to: "/client/profile",
-        },
-      ],
-      upNavItems: [
-        {
-          title: "Why Us",
-          to: "/",
-        },
-        {
-          title: "Browse Jobs",
-          to: "/",
-        },
-        {
-          title: "Freelancers",
-          to: "/",
-        },
-        {
-          title: "Learn",
-          to: "/",
         },
       ],
       miniVariant: false,

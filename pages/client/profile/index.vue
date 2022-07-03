@@ -83,18 +83,18 @@
         </v-col>
         <v-col cols="12" sm="12" lg="3">
           <div class="sideB rightSideDash">
-            <!-- <div v-if="!this.$auth.user.recipient_code">
+            <div v-if="this.$auth.user.client_id_verification_status != 'completed'"> 
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
                   () => {
-                    this.dialog = true;
+                    this.idDialog = true;
                   }
                 "
               >
-                Add account Number
+                Add ID for Verification
               </v-btn>
-            </div> -->
+            </div>
             <div class="mt-3">
               <v-btn class="myBtn findBtn fullWidth" to="/client/profile/edit">
                 Edit Profile
@@ -136,19 +136,6 @@
                 </p>
               </div>
             </div>
-            <!-- <hr class="fullWidth my-5" />
-            <div class="profileInfoHolder">
-              <p class="darkGreyColor noMargin mb-2">
-                <span
-                  ><img
-                    src="../../../assets/images/translate.svg"
-                    alt="availableicon"
-                    class="mr-2"
-                  />LANGUAGES</span
-                >
-              </p>
-              <p class="mainColor noMargin">{{ this.$auth.user.languages }}</p>
-            </div> -->
           </div>
         </v-col>
       </div>
@@ -180,6 +167,50 @@
           </v-card>
         </v-dialog>
       </v-col>
+      <v-col cols="auto">
+        <v-dialog
+          v-model="idDialog"
+          persistent
+          transition="dialog-top-transition"
+          max-width="600"
+        >
+          <v-card class="py-5">
+            <div class="centerflex columnFlex">
+              <v-card-text>
+                <h3 class="darkGreyColor textCenter">
+                  Please upload your ID to get full access to this platform features
+                </h3>
+                <p class="textCenter mt-2">
+                  <v-file-input
+                    chips
+                    counter
+                    small-chips
+                    truncate-length="15"
+                    v-on:change="onFileChange"
+                  ></v-file-input>
+                </p>
+              </v-card-text>
+            </div>
+            <div class="flex justifyCenter mobileColumn">
+              <v-btn text 
+                @click="() => {
+                  this.idDialog = false;
+                }"
+              >
+                Cancel
+              </v-btn>
+
+              <v-btn class="greyBtn mx-3 my-1" 
+                :disabled="!IDUpload"
+                @click="submitIdVerification"
+                :loading="loading"
+              >
+                Submit
+              </v-btn>
+            </div>
+          </v-card>
+        </v-dialog>
+      </v-col>
     </div>
   </div>
 </template>
@@ -190,7 +221,7 @@ export default {
   layout: "client",
   data() {
     return {
-      dialog: false,
+      idDialog: false,
       dialog2:
         this.$auth.user.phone_number &&
         this.$auth.user.username &&
@@ -204,33 +235,46 @@ export default {
         description: "",
       },
       loading: false,
+      IDUpload: ''
     };
   },
   methods: {
+    onFileChange(event){
+      this.IDUpload= event;
+      console.log(event)
+    },
     copyJobLink() {
       navigator.clipboard.writeText(
         `https://www.afriwrite.com/profile/${this.$auth.user.username}`
       );
       this.$toast.success("Link copied");
     },
-    async addAccount() {
+    async submitIdVerification(){
+      let formData = new FormData();
+      formData.append("file", this.IDUpload);
+
       try {
         this.loading = true;
         const response = await this.$axios.post(
-          `/v1/writer/payment-transer-recipient`,
-          this.accountDetails
+          `/v1/user/client-submit-id-verification`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         this.$toast.success(
-          "You have added your account details successfully!"
+          "You have added your ID successfully!"
         );
         this.loading = false;
-        this.dialog = false;
+        this.idDialog = false;
         return response;
       } catch (error) {
         this.loading = false;
         this.$toast.error(error.response.data.error);
       }
-    },
+    }
   },
   async mounted() {
     const { data } = await this.$auth.fetchUser()
