@@ -325,6 +325,33 @@
         </div>
       </form>
     </div>
+    <v-col cols="auto">
+      <v-dialog
+        v-model="idDialog"
+        persistent
+        transition="dialog-top-transition"
+        max-width="600"
+      >
+        <v-card class="py-5">
+          <div class="centerflex columnFlex">
+            <v-card-text>
+              <h3 class="darkGreyColor textCenter">
+                Please complete your profile to get full control of your
+                profile
+              </h3>
+              <p class="textCenter mt-2">
+                You have to add your ID and get verified before posting jobs!
+              </p>
+            </v-card-text>
+          </div>
+          <div class="flex justifyCenter mobileColumn">
+            <v-btn class="greyBtn mx-3 my-1" to="/client/profile"
+              >Edit Profile</v-btn
+            >
+          </div>
+        </v-card>
+      </v-dialog>
+    </v-col>
   </div>
 </template>
 
@@ -373,6 +400,17 @@ export default {
       "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
     ]
   }),
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
+  },
+  computed:{
+    idDialog(){
+      if(this.$auth.user.client_id_verification_status != 'completed') return true
+    } 
+  },
   methods: {
     onPickFile() {
       this.$refs.fileInput.click();

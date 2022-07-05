@@ -86,6 +86,27 @@
           <v-list-item
             link
             class="sideLinkCon"
+            to="/admin/buy-now-pay-later-requests"
+            router
+            exact
+            active-class="navActive"
+          >
+            <v-list-item-icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 19.59 20.989"
+              >
+                <path
+                  d="M17.092,10.324h-7v1.4h7Zm-4.2-2.8H10.1v1.4h2.8Zm8.4-.6v-2.2H18.211l-3.918-2.8-3.918,2.8H7.3v2.2l-2.8,2V22.917h19.59V8.924l-2.8-2ZM8.7,6.126H19.891v5.352l-5.6,4.617L8.7,11.478V6.126Zm-2.8,5.6,5.51,4.19L5.9,20.119v-8.4Zm1.4,9.795,5.553-4.509,1.443,1.1,1.44-1.1,5.556,4.507H7.3Zm15.392-1.4-5.518-4.2,5.518-4.2v8.4Z"
+                  transform="translate(-4.499 -1.928)"
+                />
+              </svg>
+            </v-list-item-icon>
+            <v-list-item-title>Buy Now Pay Later Requests</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -137,10 +158,10 @@ export default {
           title: "Client ID Verification",
           to: "/admin/client-id-verification",
         },
-        // {
-        //   title: "Post Job",
-        //   to: "/client/post",
-        // },
+        {
+          title: "Buy Now Pay Later Requests",
+          to: "/admin/buy-now-pay-later-requests",
+        },
         // {
         //   title: "Messages",
         //   to: "/",
@@ -165,10 +186,10 @@ export default {
         //   title: "Reports",
         //   to: "client/reports",
         // },
-        {
-          title: "Logout",
-          to: "/client/profile",
-        },
+        // {
+        //   title: "Logout",
+        //   to: "/client/profile",
+        // },
       ],
       miniVariant: false,
       right: true,
