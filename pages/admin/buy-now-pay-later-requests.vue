@@ -11,6 +11,11 @@
                   <th class="text-left">S/N</th>
                   <th class="text-left">Full Name</th>
                   <th class="text-left">Email</th>
+                  <th class="text-left">Reason</th>
+                  <th class="text-left">Facebook Link</th>
+                  <th class="text-left">Twitter Link</th>
+                  <th class="text-left">Instagram Link</th>
+                  <th class="text-left">Linkedin Link</th>
                   <th class="text-left">Country</th>
                   <th class="text-left">Phone Number</th>
                   <th class="text-left">Status</th>
@@ -18,37 +23,64 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr
-                  v-for="(client, index) in clients"
-                  :key="client.id"
+                <tr
+                  v-for="(bnplrequest, index) in bnplRequests"
+                  :key="bnplrequest.id"
                 >
                   <td>
                     {{ index+1 }}
                   </td>
                   <td>
-                    {{ client.first_name }}  {{ client.last_name }}
+                    {{ bnplrequest.user.first_name }}  {{ bnplrequest.user.last_name }}
                   </td>
                   <td>
-                    {{ client.email }}
+                    {{ bnplrequest.user.email }}
                   </td>
                   <td>
-                    {{ client.country }}
+                    {{ bnplrequest.reason }}
                   </td>
                   <td>
-                    {{ client.phone_number }}
+                    <a target="_blank" :href="bnplrequest.facebook_link">
+                      {{ bnplrequest.facebook_link }}
+                    </a>
+                  </td>
+                  <td>
+                    <a target="_blank" :href="bnplrequest.twitter_link">
+                      {{ bnplrequest.twitter_link }}
+                    </a>
+                  </td>
+                  <td>
+                    <a target="_blank" :href="bnplrequest.instagram_link">
+                      {{ bnplrequest.instagram_link }}
+                    </a>
+                  </td>
+                  <td>
+                    <a target="_blank" :href="bnplrequest.linkedin_link">
+                      {{ bnplrequest.linkedin_link }}
+                    </a>
+                  </td>
+                  <td>
+                    {{ bnplrequest.user.country }}
+                  </td>
+                  <td>
+                    {{ bnplrequest.user.phone_number }}
+                  </td>
+                  <td>
+                    {{ bnplrequest.status }}
                   </td>
                   <td>
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
-                      @click="viewClient(client)"
+                      @click="viewClient(bnplrequest.user, bnplrequest.id)"
+                      v-if="bnplrequest.status === 'pending'"
                     >
                       View ID</v-btn>
                   </td>
-                </tr> -->
+                </tr>
               </tbody>
             </template>
           </v-simple-table>
         </v-card>
-        <!-- <v-col cols="auto">
+        <v-col cols="auto">
           <v-dialog
             v-model="dialog"
             persistent
@@ -122,7 +154,7 @@
 
                 <v-btn class="greyBtn mx-3 my-1" 
                   :disabled="updateInfoNotFilled"
-                  @click="updateClientVerificationStatus"
+                  @click="updateClientBNPLRequestStatus"
                   :loading="loading"
                 >
                   Submit
@@ -130,7 +162,7 @@
               </div>
             </v-card>
           </v-dialog>
-        </v-col> -->
+        </v-col>
       </div>
     </div>
   </div>
@@ -144,14 +176,15 @@ export default {
       isSubmitMilestoneForReview: false,
       payment_milestones: [],
       search: '',
-      clients: [],
+      bnplRequests: [],
       dialog: false,
       selectedClient:{
         client_id: '',
         comment: '',
         status: '',
         id_photos: [],
-        profile_picture: ''
+        profile_picture: '',
+        bnpl_request_id: ''
       },
       loading: false
     }
@@ -169,25 +202,25 @@ export default {
        const { data, error } = await this.$axios.get(`/v1/admin/get-clients-bnpl-requests`);
 
       if(data && data.data){
-        this.clients = data.data
+        this.bnplRequests = data.data
       }
-      console.log(this.clients)
 
       if(error){
         throw error
       }
     },
-    viewClient(client){
+    viewClient(client, bnpl_request_id){
       this.selectedClient.client_id = client.id
       this.selectedClient.id_photos = client.id_file_url.length ? client.id_file_url.split(',') : []
       this.selectedClient.profile_picture = client.profile_picture
+      this.selectedClient.bnpl_request_id = bnpl_request_id
       this.dialog = true
     },
-    async updateClientVerificationStatus(){
+    async updateClientBNPLRequestStatus(){
        try {
         this.loading = true;
         const response = await this.$axios.post(
-          `/v1/admin/update-client-id-verification-status`,
+          `/v1/admin/update-client-bnpl-request-status/${this.selectedClient.bnpl_request_id}`,
           this.selectedClient
         );
         this.$toast.success("Successful");
