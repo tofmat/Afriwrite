@@ -107,6 +107,35 @@
           <v-list-item
             link
             class="sideLinkCon"
+            to="/admin/temporary-bnpl-approvals"
+            router
+            exact
+            active-class="navActive"
+          >
+            <v-list-item-icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 17.088 15.58"
+                class="anana"
+              >
+                <g transform="translate(1 1)">
+                  <path
+                    d="M4.509,10.5H16.58a1.509,1.509,0,0,1,1.509,1.509v7.544a1.509,1.509,0,0,1-1.509,1.509H4.509A1.509,1.509,0,0,1,3,19.553V12.009A1.509,1.509,0,0,1,4.509,10.5Z"
+                    transform="translate(-3 -7.482)"
+                  />
+                  <path
+                    class="a"
+                    d="M18.035,18.08V6.009A1.509,1.509,0,0,0,16.527,4.5H13.509A1.509,1.509,0,0,0,12,6.009V18.08"
+                    transform="translate(-7.473 -4.5)"
+                  />
+                </g>
+              </svg>
+            </v-list-item-icon>
+            <v-list-item-title>Approve BNPL Jobs</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -162,10 +191,10 @@ export default {
           title: "Buy Now Pay Later Requests",
           to: "/admin/buy-now-pay-later-requests",
         },
-        // {
-        //   title: "Messages",
-        //   to: "/",
-        // },
+        {
+          title: "Approve BNPL Jobs",
+          to: "/admin/temporary-bnpl-approvals",
+        },
         // {
         //   title: "Proposals",
         //   to: "/client/proposals",
