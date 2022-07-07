@@ -86,6 +86,18 @@
                       </div>
                       </div>
                     </v-col>
+                    <v-col cols="12" sm="12" v-if="selectedClient.status === 'failed'">
+                      <span>Comment:</span>
+                      <v-textarea
+                        v-model.trim="selectedClient.comment"
+                        auto-grow
+                        outlined
+                        rows="3"
+                        row-height="15"
+                        class="mt-3"
+                        placeholder="Comment on the provided document(s)"
+                      ></v-textarea>
+                    </v-col>
                   </div>
                 </v-card-text>
               </div>
@@ -100,7 +112,7 @@
 
                 <v-btn class="greyBtn mx-3 my-1" 
                   :disabled="updateInfoNotFilled"
-                  @click="updateClientBNPLRequestStatus"
+                  @click="updateClientBNPLJobStatus"
                   :loading="loading"
                 >
                   Submit
@@ -137,7 +149,9 @@ export default {
   },
   computed:{
     updateInfoNotFilled(){
-      if(!this.selectedClient.status || !this.selectedClient.comment) return true
+      if(!this.selectedClient.status || 
+        (this.selectedClient.status === 'failed' && !this.selectedClient.comment)
+      ) return true
     }
   },
   mounted(){
@@ -161,16 +175,20 @@ export default {
       this.selectedClient.job_id = job.id
       this.dialog = true
     },
-    async updateClientBNPLRequestStatus(){
+    async updateClientBNPLJobStatus(){
        try {
         this.loading = true;
         const response = await this.$axios.post(
-          `/v1/admin/update-client-bnpl-request-status/${this.selectedClient.bnpl_request_id}`,
+          `/v1/bnpl/update-temporary-job-post/${this.selectedClient.job_id}`,
           this.selectedClient
         );
         this.$toast.success("Successful");
         this.loading = false;
         this.dialog = false;
+
+        // reset form
+        this.selectedClient.status = ""
+        this.selectedClient.comment = ""
         this.getClientDetails()
         return response;
       } catch (error) {
