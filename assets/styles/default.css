@@ -247,3 +247,7 @@ hr {
 .signupField {
   padding: 140px 0;
 }
+
+.text-danger{
+  color: #CC0000;
+}

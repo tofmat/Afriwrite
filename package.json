@@ -18,6 +18,8 @@
     "vue-star-rating": "^1.7.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@nuxtjs/vuetify": "^1.11.2",
+    "sass": "^1.53.0",
+    "sass-loader": "^10.3.1"
   }
 }

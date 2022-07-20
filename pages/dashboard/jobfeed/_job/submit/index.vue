@@ -84,6 +84,20 @@
               </div>
 
               <div class="mt-5">
+                <v-col cols="8" v-show="singleJob.is_bnpl_enabled">
+                  <h4 align="justify" class="mb-3">
+                    <b class="text-danger">Please Note:</b>
+                  This client has been allowed to use AfriWrites' PayLater feature upon passing our 
+                  Advanced Verification Procedure. To a reasonable extent, we believe they will make 
+                  payments for this project as stated in this contract. A breach of this contract may 
+                  lead to or not lead to prosecution. We guarantee that you will get paid. 
+                  Read our  
+                    <a href="/terms-of-use#payLaterFeature" target="_blank">
+                      <span  class="text-danger"> PayLater terms</span>
+                    </a> here.
+                </h4>
+                </v-col>
+                
                 <h3>How do you want to get paid?</h3>
                 <v-container class="px-0 radioTerms" fluid>
                   <v-radio-group v-model="proposal.payment_mode">
@@ -99,7 +113,7 @@
                         </div>
                       </template>
                     </v-radio>
-                    <v-radio color="green darken-3" value="by_milestone">
+                    <v-radio color="green darken-3" value="by_milestone" v-show="!singleJob.is_bnpl_enabled">
                       <template v-slot:label>
                         <div>
                           <p class="darkGreyColor">
@@ -243,51 +257,6 @@
                       </div>
                     </div>
                     <hr />
-
-                    <!-- <div class="flex projectAmount my-5 justifyBetween">
-                      <div class="width40">
-                        <h4 class="darkGreyColor">
-                          AfriWrites Service Charge
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <i
-                                class="fas fa-info-circle ml-1"
-                                v-bind="attrs"
-                                v-on="on"
-                              ></i>
-                            </template>
-                            <span>Learn More</span>
-                          </v-tooltip>
-                        </h4>
-                      </div>
-                      <div>
-                        <h4>-10.00 NGN</h4>
-                      </div>
-                    </div>
-                    <hr />
-                    <div class="flex projectAmount my-5 justifyBetween">
-                      <div class="width40">
-                        <h4 class="darkGreyColor">
-                          You would be paid
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <i
-                                class="fas fa-info-circle ml-1"
-                                v-bind="attrs"
-                                v-on="on"
-                              ></i>
-                            </template>
-                            <span
-                              >Estimated amount you will be paid after <br />
-                              completing this project</span
-                            >
-                          </v-tooltip>
-                        </h4>
-                      </div>
-                      <div>
-                        <h4>{{ singleJob.total_amount - 10 }} NGN</h4>
-                      </div>
-                    </div> -->
                   </div>
                 </div>
               </div>
@@ -436,13 +405,7 @@
 </template>
 
 <script>
-import spinner from "../../../../../components/spinner.vue";
-// import { mapGetters, mapActions } from "vuex";
-import addMilestoneForm from "../../../../../components/addMilestoneForm";
 export default {
-  components: {
-    addMilestoneForm,
-  },
   layout: "dashboard",
   data() {
     return {
@@ -504,6 +467,7 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.singleJob = data.data;
+          console.log(this.singleJob.is_bnpl_enabled)
           this.clientInfo = this.singleJob.client;
           this.activities = this.singleJob.activities;
           this.savedJobs = this.singleJob.saved_jobs;

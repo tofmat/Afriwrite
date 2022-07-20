@@ -472,8 +472,4 @@ export default {
 .text-success{
   color: #007E33;
 }
-
-.text-danger{
-  color: #CC0000;
-}
 </style>
