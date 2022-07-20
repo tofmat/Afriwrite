@@ -136,6 +136,25 @@
           <v-list-item
             link
             class="sideLinkCon"
+            to="/admin/pending-bnpl-contracts"
+            router
+            exact
+            active-class="navActive"
+          >
+            <v-list-item-icon>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.59 27.12">
+                <g transform="translate(0.5 0.5)">
+                  <path
+                    d="M11.427,6.938V0H1.224A1.221,1.221,0,0,0,0,1.224V24.9A1.221,1.221,0,0,0,1.224,26.12H18.365A1.221,1.221,0,0,0,19.59,24.9V8.162H12.652A1.228,1.228,0,0,1,11.427,6.938Zm3.265,12.04a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V18.57a.614.614,0,0,1,.612-.612H14.08a.614.614,0,0,1,.612.612Zm0-3.265a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V15.3a.614.614,0,0,1,.612-.612H14.08a.614.614,0,0,1,.612.612Zm0-3.673v.408a.614.614,0,0,1-.612.612H5.51a.614.614,0,0,1-.612-.612V12.04a.614.614,0,0,1,.612-.612H14.08A.614.614,0,0,1,14.692,12.04Zm4.9-5.821V6.53H13.06V0h.311a1.223,1.223,0,0,1,.867.357l4.994,5A1.22,1.22,0,0,1,19.59,6.219Z"
+                  />
+                </g>
+              </svg>
+            </v-list-item-icon>
+            <v-list-item-title>Pending BNPL Contracts</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            link
+            class="sideLinkCon"
             router
             exact
             active-class="navActive"
@@ -195,10 +214,10 @@ export default {
           title: "Approve BNPL Jobs",
           to: "/admin/temporary-bnpl-approvals",
         },
-        // {
-        //   title: "Proposals",
-        //   to: "/client/proposals",
-        // },
+        {
+          title: "Pending BNPL Contracts",
+          to: "/admin/pending-bnpl-contracts",
+        },
         // {
         //   title: "All Contracts",
         //   to: "/client/contracts",

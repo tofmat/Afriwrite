@@ -251,3 +251,13 @@ hr {
 .text-danger{
   color: #CC0000;
 }
+
+.ProfilePic{
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.selectBank {
+  -webkit-appearance: auto;
+}

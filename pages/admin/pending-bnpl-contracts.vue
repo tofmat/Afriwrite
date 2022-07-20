@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dashDefaultContent">
-      <h2 class="mainColor">Jobs With BNPL Temporay Approval</h2>
+      <h2 class="mainColor">Pending BNPL contracts Payment</h2>
       <div class="mt-10 table">
         <v-card>
           <v-simple-table>
@@ -13,6 +13,9 @@
                   <th class="text-left">Client Email</th>
                   <th class="text-left">Job Title</th>
                   <th class="text-left">Job Description</th>
+                  <th class="text-left">Freelancer Name</th>
+                  <th class="text-left">Freelancer Email</th>
+                  <th class="text-left">Payment Due Date</th>
                   <th></th>
                 </tr>
               </thead>
@@ -25,22 +28,31 @@
                     {{ index+1 }}
                   </td>
                   <td>
-                    {{ bnplrequest.first_name }}  {{ bnplrequest.last_name }}
+                    {{ bnplrequest.job.client.first_name }}  {{ bnplrequest.job.client.last_name }}
                   </td>
                   <td>
-                    {{ bnplrequest.email }}
+                    {{ bnplrequest.job.client.email }}
                   </td>
                   <td>
-                    {{ bnplrequest.title }}
+                    {{ bnplrequest.job.title }}
                   </td>
                   <td>
-                    {{ bnplrequest.description }}
+                    {{ bnplrequest.job.description | descriptionSlice }} ...
+                  </td>
+                  <td>
+                    {{ bnplrequest.writer.first_name }}  {{ bnplrequest.writer.last_name }}
+                  </td>
+                  <td>
+                    {{ bnplrequest.writer.email }}
+                  </td>
+                  <td>
+                    {{ humanFriendlyDate(bnplrequest.client_payment_date) }}
                   </td>
                   <td>
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
                       @click="viewClient(bnplrequest)"
                     >
-                      View Proof</v-btn>
+                      Send Message To Chat Room</v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -156,10 +168,11 @@ export default {
   },
   mounted(){
     this.getClientDetails()
+    this.humanFriendlyDate()
   },
   methods:{
     async getClientDetails(){
-       const { data, error } = await this.$axios.get(`/v1/bnpl/get-temporary-approvals`);
+       const { data, error } = await this.$axios.get(`/v1/bnpl/get-pending-contracts-payment`);
 
       if(data && data.data){
         this.bnplRequests = data.data

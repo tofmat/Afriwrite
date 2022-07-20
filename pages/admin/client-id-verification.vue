@@ -204,19 +204,11 @@ export default {
 </script>
 
 <style>
-.ProfilePic{
-  display: table;
-  margin-right: auto;
-  margin-left: auto;
-}
 .normalInput2 {
   background: #ececec;
   padding: 5px 15px;
   height: 35px;
   border-radius: 5px;
   width: 250%;
-}
-.selectBank {
-  -webkit-appearance: auto;
 }
 </style>

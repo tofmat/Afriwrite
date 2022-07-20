@@ -471,10 +471,6 @@ export default {
   height: 35px;
   border-radius: 5px;
 }
-.selectBank {
-  -webkit-appearance: auto;
-}
-
 .textMainColor {
   color: #707070;
 }

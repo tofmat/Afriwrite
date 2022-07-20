@@ -1,6 +1,7 @@
 import { Constants } from "../static/constants"
 
 import Vue from 'vue'
+var hdate = require('human-date')
 
 
 const mixins = {
@@ -38,6 +39,9 @@ const mixins = {
       const formattedDate = `${year}-${month}-${day}`
       console.log(formattedDate)
       return formattedDate
+    },
+    humanFriendlyDate(date){
+      return hdate.relativeTime(date)
     }
   }
 }
