@@ -50,7 +50,7 @@
                   </td>
                   <td>
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
-                      @click="viewClient(bnplrequest)"
+                      @click="openMessageModal(bnplrequest)"
                     >
                       Send Message To Chat Room</v-btn>
                   </td>
@@ -61,7 +61,7 @@
         </v-card>
         <v-col cols="auto">
           <v-dialog
-            v-model="dialog"
+            v-model="messageDialog"
             persistent
             transition="dialog-top-transition"
             max-width="600"
@@ -69,45 +69,17 @@
             <v-card class="py-5">
               <div class="centerflex columnFlex">
                 <v-card-text>
-                  <p class="mt-5">
-                    <b>Uploaded Proofs:</b>
-                  </p>
-                  <div class="row">
-                    <img
-                      v-for="photo in selectedClient.contract_proofs"
-                      :key="photo"
-                      :src="photo"
-                      alt="avatar"
-                      width="250"
-                      class="mr-4 mb-3 ml-3"
-                  />
-                  </div>
                   <div class="row">
                     <v-col cols="12" sm="12">
-                      <div class="d-flex">
-                      <span class="mt-3 mr-4">Status:</span>
-                      <div>
-                        <select
-                          class="selectBank normalInput2 fullWidth form-control mt-2"
-                          v-model="selectedClient.status"
-                        >
-                          <option value="">-- select status --</option>
-                          <option value="failed">Decline</option>
-                          <option value="completed">Approve</option>
-                        </select>
-                      </div>
-                      </div>
-                    </v-col>
-                    <v-col cols="12" sm="12" v-if="selectedClient.status === 'failed'">
-                      <span>Comment:</span>
+                      <span>Message:</span>
                       <v-textarea
-                        v-model.trim="selectedClient.comment"
+                        v-model.trim="selectedClient.content"
                         auto-grow
                         outlined
-                        rows="3"
+                        rows="10"
                         row-height="15"
                         class="mt-3"
-                        placeholder="Comment on the provided document(s)"
+                        placeholder="Please write a descriptive message"
                       ></v-textarea>
                     </v-col>
                   </div>
@@ -116,18 +88,18 @@
               <div class="flex justifyCenter mobileColumn">
                 <v-btn text 
                   @click="() => {
-                    this.dialog = false;
+                    this.messageDialog = false;
                   }"
                 >
                   Cancel
                 </v-btn>
 
                 <v-btn class="greyBtn mx-3 my-1" 
-                  :disabled="updateInfoNotFilled"
-                  @click="updateClientBNPLJobStatus"
+                  :disabled="!selectedClient.content"
+                  @click="sendMessage"
                   :loading="loading"
                 >
-                  Submit
+                  Send Message
                 </v-btn>
               </div>
             </v-card>
@@ -139,36 +111,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { Constants } from '../../static/constants'
 export default {
   layout: 'admin',
   data(){
     return {
-      isSubmitMilestoneForReview: false,
-      payment_milestones: [],
       search: '',
       bnplRequests: [],
-      dialog: false,
+      messageDialog: false,
       selectedClient:{
         client_id: '',
-        comment: '',
-        status: '',
-        id_photos: [],
-        profile_picture: '',
-        bnpl_request_id: ''
+        writer_id: '',
+        content: '',
+        type: this.$auth.user.role,
+        sent_by_admin: this.$auth.user.id,
       },
       loading: false
     }
   },
-  computed:{
-    updateInfoNotFilled(){
-      if(!this.selectedClient.status || 
-        (this.selectedClient.status === 'failed' && !this.selectedClient.comment)
-      ) return true
-    }
-  },
   mounted(){
     this.getClientDetails()
-    this.humanFriendlyDate()
   },
   methods:{
     async getClientDetails(){
@@ -208,6 +171,38 @@ export default {
         this.loading = false;
         console.log(error.response)
         this.$toast.error(error.response.data.error);
+      }
+    },
+    openMessageModal(param){
+      this.selectedClient.client_id = param.job.client.id,
+      this.selectedClient.writer_id = param.writer.id
+      this.messageDialog = true
+    },
+    async sendMessage(){
+      try {
+        this.loading = true;
+        const response = await axios.post(`${Constants.CHAT_BASE_URL}/api/admin/send-broadcast`, 
+          this.selectedClient, {
+            headers: {
+              CHATAPISIGNINGKEY: Constants.CHAT_API_SIGNING_KEY
+            }
+          },
+        )
+        this.$toast.success("Message Sent");
+        this.loading = false;
+        this.dialog = false;
+
+        // reset form
+        this.selectedClient.writer_id = ""
+        this.selectedClient.client_id = ""
+        this.selectedClient.content = ""
+        this.messageDialog = false
+        this.getClientDetails()
+        return response;
+      } catch (error) {
+        this.loading = false;
+        console.log(error.response)
+        this.$toast.error("An error occurred");
       }
     }
   }
