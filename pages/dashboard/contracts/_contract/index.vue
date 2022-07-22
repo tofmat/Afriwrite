@@ -166,6 +166,13 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
+                v-if="jobDetails.is_bnpl_enabled && !singleContract.is_payment_complete"
+              >
+                <a href="mailto:support@afriwrites.com?Subject=Client Misconduct">Report Client Misconduct</a>  
+                </v-btn
+              >
+              <v-btn
+                class="findBtn mb-4 fullWidth"
                 disabled
                 v-if="singleContract.status === 'submitted_work_for_approval'"
                 >Submitted for approval</v-btn

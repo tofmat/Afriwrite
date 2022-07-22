@@ -18,6 +18,8 @@
                   <th class="text-left">Payment Due Date</th>
                   <th class="text-left">Payment Status</th>
                   <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -62,6 +64,13 @@
                       @click="openMessageModal(bnplrequest)"
                     >
                       Send Message To Chat Room</v-btn>
+                  </td>
+                  <td>
+                    <v-btn class="findBtn mb-4 mt-3 fullWidth"
+                      @click="openSuspensionModal(bnplrequest)"
+                      v-if="!bnplrequest.is_payment_complete"
+                    >
+                      Suspend Client</v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -114,6 +123,52 @@
             </v-card>
           </v-dialog>
         </v-col>
+        <v-col cols="auto">
+          <v-dialog
+            v-model="suspensionDialog"
+            persistent
+            transition="dialog-top-transition"
+            max-width="600"
+          >
+            <v-card class="py-5">
+              <div class="centerflex columnFlex">
+                <v-card-text>
+                  <div class="row">
+                    <v-col cols="12" sm="12">
+                      <span>Reason for Suspension:</span>
+                      <v-textarea
+                        v-model.trim="suspendClient.suspension_note"
+                        auto-grow
+                        outlined
+                        rows="10"
+                        row-height="15"
+                        class="mt-3"
+                        placeholder="Please write a detailed reason for the suspension"
+                      ></v-textarea>
+                    </v-col>
+                  </div>
+                </v-card-text>
+              </div>
+              <div class="flex justifyCenter mobileColumn">
+                <v-btn text 
+                  @click="() => {
+                    this.suspensionDialog = false;
+                  }"
+                >
+                  Cancel
+                </v-btn>
+
+                <v-btn class="greyBtn mx-3 my-1" 
+                  :disabled="!suspendClient.suspension_note"
+                  @click="suspendUser()"
+                  :loading="loading"
+                >
+                  Send Message
+                </v-btn>
+              </div>
+            </v-card>
+          </v-dialog>
+        </v-col>
       </div>
     </div>
   </div>
@@ -129,12 +184,17 @@ export default {
       search: '',
       bnplRequests: [],
       messageDialog: false,
+      suspensionDialog: false,
       selectedClient:{
         client_id: '',
         writer_id: '',
         content: '',
         type: this.$auth.user.role,
         sent_by_admin: this.$auth.user.id,
+      },
+      suspendClient:{
+        user_id: '',
+        suspension_note: ''
       },
       loading: false
     }
@@ -161,7 +221,7 @@ export default {
       this.dialog = true
     },
     async updateClientBNPLJobStatus(){
-       try {
+      try {
         this.loading = true;
         const response = await this.$axios.post(
           `/v1/bnpl/update-temporary-job-post/${this.selectedClient.job_id}`,
@@ -186,6 +246,10 @@ export default {
       this.selectedClient.client_id = param.job.client.id,
       this.selectedClient.writer_id = param.writer.id
       this.messageDialog = true
+    },
+    openSuspensionModal(param){
+      this.suspendClient.user_id = param.job.client.id,
+      this.suspensionDialog = true
     },
     async sendMessage(){
       try {
@@ -212,6 +276,28 @@ export default {
         this.loading = false;
         console.log(error.response)
         this.$toast.error("An error occurred");
+      }
+    },
+    async suspendUser(){
+       try {
+        this.loading = true;
+        const response = await this.$axios.post(
+          `/v1/user/suspend`,
+          this.suspendClient
+        );
+        this.$toast.success("Successful");
+        this.loading = false;
+        this.suspensionDialog = false;
+
+        // reset form
+        this.suspendClient.status = ""
+        this.suspendClient.suspension_note = ""
+        this.getClientDetails()
+        return response;
+      } catch (error) {
+        this.loading = false;
+        console.log(error.response)
+        this.$toast.error(error.response.data.error);
       }
     }
   }

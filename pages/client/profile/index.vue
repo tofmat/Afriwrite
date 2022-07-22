@@ -95,7 +95,7 @@
                 Add ID for Verification
               </v-btn>
             </div>
-            <div v-if="this.$auth.user.client_buy_now_pay_later_status === 'pending'"> 
+            <div v-if="this.$auth.user.client_buy_now_pay_later_status != 'completed'"> 
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
