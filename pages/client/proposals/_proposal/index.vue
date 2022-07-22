@@ -282,7 +282,6 @@ export default {
     async acceptProposal() {
       if(this.singleProposal.job.is_bnpl_enabled){
         this.submitPaymentDateDialog = true
-        console.log('aye 5 star')
       }else{
         const that = this;
         var handler = PaystackPop.setup({

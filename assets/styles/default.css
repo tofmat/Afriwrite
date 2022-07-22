@@ -261,3 +261,11 @@ hr {
 .selectBank {
   -webkit-appearance: auto;
 }
+
+.text-warning{
+  color: #FF8800;
+}
+
+.text-success{
+  color: #007E33;
+}

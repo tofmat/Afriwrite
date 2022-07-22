@@ -159,7 +159,7 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="singleContract.status === 'approved_for_payment'"
+                v-if="singleContract.status === 'approved_for_payment' && singleContract.is_payment_complete"
                 @click="requestOneTimePayment()"
                 :loading="approveLoading"
                 >Request for Payment</v-btn

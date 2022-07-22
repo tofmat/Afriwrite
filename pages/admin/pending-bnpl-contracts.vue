@@ -16,6 +16,7 @@
                   <th class="text-left">Freelancer Name</th>
                   <th class="text-left">Freelancer Email</th>
                   <th class="text-left">Payment Due Date</th>
+                  <th class="text-left">Payment Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -47,6 +48,14 @@
                   </td>
                   <td>
                     {{ humanFriendlyDate(bnplrequest.client_payment_date) }}
+                  </td>
+                  <td>
+                    <span class="text-success" v-if="bnplrequest.is_payment_complete">
+                      Paid
+                    </span>
+                    <span class="text-warning" v-else>
+                      Pending
+                    </span>
                   </td>
                   <td>
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
