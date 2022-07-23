@@ -370,12 +370,15 @@
         </v-card>
       </v-dialog>
     </v-col>
+    <suspensionDialog />
   </div>
 </template>
 
 <script>
+import suspensionDialog from "../../components/suspensionDialog";
 export default {
   layout: "client",
+  components: { suspensionDialog },
   data: () => ({
     errors: "",
     loading: false,

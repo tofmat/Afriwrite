@@ -95,7 +95,7 @@
                 Add ID for Verification
               </v-btn>
             </div>
-            <div v-if="this.$auth.user.client_buy_now_pay_later_status != 'completed'"> 
+            <div v-if="applyForBNPL"> 
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
@@ -223,96 +223,22 @@
           </v-card>
         </v-dialog>
       </v-col>
-      <v-col cols="auto">
-        <v-dialog
-          v-model="BNPLDialog"
-          persistent
-          transition="dialog-top-transition"
-          max-width="600"
-        >
-          <v-card class="py-5">
-            <div class="centerflex columnFlex">
-              <v-card-text>
-                <h3 class="darkGreyColor textCenter mb-4">
-                  Apply for Buy Now and Pay Later (BNPL) feature
-                </h3>
-                <div class="row">
-                  <v-col cols="12" sm="12">
-                    <span>Why do you want to use this feature?:</span>
-                    <v-textarea
-                      auto-grow
-                      outlined
-                      rows="3"
-                      row-height="50"
-                      class="mt-3"
-                      placeholder="Express yourself accurately"
-                      v-model.trim="BNPLRequest.reason"
-                    ></v-textarea>
-
-                    <span>Please include at least 2 social media handles:</span>
-                    <v-text-field
-                      label="Facebook link"
-                      hide-details="auto"
-                      :rules="facebookRule"
-                      v-model.trim="BNPLRequest.facebook_link"
-                    ></v-text-field>
-
-                    <v-text-field
-                      label="Linkedin link"
-                      hide-details="auto"
-                      :rules="linkedinRule"
-                      v-model.trim="BNPLRequest.linkedin_link"
-                    ></v-text-field>
-
-                    <v-text-field
-                      label="Twitter link"
-                      hide-details="auto"
-                      :rules="twitterRule"
-                      v-model.trim="BNPLRequest.twitter_link"
-                    ></v-text-field>
-
-                    <v-text-field
-                      label="Instagram link"
-                      hide-details="auto"
-                      :rules="instagramRule"
-                      v-model.trim="BNPLRequest.instagram_link"
-                    ></v-text-field>
-                  </v-col>
-                </div>
-              </v-card-text>
-            </div>
-            <div class="flex justifyCenter mobileColumn">
-              <v-btn text 
-                @click="() => {
-                  this.BNPLDialog = false;
-                }"
-              >
-                Cancel
-              </v-btn>
-
-              <v-btn class="greyBtn mx-3 my-1" 
-                :disabled="BNPLInfoRequired"
-                @click="requestForBNPL"
-                :loading="loading"
-              >
-                Submit
-              </v-btn>
-            </div>
-          </v-card>
-        </v-dialog>
-      </v-col>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import banks from "../../../static/banks";
+import suspensionDialog from "../../../components/suspensionDialog";
 export default {
   layout: "client",
+  components: { suspensionDialog },
   data() {
     return {
       idDialog: false,
       BNPLDialog: false,
+      isSuspended: true,
       dialog2:
         this.$auth.user.phone_number &&
         this.$auth.user.username &&
@@ -388,6 +314,9 @@ export default {
         // return the number of "filled" values
         .length;
     },
+    applyForBNPL(){
+      return (this.$auth.user.client_buy_now_pay_later_status == 'pending' || this.$auth.user.client_buy_now_pay_later_status == 'failed')
+    }
   },
   methods: {
     onFileChange(event){
@@ -447,6 +376,7 @@ export default {
   async mounted() {
     const { data } = await this.$auth.fetchUser()
     if(data){
+      if(data.data.status === 'suspended') this.isSuspended = true
       this.$auth.setUser(data.data)
     }
   },

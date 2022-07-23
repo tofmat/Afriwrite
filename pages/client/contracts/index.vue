@@ -142,17 +142,18 @@
           </v-tab-item>
         </v-tabs>
       </div>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+import suspensionDialog from "../../../components/suspensionDialog";
 export default {
   layout: "client",
   components: {
-    skeletonBox,
+    skeletonBox, suspensionDialog
   },
   data() {
     return {
@@ -194,11 +195,6 @@ export default {
   },
   mounted() {
     this.getContracts();
-  },
-  computed: {
-    // ...mapGetters({
-    //   allContracts: "client/allContracts",
-    // }),
   },
   filters: {
     paystackFees: function (value) {

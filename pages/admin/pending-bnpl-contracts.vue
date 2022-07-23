@@ -17,8 +17,8 @@
                   <th class="text-left">Freelancer Email</th>
                   <th class="text-left">Payment Due Date</th>
                   <th class="text-left">Payment Status</th>
-                  <th></th>
-                  <th></th>
+                  <th>Chat Button</th>
+                  <th>Client Account Status</th>
                   <th></th>
                 </tr>
               </thead>
@@ -63,14 +63,30 @@
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
                       @click="openMessageModal(bnplrequest)"
                     >
-                      Send Message To Chat Room</v-btn>
+                      Send Message To Chat Room
+                    </v-btn>
                   </td>
                   <td>
                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
                       @click="openSuspensionModal(bnplrequest)"
-                      v-if="!bnplrequest.is_payment_complete"
+                      v-if="!bnplrequest.is_payment_complete && bnplrequest.job.client.account_status != 'suspended'"
                     >
-                      Suspend Client</v-btn>
+                      Suspend Client
+                    </v-btn>
+                    <span class="text-danger" v-if="bnplrequest.job.client.account_status == 'suspended'">
+                      Client Suspended
+                    </span>
+                    <span class="text-success" v-if="bnplrequest.job.client.account_status == 'active'">
+                      Client Active
+                    </span>
+                  </td>
+                  <td>
+                     <v-btn class="findBtn mb-4 mt-3 fullWidth"
+                      @click="openPaymentConfirmationModal(bnplrequest)"
+                      v-if="!bnplrequest.is_payment_complete && bnplrequest.status == 'approved_for_payment'"
+                    >
+                      Pay Freelancer
+                    </v-btn>
                   </td>
                 </tr>
               </tbody>
@@ -158,12 +174,48 @@
                   Cancel
                 </v-btn>
 
-                <v-btn class="greyBtn mx-3 my-1" 
+                <v-btn class="greyBtn mx-3 my-1"
                   :disabled="!suspendClient.suspension_note"
                   @click="suspendUser()"
                   :loading="loading"
                 >
                   Send Message
+                </v-btn>
+              </div>
+            </v-card>
+          </v-dialog>
+        </v-col>
+        <v-col cols="auto">
+          <v-dialog
+            v-model="paymentConfirmationModal"
+            persistent
+            transition="dialog-top-transition"
+            max-width="600"
+          >
+            <v-card class="py-5">
+              <div class="centerflex columnFlex">
+                <v-card-text>
+                  <h3 class="darkGreyColor textCenter">
+                    Please wait....
+                  </h3>
+                  <p class="textCenter mt-2">
+                    Are you sure you want to pay the freelancer?
+                  </p>
+                </v-card-text>
+              </div>
+              <div class="flex justifyCenter mobileColumn">
+                 <v-btn text 
+                  @click="() => {
+                    this.paymentConfirmationModal = false;
+                  }"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn class="greyBtn mx-3 my-1"
+                  :loading="loading"
+                  @click="payFreelancer()"
+                >
+                  Continue
                 </v-btn>
               </div>
             </v-card>
@@ -185,6 +237,7 @@ export default {
       bnplRequests: [],
       messageDialog: false,
       suspensionDialog: false,
+      paymentConfirmationModal: false,
       selectedClient:{
         client_id: '',
         writer_id: '',
@@ -196,7 +249,13 @@ export default {
         user_id: '',
         suspension_note: ''
       },
-      loading: false
+      loading: false,
+      paymentDetails:{
+        job_proposal_id: '',
+        writer: '',
+        recipient_code: '',
+        description: ''
+      }
     }
   },
   mounted(){
@@ -298,6 +357,48 @@ export default {
         this.loading = false;
         console.log(error.response)
         this.$toast.error(error.response.data.error);
+      }
+    },
+    async openPaymentConfirmationModal(params){
+      this.paymentDetails.job_proposal_id = params.id
+      this.paymentDetails.writer = params.writer
+      this.paymentConfirmationModal = true
+      this.paymentDetails.description = `Payment for Contract - ${params.job.title}`
+
+      try {
+        const { data } = await this.$axios.get(
+          `/v1/user/get-user-payment-recipient-code/${params.writer.id}`
+        );
+
+        if(data && data.data){
+          this.paymentDetails.recipient_code = data.data.recipient_code
+        }
+      } catch (error) {
+        console.log(error.response)
+        this.$toast.error(error.response.data.error);
+      }
+    },
+    async payFreelancer(){
+       try {
+        this.loading = true;
+        const response = await this.$axios.post(
+          `/v1/user/pay-freelancer`,
+          this.paymentDetails
+        );
+        this.$toast.success("Successful");
+        this.loading = false;
+        this.paymentConfirmationModal = false;
+
+        // reset form
+        this.paymentDetails.job_proposal_id = ""
+        this.paymentDetails.writer = ""
+        this.paymentDetails.recipient_code = ""
+        this.getClientDetails()
+        return response;
+      } catch (error) {
+        this.loading = false;
+        console.log(error.response)
+        this.$toast.error("an error occurred");
       }
     }
   }

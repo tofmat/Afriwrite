@@ -2,7 +2,7 @@
   <div>
     <v-col cols="auto">
       <v-dialog
-        v-model="dialog"
+        v-model="isSuspended"
         persistent
         transition="dialog-top-transition"
         max-width="600"
@@ -11,7 +11,7 @@
           <div class="centerflex columnFlex">
             <v-card-text>
               <h3 class="darkGreyColor textCenter">
-                Sorry, Your account has been suspend
+                Sorry, Your account has been suspended
               </h3>
               <p class="textCenter mt-2">
                 You do not have access to view this page
@@ -35,8 +35,15 @@
 export default {
   data(){
     return{
-      dialog: true,
+      isSuspended: false,
     }
-  }
+  },
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      if(data.data.account_status === 'suspended') this.isSuspended = true
+      this.$auth.setUser(data.data)
+    }
+  },
 }
 </script>

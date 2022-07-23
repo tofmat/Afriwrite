@@ -138,16 +138,19 @@
           </v-tab-item>
         </v-tabs>
       </div>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
+import suspensionDialog from "../../../components/suspensionDialog";
+
 export default {
   layout: "client",
   components: {
-    skeletonBox,
+    skeletonBox, suspensionDialog
   },
   data() {
     return {

@@ -205,17 +205,20 @@
           </div>
         </div>
       </div>
+
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters, mapActions } from "vuex";
+import suspensionDialog from "../../../components/suspensionDialog";
+
 export default {
   layout: "client",
   components: {
-    skeletonBox,
+    skeletonBox, suspensionDialog
   },
   data() {
     return {
@@ -227,9 +230,6 @@ export default {
     };
   },
   methods: {
-    // ...mapActions({
-    //   getAllJobs: 'getAllJobs',
-    // }),
     getJobs() {
       this.apiLoading = true;
       this.$store
@@ -278,9 +278,6 @@ export default {
     this.getDrafts();
   },
   computed: {
-    // ...mapGetters({
-    //   allJobs: "client/allJobs",
-    // }),
   },
   filters: {
     changToString: function (value) {
