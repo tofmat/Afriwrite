@@ -20,6 +20,7 @@
                   <th>Chat Button</th>
                   <th>Client Account Status</th>
                   <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -67,18 +68,20 @@
                     </v-btn>
                   </td>
                   <td>
-                    <v-btn class="findBtn mb-4 mt-3 fullWidth"
-                      @click="openSuspensionModal(bnplrequest)"
-                      v-if="!bnplrequest.is_payment_complete && bnplrequest.job.client.account_status != 'suspended'"
-                    >
-                      Suspend Client
-                    </v-btn>
                     <span class="text-danger" v-if="bnplrequest.job.client.account_status == 'suspended'">
                       Client Suspended
                     </span>
                     <span class="text-success" v-if="bnplrequest.job.client.account_status == 'active'">
                       Client Active
                     </span>
+                  </td>
+                  <td>
+                    <v-btn class="findBtn mb-4 mt-3 fullWidth"
+                      @click="openSuspensionModal(bnplrequest)"
+                      v-if="!bnplrequest.is_payment_complete && bnplrequest.job.client.account_status != 'suspended'"
+                    >
+                      Suspend Client
+                    </v-btn>
                   </td>
                   <td>
                      <v-btn class="findBtn mb-4 mt-3 fullWidth"
