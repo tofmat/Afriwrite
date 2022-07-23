@@ -64,6 +64,30 @@
         fixed
       >
         <v-list nav dense class="openNavFull">
+
+          <v-list-item
+            link
+            class="sideLinkCon"
+            to="/admin"
+            router
+            exact
+            active-class="navActive"
+          >
+            <v-list-item-icon class="iconSpace">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 17.088 21.399"
+              >
+                <g transform="translate(1 1)">
+                  <path
+                    d="M22.588,23.9l-7.544-5.389L7.5,23.9V6.655A2.155,2.155,0,0,1,9.655,4.5H20.433a2.155,2.155,0,0,1,2.155,2.155Z"
+                    transform="translate(-7.5 -4.5)"
+                  />
+                </g>
+              </svg>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
           <v-list-item
             link
             class="sideLinkCon"
@@ -203,6 +227,10 @@ export default {
       fixed: false,
       navItems: [
         {
+          title: "Home",
+          to: "/admin",
+        },
+        {
           title: "Client ID Verification",
           to: "/admin/client-id-verification",
         },
@@ -218,10 +246,6 @@ export default {
           title: "Pending BNPL Contracts",
           to: "/admin/pending-bnpl-contracts",
         },
-        // {
-        //   title: "All Contracts",
-        //   to: "/client/contracts",
-        // },
         // {
         //   title: "Profile",
         //   to: "/client/profile",

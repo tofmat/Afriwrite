@@ -42,6 +42,9 @@ const mixins = {
     },
     humanFriendlyDate(date){
       return hdate.relativeTime(date)
+    },
+    prettyPrintDate(date){
+      return hdate.prettyPrint(date)
     }
   }
 }
