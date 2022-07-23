@@ -22,19 +22,19 @@
             class="theItem"
           >
             <v-item v-slot="{ active }" class="navheader px-2"  >
-              <v-title :class="active ? 'navActive' : ''">{{
+              <v-list-item-title :class="active ? 'navActive' : ''">{{
                 nav.title
-              }}</v-title>
+              }}</v-list-item-title>
             </v-item>
           </v-list-item>
           <v-list-item  :to="goToDashboard" router  v-if="user">
             <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? 'navActive' : ''">My Dashboard</v-title>
+              <v-list-item-title :class="active ? 'navActive' : ''">My Dashboard</v-list-item-title>
             </v-item>
           </v-list-item>
           <v-list-item  :to="goToDashboard" router v-else>
             <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? 'navActive' : ''">Sign In</v-title>
+              <v-list-item-title :class="active ? 'navActive' : ''">Sign In</v-list-item-title>
             </v-item>
           </v-list-item>
         </div>

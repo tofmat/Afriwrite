@@ -159,10 +159,17 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="singleContract.status === 'approved_for_payment'"
+                v-if="singleContract.status === 'approved_for_payment' && singleContract.is_payment_complete"
                 @click="requestOneTimePayment()"
                 :loading="approveLoading"
                 >Request for Payment</v-btn
+              >
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                v-if="jobDetails.is_bnpl_enabled && !singleContract.is_payment_complete"
+              >
+                <a href="mailto:support@afriwrites.com?Subject=Client Misconduct">Report Client Misconduct</a>  
+                </v-btn
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
@@ -440,9 +447,5 @@ export default {
 
 .text-success{
   color: #007E33;
-}
-
-.text-danger{
-  color: #CC0000;
 }
 </style>

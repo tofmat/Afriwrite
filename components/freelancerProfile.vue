@@ -333,9 +333,6 @@ export default {
   height: 35px;
   border-radius: 5px;
 }
-.selectBank {
-  -webkit-appearance: auto;
-}
 .articleSingle {
   background: #f9f9f9;
   padding: 0 0 10px 0;

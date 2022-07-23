@@ -158,13 +158,20 @@
                   this.submitReviewDialog = true;
                 }"
               >
-                Approve for Payment
+                {{ singleContract.is_payment_complete ? 'Approve for Payment': 'Approve work completion' }}
               </v-btn>
+              <v-btn
+                class="findBtn mb-4 fullWidth"
+                @click="payForWork()"
+                :loading="paymentLoading"
+                v-if="!singleContract.is_payment_complete"
+                >Click to Pay</v-btn
+              >
               <v-btn
                 class="findBtn mb-4 fullWidth"
                 disabled
                 v-if="singleContract.status === 'approved_for_payment'"
-                >Approved for Payment</v-btn
+                >{{ singleContract.is_payment_complete ? 'Approved for payment': 'Work approved for completion'}}</v-btn
               >
             </div>
             <v-btn
@@ -179,11 +186,8 @@
             <v-btn class="greyBtn mb-4 fullWidth"
                 target="_blank"
                 :href="getMessageURL(writerDetails.id)"
-              ><i class="far fa-comments mr-2 mainColor"></i> Contact</v-btn
+              ><i class="far fa-comments mr-2 mainColor"></i> Contact Freelancer</v-btn
             >
-            <!-- <v-btn class="greyBtn mb-4 fullWidth"
-              ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
-            > -->
             <div>
               <div class="clientInfo">
                 <h4>
@@ -272,6 +276,7 @@ export default {
   },
   data() {
     return {
+      paymentLoading: false,
       submitReviewDialog: false,
       loading: false,
       declineloading: false,
@@ -411,7 +416,41 @@ export default {
           "There was an error submitting this review"
         );
       }
-    }
+    },
+    async payForWork() {
+        const that = this;
+        var handler = PaystackPop.setup({
+          key: "pk_test_d16ba2f6073caccc6adcac860d66d70ff969721a", // Replace with your public key
+          ref: "" + Math.floor(Math.random() * 1000000000 + 1),
+          email: this.$auth.user.email,
+          amount: this.totalAmount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
+          currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
+          callback: async (response) => {
+            try {
+              this.paymentLoading = true;
+              var reference = response.reference;
+              let paymentDetails = {
+                payment_reference: reference,
+                job_proposal_id: this.singleContract.id,
+              };
+              await this.$axios.post(`/v1/bnpl/accept-payment`, paymentDetails);
+              this.$toast.success("Payment received");
+              this.paymentLoading = false;
+              setInterval(() =>{
+                location.reload()
+              }, 1000)
+            } catch {
+              this.paymentLoading = false;
+              this.$toast.error("There was an error verifying the payment");
+            }
+          },
+          onClose: function () {
+            alert("Transaction was not completed, window closed.");
+            this.paymentLoading = false;
+          },
+        });
+        handler.openIframe();
+    },
   },
   mounted() {
     this.getSingleContract();
@@ -463,17 +502,5 @@ export default {
 
 .clientInfo h4 {
   color: #4d4d4d;
-}
-
-.text-warning{
-  color: #FF8800;
-}
-
-.text-success{
-  color: #007E33;
-}
-
-.text-danger{
-  color: #CC0000;
 }
 </style>

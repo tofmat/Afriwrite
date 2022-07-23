@@ -62,7 +62,7 @@ export default {
     "@nuxtjs/axios", 
     "@nuxtjs/auth-next", 
     "@nuxtjs/toast", 
-    "@nuxtjs/sentry"
+    // "@nuxtjs/sentry"
   ],
 
   sentry: {

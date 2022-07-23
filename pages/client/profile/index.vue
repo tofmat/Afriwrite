@@ -26,7 +26,7 @@
                       {{ this.$auth.user.first_name }}
                       {{ this.$auth.user.last_name }}
                     </h1>
-                    <p>{{ this.$auth.user.username }}</p>
+                    <p>{{ this.$auth.user.link }}</p>
                     <div class="flex alignCenter mb-3 lca">
                       <i class="fas fa-map-marker-alt"></i>
                       <p class="noMargin">{{ this.$auth.user.country }}</p>
@@ -83,18 +83,30 @@
         </v-col>
         <v-col cols="12" sm="12" lg="3">
           <div class="sideB rightSideDash">
-            <!-- <div v-if="!this.$auth.user.recipient_code">
+            <div v-if="this.$auth.user.client_id_verification_status != 'completed'"> 
               <v-btn
                 class="myBtn findBtn fullWidth"
                 @click="
                   () => {
-                    this.dialog = true;
+                    this.idDialog = true;
                   }
                 "
               >
-                Add account Number
+                Add ID for Verification
               </v-btn>
-            </div> -->
+            </div>
+            <div v-if="applyForBNPL"> 
+              <v-btn
+                class="myBtn findBtn fullWidth"
+                @click="
+                  () => {
+                    this.BNPLDialog = true;
+                  }
+                "
+              >
+                Apply For BNPL Feature
+              </v-btn>
+            </div>
             <div class="mt-3">
               <v-btn class="myBtn findBtn fullWidth" to="/client/profile/edit">
                 Edit Profile
@@ -117,7 +129,7 @@
               <h3 v-else class="mainColor">Not Available</h3>
             </div>
             <hr class="fullWidth my-5" />
-            <div class="profileInfoHolder">
+            <!-- <div class="profileInfoHolder">
               <div>
                 <h4 class="darkGreyColor noMargin mb-2">
                   <span
@@ -127,7 +139,7 @@
                 <div class="workDiv fullWidth my-3 scrollable-x" to="#">
                   <p class="mainColor noMargin">
                     https://www.afriwrite.com/profile/{{
-                      this.$auth.user.username
+                      this.$auth.user.link
                     }}
                   </p>
                 </div>
@@ -135,19 +147,6 @@
                   Copy link
                 </p>
               </div>
-            </div>
-            <!-- <hr class="fullWidth my-5" />
-            <div class="profileInfoHolder">
-              <p class="darkGreyColor noMargin mb-2">
-                <span
-                  ><img
-                    src="../../../assets/images/translate.svg"
-                    alt="availableicon"
-                    class="mr-2"
-                  />LANGUAGES</span
-                >
-              </p>
-              <p class="mainColor noMargin">{{ this.$auth.user.languages }}</p>
             </div> -->
           </div>
         </v-col>
@@ -180,17 +179,66 @@
           </v-card>
         </v-dialog>
       </v-col>
+      <v-col cols="auto">
+        <v-dialog
+          v-model="idDialog"
+          persistent
+          transition="dialog-top-transition"
+          max-width="600"
+        >
+          <v-card class="py-5">
+            <div class="centerflex columnFlex">
+              <v-card-text>
+                <h3 class="darkGreyColor textCenter">
+                  Please upload your ID to get full access to this platform features
+                </h3>
+                <p class="textCenter mt-2">
+                  <v-file-input
+                    chips
+                    counter
+                    small-chips
+                    truncate-length="15"
+                    v-on:change="onFileChange"
+                  ></v-file-input>
+                </p>
+              </v-card-text>
+            </div>
+            <div class="flex justifyCenter mobileColumn">
+              <v-btn text 
+                @click="() => {
+                  this.idDialog = false;
+                }"
+              >
+                Cancel
+              </v-btn>
+
+              <v-btn class="greyBtn mx-3 my-1" 
+                :disabled="!IDUpload"
+                @click="submitIdVerification"
+                :loading="loading"
+              >
+                Submit
+              </v-btn>
+            </div>
+          </v-card>
+        </v-dialog>
+      </v-col>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import banks from "../../../static/banks";
+import suspensionDialog from "../../../components/suspensionDialog";
 export default {
   layout: "client",
+  components: { suspensionDialog },
   data() {
     return {
-      dialog: false,
+      idDialog: false,
+      BNPLDialog: false,
+      isSuspended: true,
       dialog2:
         this.$auth.user.phone_number &&
         this.$auth.user.username &&
@@ -204,37 +252,131 @@ export default {
         description: "",
       },
       loading: false,
+      IDUpload: '',
+      BNPLRequest: {
+        reason: '',
+        facebook_link: '',
+        instagram_link: '',
+        twitter_link: '',
+        linkedin_link: ''
+      },
+      facebookRule: [
+        value => {
+          const pattern = /(?:http:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/
+          if(value){
+            return pattern.test(value) || 'Invalid facebook link.'
+          }
+          return true
+        },
+      ],
+      twitterRule: [
+        value => {
+          const pattern = /(?:http:\/\/)?(?:www\.)?twitter\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-]*)/
+          if(value){
+            return pattern.test(value) || 'Invalid twitter link.'
+          }
+          return true
+        },
+      ],
+      instagramRule: [
+        value => {
+          const pattern = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/
+          if(value){
+            return pattern.test(value) || 'Invalid instagram link.'
+          }
+          return true
+        },
+      ],
+      linkedinRule: [
+        value => {
+          const pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm
+          if(value){
+            return pattern.test(value) || 'Invalid linkedin link.'
+          }
+          return true
+        },
+      ],
     };
   },
+  computed:{
+    BNPLInfoRequired(){
+      if(!this.BNPLRequest.reason.length || this.filledValuesCount < 2) return true
+    },
+    filledValuesCount() {
+      return [this.BNPLRequest.facebook_link, this.BNPLRequest.instagram_link, this.BNPLRequest.twitter_link, this.BNPLRequest.linkedin_link]
+        // ensure all values are Strings and remove whitespace around
+        .map((value) => String(value || '').trim())
+
+        // an empty String will be considered false
+        // so only "filled" values will pass the filter
+        .filter(Boolean)
+
+        // return the number of "filled" values
+        .length;
+    },
+    applyForBNPL(){
+      return (this.$auth.user.client_buy_now_pay_later_status == 'pending' || this.$auth.user.client_buy_now_pay_later_status == 'failed')
+    }
+  },
   methods: {
+    onFileChange(event){
+      this.IDUpload= event;
+    },
     copyJobLink() {
       navigator.clipboard.writeText(
-        `https://www.afriwrite.com/profile/${this.$auth.user.username}`
+        `https://www.afriwrite.com/profile/${this.$auth.user.link}`
       );
       this.$toast.success("Link copied");
     },
-    async addAccount() {
+    async submitIdVerification(){
+      let formData = new FormData();
+      formData.append("file", this.IDUpload);
+
       try {
         this.loading = true;
         const response = await this.$axios.post(
-          `/v1/writer/payment-transer-recipient`,
-          this.accountDetails
+          `/v1/user/client-submit-id-verification`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         this.$toast.success(
-          "You have added your account details successfully!"
+          "You have added your ID successfully!"
         );
         this.loading = false;
-        this.dialog = false;
+        this.idDialog = false;
         return response;
       } catch (error) {
         this.loading = false;
         this.$toast.error(error.response.data.error);
       }
     },
+    async requestForBNPL(){
+      try {
+        this.loading = true;
+        const response = await this.$axios.post(
+          `/v1/user/client-request-for-bnpl`,
+          this.BNPLRequest
+        );
+        this.$toast.success(
+          "Your request has been submitted successfully!"
+        );
+        this.loading = false;
+        this.BNPLDialog = false;
+        return response;
+      } catch (error) {
+        this.loading = false;
+        this.$toast.error(error.response.data.error);
+      }
+    }
   },
   async mounted() {
     const { data } = await this.$auth.fetchUser()
     if(data){
+      if(data.data.status === 'suspended') this.isSuspended = true
       this.$auth.setUser(data.data)
     }
   },
@@ -259,10 +401,6 @@ export default {
   height: 35px;
   border-radius: 5px;
 }
-.selectBank {
-  -webkit-appearance: auto;
-}
-
 .textMainColor {
   color: #707070;
 }

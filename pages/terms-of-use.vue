@@ -189,7 +189,7 @@
                   For now, the only Payment Provider used by the platform is PayStack and freelancers can receive 
                   payments from the platform through any of the methods acceptable by PayStack.
                 </li>
-                <li>
+                <li id="payLaterFeature">
                   Clients pay AfriWrites in advance to enter into a contractual agreement with a freelance writer on 
                   the platform. However, some vetted clients may be able to take advantage of our <i class="text-danger">PayLater features</i>, 
                   in which a client doesn’t need to pay in advance at the point of contract creation. With the PayLater 
@@ -267,9 +267,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-.text-danger{
-  color: red;
-}
-</style>

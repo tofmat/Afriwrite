@@ -219,6 +219,8 @@ export default {
           this.apiLoading = false;
           if(data && data != null){
             this.singleJob = data.data;
+            console.log(this.singleJob)
+
             this.singleJobMedia = this.singleJob.media;
             this.clientInfo = this.singleJob.client;
             this.lastViewedByCLient = this.singleJob.last_viewed_by_client;
@@ -236,9 +238,10 @@ export default {
         .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
-          setTimeout(() => {
-            this.$router.push("/dashboard/jobfeed")
-          }, 2000)
+          console.log(err)
+          // setTimeout(() => {
+          //   this.$router.push("/dashboard/jobfeed")
+          // }, 2000)
         });
     },
     async saveJob(job_id) {

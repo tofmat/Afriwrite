@@ -123,6 +123,7 @@ export default {
           this.niches = JSON.parse(this.singleJob.writing_niches)
         })
         .catch((err) => {
+          console.log(err)
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
         });
