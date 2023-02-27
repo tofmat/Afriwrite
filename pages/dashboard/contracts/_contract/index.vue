@@ -11,7 +11,7 @@
         <div class="row">
           <v-col cols="12" sm="9">
             <div class="flex alignCenter mobileColumn mt-5">
-              <div class="mr-10 infoCards">
+              <div class="mr-10 infoCards" v-if="singleContract.price_per_word != 'null'">
                 <h3 class="mb-2 mainColor">
                   N{{ singleContract.price_per_word }}/word
                 </h3>
@@ -27,28 +27,23 @@
                 <h3 class="mb-2 mainColor">N{{ totalAmount }}</h3>
                 <p class="darkGreyColor">Total Amount</p>
               </div>
-              <!-- <div class="">
-                <img src="../../../../assets/images/Ellipse29.png" alt="user" />
-                <h3>{{ writerDetails.first_name }}</h3>
-                <p>{{ writerDetails.role }}</p>
-              </div> -->
             </div>
             <div class="mt-5">
-              <p>Date Submitted: {{ proposalDate | dateSlice }}</p>
+              <p><b>Date Submitted:</b> {{ proposalDate | dateSlice }}</p>
               <p v-if="singleContract.payment_mode === 'by_project'">
-                <span class="mainColor">Payment Method:</span> Project based
+                <span class=""><b>Payment Method:</b></span> Project based
                 payment
               </p>
-              <p v-else>
-                <span class="mainColor">Payment Method:</span> Milestone based
+              <p v-if="singleContract.payment_mode === 'by_milestone'">
+                <span class=""><b>Payment Method:</b></span> Milestone based
                 payment
               </p>
               <p>
-                Payment Status:
+                <b>Payment Status:</b>
                 {{ singleContract.disbursed_writer_payment_status }}
               </p>
             </div>
-            <div v-if="singleContract.assets > 0">
+            <div v-if="singleContract.asset && singleContract.assets.length > 0" class="mb-5">
               <h3>Attachments</h3>
               <row class="row">
                 <v-col cols="6" sm="6">
@@ -63,22 +58,95 @@
                       target="_blank"
                       rel="noopener noreferrer"
                       class="mainColor"
-                      >{{ media.file | slicee }}</a
+                      >{{ media.file | fileNameSlicee }}</a
                     >
                   </div>
                 </v-col>
               </row>
             </div>
-            <div v-if="singleContract.payment_mode === 'by_milestone'">
-              <h4 class="mainColor mt-3">Milestones</h4>
-              <p class="mt-3">Milestone One</p>
-              <p>Milestone Two</p>
-            </div>
-
             <h4 class="mainColor">Cover Letter</h4>
             <p class="my-5">
               {{ singleContract.cover_letter }}
             </p>
+            <div v-if="singleContract.payment_mode === 'by_milestone'"> 
+              <h4 class="mainColor mt-3">Milestones</h4>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">S/N</th>
+                      <th class="text-left">Description</th>
+                      <th class="text-left">Expected Delivery Time</th>
+                      <th class="text-left">Word Count</th>
+                      <th class="text-left">Milestone Amount</th>
+                      <th class="textCenter">Status</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(milestones, index) in payment_milestones"
+                      :key="milestones.id"
+                    >
+                      <td>
+                        {{ index+1 }}
+                      </td>
+                      <td>
+                        {{ milestones.description }}
+                      </td>
+                      <td>
+                        {{ milestones.expected_time }}
+                      </td>
+                      <td>
+                        {{ milestones.number_of_words }}
+                      </td>
+                      <td>
+                          &#8358; {{ milestones.milestone_amount }}
+                      </td>
+                      <td>
+                        <span class="text-warning" v-if="pendingStatus.includes(milestones.status)">
+                        pending
+                        </span>
+                        <span class="text-success" v-if="milestones.status === 'completed'">
+                        {{ milestones.status }}
+                        </span>
+                        <span class="text-danger" v-if="failedStatus.includes(milestones.status)">
+                        {{ milestones.status }}
+                        </span>
+                      </td>
+                      <td>
+                        <v-btn
+                          class="findBtn mb-4 mt-3 fullWidth"
+                          v-if="milestones.isStatusPending"
+                          @click="submitMilestoneForReview(singleContract.id, milestones.id)"
+                          :loading="isSubmitMilestoneForReview"
+                          >Submit for Review</v-btn
+                        >
+                        <v-btn
+                          class="findBtn mb-4 mt-3 fullWidth"
+                          v-if="milestones.isApprovedForPayment"
+                          @click="requestMilestonePayment(milestones.id)"
+                          :loading="approveLoading"
+                          >Request for Payment</v-btn
+                        >
+                        <v-btn
+                          class="findBtn mb-4 mt-3 fullWidth"
+                          disabled
+                          v-if="milestones.status === 'submitted_work_for_approval'"
+                          >Submitted for approval</v-btn
+                        >
+                        <v-btn
+                          class="findBtn mb-4 mt-3 fullWidth"
+                          disabled
+                          v-if="milestones.status === 'processing_payment'"
+                          >Payment Processing</v-btn
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </div>
           </v-col>
           <v-col cols="12" sm="3">
             <div v-if="singleContract.payment_mode === 'by_project'">
@@ -91,28 +159,17 @@
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="
-                  singleContract.status === 'approved_for_payment' &&
-                  !this.$auth.user.recipient_code
-                "
-                @click="
-                  () => {
-                    this.$toast.error(
-                      'Please add your account number to be abe to request for payment. Do this in your profile'
-                    );
-                  }
-                "
+                v-if="singleContract.status === 'approved_for_payment' && singleContract.is_payment_complete"
+                @click="requestOneTimePayment()"
+                :loading="approveLoading"
                 >Request for Payment</v-btn
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
-                v-if="
-                  singleContract.status === 'approved_for_payment' &&
-                  this.$auth.user.recipient_code
-                "
-                @click="requestPayment()"
-                :loading="approveLoading"
-                >Request for Payment</v-btn
+                v-if="jobDetails.is_bnpl_enabled && !singleContract.is_payment_complete"
+              >
+                <a href="mailto:support@afriwrites.com?Subject=Client Misconduct">Report Client Misconduct</a>  
+                </v-btn
               >
               <v-btn
                 class="findBtn mb-4 fullWidth"
@@ -126,20 +183,18 @@
                 v-if="singleContract.status === 'processing_payment'"
                 >Payment Processing</v-btn
               >
+            </div>
+
               <v-btn
                 class="findBtn mb-4 fullWidth"
                 v-if="singleContract.status === 'completed'"
                 >Project Completed</v-btn
               >
-            </div>
             <v-btn class="greyBtn mb-4 fullWidth" 
                 target="_blank"
                 :href="getMessageURL(clientDetails.id)"
               ><i class="far fa-comments mr-2 mainColor"></i> Contact Client</v-btn
             >
-            <!-- <v-btn class="greyBtn mb-4 fullWidth"
-              ><i class="far fa-trash-alt mr-2 mainColor"></i> Delete</v-btn
-            > -->
             <div>
               <div class="clientInfo">
                 <h4>
@@ -168,7 +223,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   scrollToTop: true,
@@ -177,27 +231,32 @@ export default {
     return {
       loading: false,
       declineloading: false,
-      singleContract: "",
+      singleContract: {},
       pageLoading: false,
-      clientDetails: "",
+      clientDetails: {},
       proposalDate: "",
       dateWriterRegistered: "",
       approveLoading: false,
+      isSubmitMilestoneForReview: false,
       jobDetails: "",
       paymentDetails: {
         recipient_code: "",
         job_proposal_id: "",
         description: "Thanks",
       },
-      totalAmount: ''
+      totalAmount: '',
+      payment_milestones: [],
+      pendingStatus: [
+        'pending',
+        'accepted',
+        'submitted_work_for_approval',
+        'approved_for_payment',
+        'processing_payment'
+      ],
+      failedStatus: ['rejected', 'failed']
     };
   },
   methods: {
-    contactRecipient() {
-      window.location.assign(
-        `http://afriwrites-chat-system.herokuapp.com/create-chat?user_id=${this.$auth.user.id}&recipient_id=${this.clientDetails.id}&email=${this.$auth.user.email}&signature_key=$2y$10$jXZolJaVBfwnAUM1qMR3Ju7MGvqFrrqW119gzcHZXgsKTQDnijl3y`
-      );
-    },
     getSingleContract() {
       this.singleContract = "";
       this.pageLoading = true;
@@ -210,9 +269,36 @@ export default {
           this.clientDetails = this.jobDetails.client;
           this.dateWriterRegistered = this.clientDetails.created_at;
           this.proposalDate = this.singleContract.created_at;
-          this.totalAmount =
-            this.singleContract.price_per_word *
-            this.jobDetails.number_of_words;
+
+          if(this.singleContract.payment_mode === 'by_project'){
+            this.totalAmount = this.singleContract.price_per_word * this.jobDetails.number_of_words;
+          }
+
+          if(this.singleContract.payment_mode === 'by_milestone'){
+            let total_amount = 0
+            this.singleContract.payment_milestones.forEach(function (milestone) {
+              return total_amount += parseInt(milestone.milestone_amount);
+            })
+
+            this.totalAmount = total_amount
+            this.payment_milestones = this.singleContract.payment_milestones
+
+            // get only the index that has pending status
+            for(let i = 0; i < this.payment_milestones.length; i++){
+                if(this.payment_milestones[i].status == 'pending'){
+                  this.payment_milestones[i].isStatusPending = true
+                  break
+                }
+            }
+
+            // get only the index that has approved_for_payment status
+            for(let i = 0; i < this.payment_milestones.length; i++){
+                if(this.payment_milestones[i].status == 'approved_for_payment'){
+                  this.payment_milestones[i].isApprovedForPayment = true
+                  break
+                }
+            }
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -228,6 +314,9 @@ export default {
         );
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for review.");
+        setTimeout(() =>{
+          location.reload()
+        }, 2000)
       } catch (error) {
         this.approveLoading = false;
         this.$toast.error(
@@ -235,7 +324,15 @@ export default {
         );
       }
     },
-    async requestPayment() {
+    async requestOneTimePayment() {
+      // if user has not created a recipient_code yet, do not proceed to payment
+      if(!this.$auth.user.recipient_code){
+        this.$toast.error(
+          'Please add your account number to be abe to request for payment. Do this in your profile'
+        );
+        return
+      }
+
       this.paymentDetails.recipient_code = this.$auth.user.recipient_code;
       this.paymentDetails.job_proposal_id = this.singleContract.id;
       this.paymentDetails.description = "I want to request for payment";
@@ -248,12 +345,62 @@ export default {
         this.approveLoading = false;
         this.$toast.success("This contract has been submitted for payment.");
         setTimeout(() => {
-          window.reload()
+          location.reload()
         }, 2000)
       } catch (error) {
         this.approveLoading = false;
         this.$toast.error(
           "There was an error submitting this contract for payment"
+        );
+      }
+    },
+    async submitMilestoneForReview(contractId, milestoneId){
+      try {
+        this.isSubmitMilestoneForReview = true;
+        const response = await this.$axios.post(
+          `/v1/writer/jobs/submit/${contractId}/milestone/${milestoneId}`
+        );
+        this.isSubmitMilestoneForReview = false;
+        this.$toast.success("This Milestone has been submitted for review.");
+        setTimeout(() =>{
+          location.reload()
+        }, 2000)
+      } catch (error) {
+        this.isSubmitMilestoneForReview = false;
+        this.$toast.error(
+          "There was an error submitting this milestone for review"
+        );
+      }
+
+      console.log(contractId, milestoneId)
+    },
+    async requestMilestonePayment(milestoneId) {
+      // if user has not created a recipient_code yet, do not proceed to payment
+      if(!this.$auth.user.recipient_code){
+        this.$toast.error(
+          'Please add your account number to be abe to request for payment. Do this in your profile'
+        );
+        return
+      }
+
+      this.paymentDetails.recipient_code = this.$auth.user.recipient_code;
+      this.paymentDetails.job_proposal_milestone_id = milestoneId;
+      this.paymentDetails.description = "I want to request for miletone payment";
+      try {
+        this.approveLoading = true;
+        const response = await this.$axios.post(
+          `/v1/writer/jobs/request-payment-for-milestone-work`,
+          this.paymentDetails
+        );
+        this.approveLoading = false;
+        this.$toast.success("Your payment request has been accepted.");
+        setTimeout(() => {
+          location.reload()
+        }, 2000)
+      } catch (error) {
+        this.approveLoading = false;
+        this.$toast.error(
+          "There was an error submitting this milestone for payment"
         );
       }
     },
@@ -265,23 +412,6 @@ export default {
     }
 
     this.getSingleContract();
-  },
-  computed: {
-    // ...mapGetters({
-    //   singleContract: "writer/singleContract",
-    // }),
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
   },
 };
 </script>
@@ -309,5 +439,13 @@ export default {
 
 .clientInfo h4 {
   color: #4d4d4d;
+}
+
+.text-warning{
+  color: #FF8800;
+}
+
+.text-success{
+  color: #007E33;
 }
 </style>

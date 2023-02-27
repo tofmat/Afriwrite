@@ -234,8 +234,12 @@ export default {
 }
 .checkboxDiv .checkbox {
   margin-right: 3px;
-  width: 30px;
+  width: 15px;
   color: #8b8b8b;
+}
+.checkboxDiv p {
+  color: #8b8b8b;
+  margin-bottom: 0 !important;
 }
 .twoColumnsInput :first-child {
   margin-right: 10px;

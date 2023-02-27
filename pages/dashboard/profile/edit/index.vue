@@ -574,19 +574,25 @@ export default {
     async updateProfile() {
       let editedProfileDetails = {
         username: this.profileDetails.username,
-        gender: this.profileDetails.gender,
         phone_number: this.profileDetails.phone_number,
         country: this.profileDetails.country,
-        date_of_birth: this.profileDetails.date_of_birth,
-        availability: this.profileDetails.availability,
         about_me: this.profileDetails.about_me,
         languages: this.profileDetails.languages,
+        availability: JSON.parse(this.profileDetails.availability),
         additional_links: this.profileDetails.additional_links,
         category: this.profileDetails.category,
         articles: this.profileDetails.articles[0].article_link
           ? this.profileDetails.articles
           : [],
       };
+
+      if(this.profileDetails.gender){
+        editedProfileDetails.gender = this.profileDetails.gender
+      }
+
+      if(this.profileDetails.date_of_birth){
+        editedProfileDetails.date_of_birth = this.profileDetails.date_of_birth
+      }
 
       if(this.subcategory.length > 0){
         editedProfileDetails.subcategory = this.subcategory
@@ -612,12 +618,12 @@ export default {
           this.loading = false;
           this.$toast.success("Your profile has been updated.");
           setTimeout(() =>{
-            window.location.assign("/dashboard/profile");
+            this.$router.push("/dashboard/profile");
           }, 1000)
         }
       } catch (error) {
         this.loading = false;
-        this.$toast.error("There was an error updating your profile");
+        this.$toast.error(error.response.data.error ?? "There was an error updating your profile");
       }
     },
     removeItem(val) {

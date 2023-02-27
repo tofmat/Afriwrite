@@ -58,22 +58,41 @@
                 v-model="jobInfo.description"
               ></textarea>
 
-              <!-- <h3 class="mt-3">Choose Category</h3>
+              <h3 class="mt-3">Choose Category</h3>
               <p>
-                Select the category this job falls under (You can select more
-                than one)
+                Select the category this job falls under 
               </p>
               <v-autocomplete
                 v-model="jobInfo.category"
-                :items="items"
+                :items="categoryItems"
                 outlined
                 dense
                 chips
                 color="green darken-3"
                 small-chips
                 label="Categories"
+              ></v-autocomplete>
+              <h3 class="mt-3">Choose Niches</h3>
+              <p>
+                Select the writing niches you want for the job (You can select more
+                than one)
+              </p>
+              <v-autocomplete
+                v-model="niches"
+                :items="nicheItems"
+                outlined
+                dense
+                chips
+                color="green darken-3"
+                small-chips
+                label="Select Niches"
                 multiple
-              ></v-autocomplete> -->
+              ></v-autocomplete>
+              <h3 class="mt-3">Choose Skills</h3>
+              <p>
+                Select the skills that you want the freelancer to have(You can select more
+                than one)
+              </p>
               <h3 class="my-3">Attach additional project files (optional)</h3>
               <div class="dragAndDrop">
                 <p class="textCenter">
@@ -301,7 +320,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   layout: "client",
   data: () => ({
@@ -310,19 +329,42 @@ export default {
     draftLoading: false,
     draftedJob: "",
     pageLoading: false,
-    items: ["Content writing", "Articles", "Blogging", "Copywriting"],
-    values: ["Articles", "Blogging"],
-    value: null,
+    categoryItems: [
+      "Article Writing",
+      "Website Copywriting",
+      "Sales and Marketing Copy",
+      "Career Writing",
+      "Academic Writing",
+      "Creative Writing ",
+      "Social Media Writing",
+    ],
+    skills: [],
+    niches: [],
+    skillItems:[
+      "Search Engine Optimization (SEO)", "In-depth Topic Research", "Keyword Research", 
+      "Image Optimization", "Meta Description", "Meta Tags", "Title Tags", "Slug Writing", 
+      "Blog Copywriting", "H1-H6 Headline Usage", "WordPress Content Upload", 
+      "WordPress Content Optimization", "WordPress Blog Management", "Blog Editing and Proofreading", 
+      "SurferSEO", "Grammarly Premium", "Copyscape", "Ahrefs", "SEMRush", "Ubersuggest"
+    ],
+    nicheItems: [
+      "Finance and Accounting", "Law and Legal Writing", "Cryptocurrency and Stocks", 
+      "Medical, Health, and Fitness", "News and Press Release", "Technology and Technical Writing", 
+      "Digital Marketing", "Social Media Marketing", "Food, Wine, and Drinks", "Real Estate", 
+      "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
+    ],
     jobInfo: {
       title: "",
       description: "",
       project_duration: "",
-      category: "E-commerce Website Articles",
+      category: "",
       level_of_experience: "",
       number_of_words: "",
       price: "",
       duration_of_job_in_days: "",
       file: null,
+      writing_niches: [],
+      skills: []
     },
   }),
   methods: {
@@ -407,6 +449,17 @@ export default {
       if (this.jobInfo.price) {
         formData.append("price", this.jobInfo.price);
       }
+
+      if(this.skills.length > 0){
+        this.jobInfo.skills = this.skills
+        formData.append("skills", JSON.stringify(this.jobInfo.skills));
+      }
+
+      if(this.niches.length > 0){
+        this.jobInfo.writing_niches = this.niches
+        formData.append("writing_niches", JSON.stringify(this.jobInfo.writing_niches));
+      }
+      
       try {
         this.draftLoading = true;
         const response = await this.$axios.post(
@@ -458,9 +511,9 @@ export default {
     this.getDraftedJob();
   },
   computed: {
-    ...mapGetters({
-      draftedJob: "client/draftedJob",
-    }),
+    // ...mapGetters({
+    //   draftedJob: "client/draftedJob",
+    // }),
   },
 };
 </script>

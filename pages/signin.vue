@@ -87,6 +87,7 @@ export default {
       },
     };
   },
+  mounted(){},
   methods: {
     async loginUser(loginInfo) {
       this.errors = "";
@@ -97,9 +98,19 @@ export default {
           data: loginInfo,
         });
         if (this.$auth.user.role === "client") {
-          this.$router.push("/client/jobs");
+          if(this.$store.state.formerRoute != ''){
+            this.$router.push(this.$store.state.formerRoute);
+            this.$store.dispatch('clearFormerRoute', null, { root: true })
+          }else{
+            this.$router.push("/client/jobs");
+          }
         } else if (this.$auth.user.role === "writer") {
-          this.$router.push("/dashboard/jobfeed");
+          if(this.$store.state.formerRoute != ''){
+            this.$router.push(this.$store.state.formerRoute);
+            this.$store.dispatch('clearFormerRoute', null, { root: true })
+          }else{
+            this.$router.push("/dashboard/jobfeed");
+          }
         } else if (this.$auth.user.role === "admin") {
           this.$router.push("/admin");
         }

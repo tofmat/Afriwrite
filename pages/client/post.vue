@@ -73,25 +73,24 @@
                 Select the writing niches you want for the job (You can select more
                 than one)
               </p>
-              <v-select
-                v-model="jobInfo.writing_niches"
+              <v-autocomplete
+                v-model="niches"
                 :items="nicheItems"
-                :menu-props="{ maxHeight: '400' }"
-                multiple
-                chips
-                persistent-hint
-                color="green darken-3"
-                required
                 outlined
+                dense
+                chips
+                color="green darken-3"
+                small-chips
                 label="Select Niches"
-              ></v-select>
+                multiple
+              ></v-autocomplete>
               <h3 class="mt-3">Choose Skills</h3>
               <p>
                 Select the skills that you want the freelancer to have(You can select more
                 than one)
               </p>
               <v-select
-                v-model="jobInfo.skills"
+                v-model="skills"
                 :items="skillItems"
                 :menu-props="{ maxHeight: '400' }"
                 multiple
@@ -100,6 +99,7 @@
                 color="green darken-3"
                 required
                 outlined
+                dense
                 label="Select Skills"
               ></v-select>
               <h3 class="my-3">Attach additional project files (optional)</h3>
@@ -308,6 +308,24 @@
                     />
                   </div>
                 </div>
+                <div class="my-2" v-if="isUseBNPL">
+                  <v-checkbox
+                    v-model="jobInfo.is_bnpl_enabled"
+                    label="Use Buy Now Pay Later Feature"
+                  ></v-checkbox>
+                </div>
+                <div class="my-2" v-if="isBNPLTemporaryApproval">
+                  <h4>Please attach screenshots of detailed conversations you had with the original client for proof:</h4>
+                   <v-file-input
+                    chips
+                    counter
+                    multiple
+                    small-chips
+                    truncate-length="15"
+                    v-on:change="onBNPLFileChange"
+                    label="Attach screenshots (you can select more than one media at the same time)."
+                  ></v-file-input>
+                </div>
               </div>
             </div>
           </div>
@@ -325,12 +343,42 @@
         </div>
       </form>
     </div>
+    <v-col cols="auto">
+      <v-dialog
+        v-model="idDialog"
+        persistent
+        transition="dialog-top-transition"
+        max-width="600"
+      >
+        <v-card class="py-5">
+          <div class="centerflex columnFlex">
+            <v-card-text>
+              <h3 class="darkGreyColor textCenter">
+                Please complete your profile to get full control of your
+                profile
+              </h3>
+              <p class="textCenter mt-2">
+                You have to add your ID and get verified before posting jobs!
+              </p>
+            </v-card-text>
+          </div>
+          <div class="flex justifyCenter mobileColumn">
+            <v-btn class="greyBtn mx-3 my-1" to="/client/profile"
+              >Edit Profile</v-btn
+            >
+          </div>
+        </v-card>
+      </v-dialog>
+    </v-col>
+    <suspensionDialog />
   </div>
 </template>
 
 <script>
+import suspensionDialog from "../../components/suspensionDialog";
 export default {
   layout: "client",
+  components: { suspensionDialog },
   data: () => ({
     errors: "",
     loading: false,
@@ -344,8 +392,8 @@ export default {
       "Creative Writing ",
       "Social Media Writing",
     ],
-    values: ["Articles", "Blogging"],
-    value: null,
+    skills: [],
+    niches: [],
     jobInfo: {
       title: "",
       description: "",
@@ -357,7 +405,9 @@ export default {
       duration_of_job_in_days: "",
       file: null,
       writing_niches: [],
-      skills: []
+      skills: [],
+      is_bnpl_enabled: false,
+      bnpl_contract_proof_assets: []
     },
     skillItems:[
       "Search Engine Optimization (SEO)", "In-depth Topic Research", "Keyword Research", 
@@ -373,7 +423,30 @@ export default {
       "Fashion and Beauty", "Entertainment, Music, and Movies", "Sports", "Travel"
     ]
   }),
+  async mounted() {
+    const { data } = await this.$auth.fetchUser()
+    if(data){
+      this.$auth.setUser(data.data)
+    }
+  },
+  computed:{
+    idDialog(){
+      if(this.$auth.user.client_id_verification_status != 'completed') return true
+    },
+    user(){
+      return this.$auth.user
+    },
+    isUseBNPL(){
+      return this.user.client_buy_now_pay_later_status === 'temporary_approval' || this.user.client_buy_now_pay_later_status === 'completed'
+    },
+    isBNPLTemporaryApproval(){
+      return this.jobInfo.is_bnpl_enabled && this.user.client_bpnl_temporary_approval_counter < 3
+    } 
+  },
   methods: {
+    onBNPLFileChange(event){
+      this.jobInfo.bnpl_contract_proof_assets = event;
+    },
     onPickFile() {
       this.$refs.fileInput.click();
     },
@@ -387,6 +460,21 @@ export default {
           formData.append("file[" + i + "]", this.jobInfo.file[i]);
         }
       }
+
+      if (this.jobInfo.bnpl_contract_proof_assets) {
+        for (const j of Object.keys(this.jobInfo.bnpl_contract_proof_assets)) {
+          formData.append("bnpl_contract_proof_assets[" + j + "]", this.jobInfo.bnpl_contract_proof_assets[j]);
+        }
+      }
+
+      if(this.skills.length > 0){
+        this.jobInfo.skills = this.skills
+      }
+
+      if(this.niches.length > 0){
+        this.jobInfo.writing_niches = this.niches
+      }
+      
       formData.append("title", this.jobInfo.title);
       formData.append("description", this.jobInfo.description);
       formData.append("price", this.jobInfo.price);
@@ -394,8 +482,10 @@ export default {
       formData.append("category", this.jobInfo.category);
       formData.append("level_of_experience", this.jobInfo.level_of_experience);
       formData.append("number_of_words", this.jobInfo.number_of_words);
-      formData.append("writing_niches", this.jobInfo.writing_niches);
-      formData.append("skills", this.jobInfo.skills);
+      formData.append("writing_niches", JSON.stringify(this.jobInfo.writing_niches));
+      formData.append("skills", JSON.stringify(this.jobInfo.skills));
+      formData.append("is_bnpl_enabled", this.jobInfo.is_bnpl_enabled)
+
       formData.append(
         "duration_of_job_in_days",
         this.jobInfo.duration_of_job_in_days
@@ -434,6 +524,13 @@ export default {
       this.jobInfo.file = null
       this.jobInfo.writing_niches = []
       this.jobInfo.skills = []
+      this.jobInfo.is_bnpl_enabled = false
+      this.niches = []
+      this.skills = []
+
+      // scroll to the top of the page
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     },
     async addDraftJob() {
       let formData = new FormData();

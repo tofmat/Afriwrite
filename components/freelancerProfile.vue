@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>
       <div class="row noMargin">
         <v-col cols="12" sm="12" lg="9" class="">
           <div class="dashMainContent">
@@ -14,7 +13,7 @@
                       v-if="user.profile_picture"
                     />
                     <img
-                      src=".././../../assets/images/emptyUser.png"
+                      src="../assets/images/emptyUser.png"
                       alt="ProfilePic"
                       v-else
                     />
@@ -68,15 +67,15 @@
                     <p class="darkGreyColor">Hourly Rate</p>
                   </div>
                 </v-col>
-                <!-- <v-col cols="6" sm="6" class="">
+                <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
                     <h3 class="mb-2 mainColor">Null</h3>
                     <p class="darkGreyColor">Null</p>
                   </div>
-                </v-col> -->
+                </v-col>
                 <v-col cols="6" sm="6" class="">
                   <div class="mx-2 infoCards">
-                    <h3 class="mb-2 mainColor">{{ user.jobs.length }}</h3>
+                    <h3 class="mb-2 mainColor">{{ user.jobs ? user.jobs.length : 0 }}</h3>
                     <p class="darkGreyColor">Jobs</p>
                   </div>
                 </v-col>
@@ -118,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <div class="mt-10" v-if="user.portfolio.length > 0">
+            <div class="mt-10" v-if="user.portfolio && user.portfolio.length > 0">
               <div class="allArticle">
                 <h2 class="mb-4 darkGreyColor">Past written Articles</h2>
                 <hr class="fullWidth" />
@@ -133,7 +132,7 @@
                       >
                         <div class="articleSingle">
                           <img
-                            src=".././../../assets/images/articleImage.jpg"
+                            src="../assets/images/articleImage.jpg"
                             alt=""
                           />
                           <div class="articleDetails">
@@ -169,41 +168,11 @@
         </v-col>
         <v-col cols="12" sm="12" lg="3">
           <div class="sideB rightSideDash">
-            <div v-if="!user.recipient_code">
-              <v-btn
-                class="myBtn findBtn fullWidth"
-                @click="
-                  () => {
-                    this.dialog = true;
-                  }
-                "
-              > 
-                Add account Number
-              </v-btn>
-            </div>
-            <div class="mt-3">
-              <v-btn
-                class="myBtn findBtn fullWidth"
-                to="/dashboard/profile/edit"
-              >
-                Edit Profile
-              </v-btn>
-            </div>
-            <div class="mt-3" v-if="userVerificationComplete">
-              <v-btn 
-                class="myBtn findBtn fullWidth"
-                @click="requestForTestLink"
-                :loading="loading"
-              >
-                Request For Verification Test Link
-              </v-btn>
-            </div>
-            <hr class="fullWidth my-5" />
             <div class="profileInfoHolder">
               <p class="darkGreyColor noMargin mb-2">
                 <span
                   ><img
-                    src="../../../assets/images/24hrs.svg"
+                    src="../assets/images/24hrs.svg"
                     alt="availableicon"
                     class="mr-2"
                   />AVAILABILITY</span
@@ -219,7 +188,7 @@
               <p class="darkGreyColor noMargin mb-2">
                 <span
                   ><img
-                    src="../../../assets/images/category.svg"
+                    src="../assets/images/category.svg"
                     alt="availableicon"
                     class="mr-2"
                   />CATEGORY</span
@@ -234,14 +203,14 @@
               <p class="darkGreyColor noMargin mb-2">
                 <span
                   ><img
-                    src="../../../assets/images/writing2.svg"
+                    src="../assets/images/writing2.svg"
                     alt="availableicon"
                     class="mr-2"
                   />WRITING NICHES</span
                 >
               </p>
               <p class="mainColor noMargin">
-                {{ writing_niches }}
+                {{ formatStringData(user.writing_niches) }}
               </p>
             </div>
             <hr class="fullWidth my-5" />
@@ -249,14 +218,14 @@
               <p class="darkGreyColor noMargin mb-2">
                 <span
                   ><img
-                    src="../../../assets/images/civil.svg"
+                    src="../assets/images/civil.svg"
                     alt="availableicon"
                     class="mr-2"
                   />SKILLS</span
                 >
               </p>
               <p class="mainColor noMargin">
-                {{ skills }}
+                {{ formatStringData(user.skills) }}
               </p>
             </div>
             <hr class="fullWidth my-5" />
@@ -282,7 +251,7 @@
               <p class="darkGreyColor noMargin mb-2">
                 <span
                   ><img
-                    src="../../../assets/images/translate.svg"
+                    src="../assets/images/translate.svg"
                     alt="availableicon"
                     class="mr-2"
                   />LANGUAGES</span
@@ -295,126 +264,15 @@
           </div>
         </v-col>
       </div>
-
-      <div>
-        <v-col cols="auto">
-          <v-dialog
-            v-model="dialog"
-            transition="dialog-top-transition"
-            max-width="600"
-          >
-            <template>
-              <v-card class="py-5">
-                <div class="centerflex columnFlex">
-                  <v-card-text>
-                    <h2 class="mainColor textCenter">Add account number</h2>
-                    <p class="textCenter mt-3">
-                      Please input the account number you want your money to be
-                      settled in. Please cross check before submitting
-                    </p>
-                    <div class="mt-5">
-                      <div class="row">
-                        <v-col cols="12" sm="12">
-                          <span>Account Number</span>
-                          <input
-                            type="tel"
-                            class="normalInput2 fullWidth"
-                            v-model="accountDetails.account_number"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <span>Name of account</span>
-                          <input
-                            type="text"
-                            class="normalInput2 fullWidth"
-                            v-model="accountDetails.description"
-                          />
-                        </v-col>
-                        <v-col cols="12" sm="12">
-                          <span>Bank Name</span>
-                          <div>
-                            <select
-                              class="selectBank normalInput2 fullWidth"
-                              v-model="accountDetails.bank_code"
-                            >
-                              <option
-                                :value="bank.code"
-                                v-for="bank in allBanks"
-                                :key="bank.id"
-                              >
-                                {{ bank.name }}
-                              </option>
-                            </select>
-                          </div>
-                        </v-col>
-                      </div>
-                    </div>
-                  </v-card-text>
-                </div>
-                <div class="flex justifyCenter mobileColumn">
-                  <v-btn
-                    @click="addAccount()"
-                    class="findBtn mx-3 my-1"
-                    :loading="loading"
-                    >Add Account</v-btn
-                  >
-                </div>
-              </v-card>
-            </template>
-          </v-dialog>
-        </v-col>
-      </div>
-
-      <v-col cols="auto">
-        <v-dialog
-          v-model="dialog2"
-          persistent
-          transition="dialog-top-transition"
-          max-width="600"
-        >
-          <v-card class="py-5">
-            <div class="centerflex columnFlex">
-              <v-card-text>
-                <h3 class="darkGreyColor textCenter">
-                  Please complete your profile to get full control of your
-                  profile
-                </h3>
-                <p class="textCenter mt-2">
-                  Hey we would love if you completed your profile!
-                </p>
-              </v-card-text>
-            </div>
-            <div class="flex justifyCenter mobileColumn">
-              <v-btn class="greyBtn mx-3 my-1" to="/dashboard/profile/edit"
-                >Edit Profile</v-btn
-              >
-            </div>
-          </v-card>
-        </v-dialog>
-      </v-col>
     </div>
-  </div>
 </template>
 
 <script>
-import banks from "../../../static/banks";
+import { Constants } from "../static/constants"
 
 export default {
-  layout: "dashboard",
+  // layout: "client",
   computed:{
-    userVerificationComplete(){
-      if(this.user.writing_niches && this.user.skills && this.user.category && this.user.subcategory 
-        && (this.user.writer_stage_one_test_status === 'pending')
-      ){
-          return true
-      }
-    },
-   writing_niches(){
-      return  this.user.writing_niches ? this.user.writing_niches.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
-    },
-    skills(){
-      return  this.user.skills ? this.user.skills.replaceAll('[', '').replaceAll(']', '').replaceAll('",', '", ').replaceAll('"', '') : ''
-    },
     profileLink(){
       return `${window.location.host}/profile/${this.user.public_reference_id}`
     }
@@ -422,71 +280,37 @@ export default {
   data() {
     return {
       dialog: false,
-      dialog2:
-        this.$auth.user.phone_number &&
-        this.$auth.user.username &&
-        this.$auth.user.country
-          ? false
-          : true,
-      allBanks: banks.data,
-      accountDetails: {
-        account_number: "",
-        bank_code: "",
-        description: "",
-      },
       loading: false,
-      user: this.$auth.user
+      user: {}
     };
   },
   methods: {
-    copyJobLink() {
-      navigator.clipboard.writeText(
-        `https://www.afriwrite.com/profile/${this.$auth.user.username}`
-      );
-      this.$toast.success("Link copied");
-    },
-    async addAccount() {
+    async getWriterProfile(public_reference_id) {
       try {
         this.loading = true;
-        const response = await this.$axios.post(
-          `/v1/writer/payment-transer-recipient`,
-          this.accountDetails
+        const { data } = await this.$axios.get(`/get-writer-profile/${public_reference_id}`, {
+            headers: {
+              PUBLICJOBPOSTINGKEY: Constants.PUBLIC_JOB_POSTING_KEY
+            }
+          },
         );
-        this.$toast.success(
-          "You have added your account details successfully!"
-        );
-        this.loading = false;
-        this.dialog = false;
-        location.reload()
-        return response;
+
+        if(data && data.data != null){
+          this.user = data.data
+        }else{
+          this.$toast.error("User not found");
+          window.location.assign('/')
+        }
       } catch (error) {
         this.loading = false;
-        this.$toast.error(error.response.data.error);
+        this.$toast.error(
+          "There was an error getting user profile. please try again"
+        );
       }
     },
-    async requestForTestLink(){
-      try {
-        this.loading = true;
-        const response = await this.$axios.post(
-          `/v1/auth/complete-registration`
-        );
-        this.$toast.success(
-          "Test Link has been sent to your email!"
-        );
-        this.loading = false;
-        return 
-      } catch (error) {
-        console.log(error.response)
-        this.loading = false;
-        this.$toast.error(error.response.data.error);
-      }
-    }
   },
-  async mounted() {
-    const { data } = await this.$auth.fetchUser()
-    if(data){
-      this.$auth.setUser(data.data)
-    }
+  async beforeMount() {
+    this.getWriterProfile(this.$route.params.profile)
   },
 };
 </script>

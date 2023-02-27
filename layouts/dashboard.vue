@@ -48,7 +48,7 @@
           class="logoImage mobileLogo"
       /></a>
       <v-list nav dense>
-        <v-list-item-group v-model="group" active-class="navActive">
+        <v-list-item-group active-class="navActive">
           <v-list-item
             v-for="(nav, i) in navItems"
             :key="i"
@@ -415,14 +415,6 @@ export default {
     //     this.dialog = "on"
     //   }
     // },
-    logoutUser() {
-      console.log("Heyooo");
-      localStorage.removeItem("auth._token.local");
-      document.cookie =
-        "auth._token.local" +
-        "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      window.location.assign("/signin");
-    },
     async sendNewMail() {
       try {
         this.loading = true;
@@ -456,9 +448,11 @@ export default {
 body {
   background-color: white;
 }
-.greenBack {
-  background-color: #008952 !important;
+
+.greenBack .v-toolbar__content {
+  background: #008952 !important;
 }
+/* 008952 */
 .sideLinkCon {
   margin: 7px 0;
   display: flex !important;

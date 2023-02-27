@@ -79,7 +79,8 @@
                               class="jobDesc flex flexColumn justifyCenter"
                             >
                               <h3>{{ contract.created_at | dateSlice }}</h3>
-                              <p>Contract started</p>
+                              <p v-if="contract.status === 'completed'">Contract Ended</p>
+                              <p v-else>Contract started</p>
                               <h3>Freelancer</h3>
                               <p>
                                 {{ contract.proposals[0].writer.first_name }}
@@ -141,17 +142,18 @@
           </v-tab-item>
         </v-tabs>
       </div>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-import { mapGetters } from "vuex";
+import suspensionDialog from "../../../components/suspensionDialog";
 export default {
   layout: "client",
   components: {
-    skeletonBox,
+    skeletonBox, suspensionDialog
   },
   data() {
     return {
@@ -194,26 +196,7 @@ export default {
   mounted() {
     this.getContracts();
   },
-  computed: {
-    // ...mapGetters({
-    //   allContracts: "client/allContracts",
-    // }),
-  },
   filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
-    descriptionSlice(data) {
-      let response = data.slice(0, 100);
-      return response;
-    },
     paystackFees: function (value) {
       let newvalue = Math.floor(value);
       if (newvalue > 126000) {

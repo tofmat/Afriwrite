@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-container class="firstHead"> -->
   <div>
     <v-container class="firstHead">
       <v-row align="center">
@@ -10,8 +9,8 @@
             Writers and clients.
           </p>
           <div class="headButtons">
-            <v-btn class="px-5 mr-2 findBtn2" to="jobfeed"> Find Talent</v-btn>
-            <v-btn class="px-5 mr-2 greyBtn2" to="jobfeed"> Find Work</v-btn>
+            <v-btn class="px-5 mr-2 findBtn2" to="/profile/freelancers"> Find Talent</v-btn>
+            <v-btn class="px-5 mr-2 greyBtn2" to="/signup"> Find Work</v-btn>
           </div>
         </v-col>
         <v-col cols="12" sm="6">

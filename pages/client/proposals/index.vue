@@ -76,6 +76,7 @@
                             <img
                               :src="proposal.writer.profile_picture"
                               alt="user"
+                              style="border-radius: 50%; width: 70px;"
                             />
                           </div>
                           <div v-else>
@@ -90,7 +91,7 @@
                             {{ proposal.writer.first_name }}
                           </h4>
                           <small>{{ proposal.writer.role }}</small>
-                          <p class="noMargin">
+                          <p class="noMargin" v-if="proposal.price_per_word != 'null'">
                             Bid: &#8358;{{ proposal.price_per_word }}/word
                           </p>
                           <p class="noMargin">
@@ -108,10 +109,9 @@
                           >
                           <v-btn
                             class="greyBtn my-1 fullWidth"
-                            :href="getMessageURL(proposal.writer.id)"
-                            target="_blank"
+                            :to="`/profile/${proposal.writer.public_reference_id}`"
                             ><i class="far fa-comments mr-2 mainColor"></i>
-                            Contact</v-btn
+                            View Profile</v-btn
                           >
                           <v-btn class="greyBtn mb-4 fullWidth"
                             ><i class="far fa-trash-alt mr-2 mainColor"></i>
@@ -138,17 +138,19 @@
           </v-tab-item>
         </v-tabs>
       </div>
+      <suspensionDialog />
     </div>
   </div>
 </template>
 
 <script>
 import skeletonBox from "../../../components/skeletonBox";
-// import { mapGetters } from "vuex";
+import suspensionDialog from "../../../components/suspensionDialog";
+
 export default {
   layout: "client",
   components: {
-    skeletonBox,
+    skeletonBox, suspensionDialog
   },
   data() {
     return {
@@ -165,6 +167,7 @@ export default {
         .then(({ data }) => {
           this.apiLoading = false;
           this.allProposals = data.data;
+          console.log(this.allProposals)
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -176,9 +179,6 @@ export default {
     this.getJobs();
   },
   computed: {
-    // ...mapGetters({
-    //   allProposals: "client/allProposals",
-    // }),
   },
   filters: {
     dateSlice(data) {

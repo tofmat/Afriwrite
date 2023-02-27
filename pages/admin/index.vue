@@ -41,6 +41,62 @@
                 </v-col>
               </div>
             </div>
+            <h2 class="mt-4 mb-3">All Users</h2>
+            <v-card>
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">S/N</th>
+                      <th class="text-left">Name</th>
+                      <th class="text-left">Email</th>
+                      <th class="text-left">Role</th>
+                      <th class="text-left">Phone Number</th>
+                      <th class="text-left">Account Status</th>
+                      <th class="text-left">Date Joined</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(user, index) in users"
+                      :key="user.id"
+                    >
+                      <td>
+                        {{ index+1 }}
+                      </td>
+                      <td>
+                        {{ user.first_name }}  {{ user.last_name }}
+                      </td>
+                      <td>
+                        {{ user.email }}
+                      </td>
+                      <td>
+                        {{ user.role }}
+                      </td>
+                      <td>
+                        {{ user.phone_number ? user.phone_number : '------' }}
+                      </td>
+                      <td>
+                        <span :class=" user.account_status == 'active' ? 'text-success': 'text-danger'">
+                          {{ user.account_status }}
+                        </span>
+                      </td>
+                      <td>
+                        {{ prettyPrintDate(user.created_at) }}
+                      </td>
+                      <td>
+                        <v-btn class="findBtn mb-4 mt-3 fullWidth"
+                          @click="openStatusModal(user)"
+                        >
+                          Update User Status
+                        </v-btn>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-card>
           </div>
         </v-col>
         <v-col cols="12" sm="12" lg="3">
@@ -71,21 +127,12 @@
               </v-btn>
             </div>
             <hr class="fullWidth my-5" />
-
-            <!-- <div>
-              <v-btn
-                class="myBtn findBtn fullWidth"
-                @click="
-                  () => {
-                    this.dialog3 = true;
-                  }
-                "
-              >
-                Verify Final Test
-              </v-btn>
-            </div> -->
-            <hr class="fullWidth my-5" />
           </div>
+        </v-col>
+      </div>
+      <div class="p-5 mt-10 table">
+        <v-col cols="12">
+        
         </v-col>
       </div>
 
@@ -318,6 +365,56 @@
           </v-dialog>
         </v-col>
       </div>
+
+      <v-col cols="auto">
+        <v-dialog
+          v-model="updateStatusModal"
+          persistent
+          transition="dialog-top-transition"
+          max-width="600"
+        >
+          <v-card class="py-5">
+            <div class="centerflex columnFlex">
+              <v-card-text>
+                <h3 class="darkGreyColor textCenter">
+                  Update {{ selectedUser.email }} account status!
+                </h3>
+                <v-col cols="12" sm="12">
+                  <div class="d-flex">
+                  <span class="mt-3 mr-4">Select Status:</span>
+                  <div>
+                    <select
+                      class="selectBank normalInput2 fullWidth form-control mt-2"
+                      v-model="selectedUser.status"
+                    >
+                      <option value="">-- select status --</option>
+                      <option value="active">Active</option>
+                      <option value="pending">Inactive</option>
+                      <option value="suspended">Suspend</option>
+                    </select>
+                  </div>
+                  </div>
+                </v-col>
+              </v-card-text>
+            </div>
+            <div class="flex justifyCenter mobileColumn">
+                <v-btn text 
+                @click="() => {
+                  this.updateStatusModal = false;
+                }"
+              >
+                Cancel
+              </v-btn>
+              <v-btn class="greyBtn mx-3 my-1"
+                :loading="loading"
+                @click="updateUserStatus()"
+              >
+                Update
+              </v-btn>
+            </div>
+          </v-card>
+        </v-dialog>
+      </v-col>
     </div>
   </div>
 </template>
@@ -330,6 +427,8 @@ export default {
       dialog: false,
       dialog2: false,
       dialog3: false,
+      updateStatusModal: false,
+      users: [],
       testLink: {
         test_stage: "",
         url: "",
@@ -343,6 +442,11 @@ export default {
         test_result: "",
       },
       loading: false,
+      selectedUser:{
+        status: '',
+        email: '',
+        id: ''
+      }
     };
   },
   methods: {
@@ -425,9 +529,55 @@ export default {
         this.$toast.error(error.response.data.error);
       }
     },
+    async getAllUsers(){
+      try {
+        const { data } = await this.$axios.get(
+          `/v1/user/all`
+        );
+        if(data && data.data){
+          this.users = data.data
+          console.log(data.data)
+          return true; 
+        }
+      } catch (error) {
+        this.loading = false;
+        console.log(error.response)
+        this.$toast.error(error.response.data.error);
+      }
+    },
+    openStatusModal(user){
+      this.selectedUser.email = user.email
+      this.selectedUser.id = user.id
+      this.selectedUser.status = user.account_status
+      this.updateStatusModal = true
+    },
+    async updateUserStatus(){
+     this.loading = true
+      try {
+        const { data } = await this.$axios.post(
+          `/v1/user/update-account-status/${this.selectedUser.id}`,
+          this.selectedUser
+        );
+        if(data && data.data){
+          this.$toast.success("Successful");
+          this.loading = false;
+          this.updateStatusModal = false;
+
+          // reset form
+          this.selectedUser.email = ""
+          this.selectedUser.id = ""
+          this.selectedUser.status = ""
+          this.getAllUsers()
+        }
+      } catch (error) {
+        this.loading = false;
+        console.log(error)
+        this.$toast.error(error.response.data.error);
+      }
+    }
   },
   mounted() {
-    // this.fetchAllBanks;
+    this.getAllUsers();
   },
 };
 </script>
@@ -450,10 +600,6 @@ export default {
   height: 35px;
   border-radius: 5px;
 }
-.selectBank {
-  -webkit-appearance: auto;
-}
-
 .textMainColor {
   color: #707070;
 }

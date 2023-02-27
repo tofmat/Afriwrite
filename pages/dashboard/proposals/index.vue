@@ -69,10 +69,10 @@
                               </h4>
                               <h4>{{ job.created_at | dateSlice }}</h4>
                               <p>Date Submitted</p>
-                              <h4 class="mainColor">
+                              <h4 class="mainColor" v-if="job.proposed_amount != 'null'">
                                 N{{ job.proposed_amount }}
                               </h4>
-                              <p>Proposed Amount</p>
+                              <p v-if="job.proposed_amount != 'null'">Proposed Amount</p>
                             </v-col>
                             <v-col cols="12" sm="8" class="jobDesc">
                               <div

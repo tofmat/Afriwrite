@@ -44,6 +44,8 @@ export default {
   plugins: [
     "~/plugins/axios",
     '~/plugins/mixins',
+    '~/plugins/star-rating',
+    '~/plugins/filters.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -56,7 +58,22 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxtjs/toast"],
+  modules: [
+    "@nuxtjs/axios", 
+    "@nuxtjs/auth-next", 
+    "@nuxtjs/toast", 
+    // "@nuxtjs/sentry"
+  ],
+
+  sentry: {
+    dsn: 'https://15a0818515a842308d24875d4c72ca34@o344693.ingest.sentry.io/6517812', // Enter your project's DSN here
+    // Additional Module Options go here
+    // https://sentry.nuxtjs.org/sentry/options
+    config: {
+      // Add native Sentry config here
+      // https://docs.sentry.io/platforms/javascript/guides/vue/configuration/options/
+    },
+  },
 
   toast: {
     position: "top-right",
@@ -128,5 +145,10 @@ export default {
         // autoFetchUser: true
       }
     }
+  },
+
+  // for netlify giving 404 page
+  generate: {
+    fallback: true
   }
 };

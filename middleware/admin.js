@@ -1,4 +1,4 @@
-export default function({ $auth, redirect, store }) {
+export default function({ $auth, redirect, store, route }) {
   let user = store.state.auth.user;
   if (user && user.role === "admin") {
   } else if (user && user.role === "client") {
@@ -6,6 +6,7 @@ export default function({ $auth, redirect, store }) {
   } else if (user && user.role === "writer") {
     redirect("/dashboard/jobfeed");
   } else {
-    redirect("/signin");
+    store.dispatch("setFormerRoute", route.fullPath, { root: true })
+    redirect('/signin');
   }
 }

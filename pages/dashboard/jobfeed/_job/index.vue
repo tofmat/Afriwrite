@@ -14,9 +14,7 @@
                 <div class="jobDetailsTexts">
                   <p>{{ singleJob.description }}</p>
                   <div class="flex alignCenter scrollable-x">
-                    <v-btn class="tagBtn">{{
-                      singleJob.project_duration
-                    }}</v-btn>
+                    <v-btn class="tagBtn" v-for="niche in niches" :key="niche">{{ niche }}</v-btn>
                   </div>
                 </div>
                 <div class="row alignCenter jobTips mt-10">
@@ -60,7 +58,7 @@
                           target="_blank"
                           rel="noopener noreferrer"
                           class="mainColor"
-                          >{{ media.file | slicee }}</a
+                          >{{ media.file | fileNameSlicee }}</a
                         >
                       </div>
                     </v-col>
@@ -189,7 +187,6 @@
 <script>
 import spinner from "../../../../components/spinner.vue";
 import skeletonBox from "../../../../components/skeletonBox";
-import { mapGetters } from "vuex";
 export default {
   scrollToTop: true,
   apiLoading: false,
@@ -209,6 +206,7 @@ export default {
       apiLoading: false,
       singleJobMedia: [],
       lastViewedByCLient: "",
+      niches: []
     };
   },
   methods: {
@@ -221,25 +219,29 @@ export default {
           this.apiLoading = false;
           if(data && data != null){
             this.singleJob = data.data;
+            console.log(this.singleJob)
+
             this.singleJobMedia = this.singleJob.media;
             this.clientInfo = this.singleJob.client;
             this.lastViewedByCLient = this.singleJob.last_viewed_by_client;
             this.clientCreatedAt = this.clientInfo.created_at;
             this.activities = this.singleJob.activities;
             this.savedJobs = this.singleJob.saved_jobs;
+            this.niches = JSON.parse(this.singleJob.writing_niches)
           }else{
             this.$toast.success("This job is not available any longer");
             setTimeout(() => {
-              window.location = "/dashboard/jobfeed"
+              this.$router.push("/dashboard/jobfeed")
             }, 2000)
           }
         })
         .catch((err) => {
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
-          setTimeout(() => {
-            window.location = "/dashboard/jobfeed"
-          }, 2000)
+          console.log(err)
+          // setTimeout(() => {
+          //   this.$router.push("/dashboard/jobfeed")
+          // }, 2000)
         });
     },
     async saveJob(job_id) {
@@ -281,27 +283,11 @@ export default {
   },
   mounted() {
     this.getSingleJobs();
-    console.log(this.$route.params.job)
   },
   computed: {
-    // ...mapGetters({
-    //   singleJob: "writer/singleJob",
-    // }),
     publicJobPostLink(){
-      return `${window.location.host}/jobs/${this.singleJob.public_reference_id}`
+      return `${window.location.host}/job/${this.singleJob.public_reference_id}`
     }
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
   },
 };
 </script>

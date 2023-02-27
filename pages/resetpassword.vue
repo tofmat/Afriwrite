@@ -72,25 +72,14 @@ export default {};
 .otherSignUp {
   display: flex;
 }
-.checkboxDiv {
-  color: #8b8b8b;
-}
-.checkboxDiv p {
-  color: #8b8b8b;
-  margin-bottom: 0 !important;
-}
+
 .orDiv p {
   margin: 0 10px;
 }
 .orDiv {
   margin: 15px;
 }
-.checkboxDiv .checkbox {
-  height: auto;
-  margin-right: 5px;
-  width: 15px;
-  color: #8b8b8b;
-}
+
 .twoColumnsInput :first-child {
   margin-right: 10px;
 }

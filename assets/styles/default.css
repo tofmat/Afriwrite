@@ -247,3 +247,25 @@ hr {
 .signupField {
   padding: 140px 0;
 }
+
+.text-danger{
+  color: #CC0000;
+}
+
+.ProfilePic{
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.selectBank {
+  -webkit-appearance: auto;
+}
+
+.text-warning{
+  color: #FF8800;
+}
+
+.text-success{
+  color: #007E33;
+}

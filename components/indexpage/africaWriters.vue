@@ -18,7 +18,7 @@
                 new heights.
               </p>
               <div class="centerFlex africaButton">
-                <v-btn class="workBtn" to="#"> Find Work </v-btn>
+                <v-btn class="workBtn" to="/signup"> Find Work </v-btn>
               </div>
             </div>
           </v-col>

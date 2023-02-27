@@ -16,9 +16,7 @@
               <div class="jobDetailsTexts">
                 <p>{{ singleJob.description }}</p>
                 <div class="flex alignCenter scrollable-x">
-                  <v-btn class="tagBtn">Writing</v-btn>
-                  <v-btn class="tagBtn">Content writing</v-btn>
-                  <v-btn class="tagBtn">Proof reading</v-btn>
+                  <v-btn class="tagBtn" v-for="niche in niches" :key="niche">{{ niche }}</v-btn>
                 </div>
               </div>
               <div class="row alignCenter jobTips mt-10">
@@ -241,7 +239,7 @@
                     </div>
                     <hr />
 
-                    <div class="flex projectAmount my-5 justifyBetween">
+                    <!-- <div class="flex projectAmount my-5 justifyBetween">
                       <div class="width40">
                         <h4 class="darkGreyColor">
                           AfriWrites Service Charge
@@ -290,7 +288,7 @@
                       <div>
                         <h4>50.00 NGN</h4>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -470,6 +468,7 @@ export default {
         ],
         file: null,
       },
+      niches: []
     };
   },
   methods: {
@@ -503,6 +502,7 @@ export default {
           this.clientInfo = this.singleJob.client;
           this.activities = this.singleJob.activities;
           this.savedJobs = this.singleJob.saved_jobs;
+          this.niches = JSON.parse(this.singleJob.writing_niches)
         })
         .catch((err) => {
           this.apiLoading = false;
@@ -581,13 +581,6 @@ export default {
       // singleProposal: "writer/singleProposal",
       savedProposal: "writer/savedProposal",
     }),
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
   },
 };
 </script>

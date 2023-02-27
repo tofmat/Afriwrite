@@ -21,15 +21,25 @@
             exact
             class="theItem"
           >
-            <v-item v-slot="{ active }" class="navheader px-2">
-              <v-title :class="active ? 'navActive' : ''">{{
+            <v-item v-slot="{ active }" class="navheader px-2"  >
+              <v-list-item-title :class="active ? 'navActive' : ''">{{
                 nav.title
-              }}</v-title>
+              }}</v-list-item-title>
+            </v-item>
+          </v-list-item>
+          <v-list-item  :to="goToDashboard" router  v-if="user">
+            <v-item v-slot="{ active }" class="navheader px-2">
+              <v-list-item-title :class="active ? 'navActive' : ''">My Dashboard</v-list-item-title>
+            </v-item>
+          </v-list-item>
+          <v-list-item  :to="goToDashboard" router v-else>
+            <v-item v-slot="{ active }" class="navheader px-2">
+              <v-list-item-title :class="active ? 'navActive' : ''">Sign In</v-list-item-title>
             </v-item>
           </v-list-item>
         </div>
       </v-item-group>
-      <v-btn class="px-5 mx-2 noMobile findBtn" to="/signup"> Join Now</v-btn>
+      <v-btn class="px-5 mx-2 noMobile findBtn" to="/signup"  v-if="!user"> Join Now</v-btn>
       <div>
         <v-app-bar-nav-icon
           @click="drawer = true"
@@ -56,16 +66,23 @@
             router
             exact
           >
-            <!-- <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action> -->
             <v-list-item-content>
               <v-list-item-title v-text="nav.title" />
             </v-list-item-content>
           </v-list-item>
+           <v-list-item  :to="goToDashboard" router  v-if="user">
+            <v-list-item-content>
+                <v-list-item-title>My Dashboard</v-list-item-title>
+              </v-list-item-content>
+          </v-list-item>
+          <v-list-item  :to="goToDashboard" router v-else>
+            <v-list-item-content>
+              <v-list-item-title>Sign In</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
-      <v-btn class="px-5 mx-2 findBtn" to="jobfeed"> Join Now</v-btn>
+      <v-btn class="px-5 mx-2 findBtn" to="/signup" v-if="!user"> Join Now</v-btn>
     </v-navigation-drawer>
     <v-main>
       <nuxt />
@@ -89,8 +106,16 @@
           <v-col cols="6" sm="3">
             <div class="footerList">
               <ul>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
+                <li>
+                  <a href="/privacy-policy">
+                    Privacy Policy
+                  </a>    
+                </li>
+                <li>
+                  <a href="/terms-of-use">
+                    Terms of Service
+                  </a>    
+                </li>
                 <li>Invite a Friend</li>
               </ul>
             </div>
@@ -99,7 +124,11 @@
             <div class="footerList">
               <ul>
                 <li>Support</li>
-                <li>About Us</li>
+                <li>
+                  <a href="/about-us">
+                    About Us
+                  </a>
+                </li>
                 <li>Work with us</li>
                 <li>Help & Support</li>
               </ul>
@@ -121,7 +150,7 @@
             <img src="../assets/images/feather-linkedin.svg" alt="footerLogo" />
           </div>
         </div>
-        <p class="footerText">Afriwrite 2022</p>
+        <p class="footerText">Afriwrite {{ date }}</p>
       </v-container>
     </v-footer>
   </v-app>
@@ -134,7 +163,9 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      user: this.$auth.user,
       group: "",
+      date: new Date().getFullYear(),
       navItems: [
         {
           title: "Home",
@@ -142,15 +173,11 @@ export default {
         },
         {
           title: "About Us",
-          to: "#",
+          to: "/about-us",
         },
         {
           title: "View Freelancers",
-          to: "#",
-        },
-        {
-          title: "Sign In",
-          to: "/signin",
+          to: "/profile/freelancers",
         },
       ],
       miniVariant: false,
@@ -159,6 +186,16 @@ export default {
       title: "Vuetify.js",
     };
   },
+  computed:{
+    goToDashboard(){
+      if(this.user){
+        return this.user.role === 'writer' ? '/dashboard/jobfeed' : '/client/jobs'
+      }else{
+        return '/signin'
+      }
+      
+    }
+  }
 };
 </script>
 

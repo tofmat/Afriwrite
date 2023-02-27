@@ -14,9 +14,7 @@
                 <div class="jobDetailsTexts">
                   <p>{{ singleJob.description }}</p>
                   <div class="flex alignCenter scrollable-x">
-                    <v-btn class="tagBtn">Writing</v-btn>
-                    <v-btn class="tagBtn">Content writing</v-btn>
-                    <v-btn class="tagBtn">Proof reading</v-btn>
+                    <v-btn class="tagBtn" v-for="niche in niches" :key="niche">{{ niche }}</v-btn>
                   </div>
                 </div>
                 <div class="row alignCenter jobTips mt-10">
@@ -54,7 +52,7 @@
                           target="_blank"
                           rel="noopener noreferrer"
                           class="mainColor"
-                          >{{ media.file | slicee }}</a
+                          >{{ media.file | fileNameSlicee }}</a
                         >
                       </div>
                     </v-col>
@@ -72,6 +70,13 @@
                   <i class="fas fa-bookmark mr-2 mt-1"></i> View
                   Proposals</v-btn
                 >
+                <div class="mt-3">
+                    <h4><span><i class="far fa-file-alt mr-2 mb-2"></i> Job Link </span></h4>
+                    <v-btn class="workDiv fullWidth my-3 scrollable-x" to="#">
+                        {{ publicJobPostLink }}
+                    </v-btn>
+                    <p class="mainColor" @click="copyLink(publicJobPostLink)">Copy link</p>
+                  </div>
               </v-col>
             </div>
           </div>
@@ -84,7 +89,6 @@
 <script>
 import spinner from "../../../../components/spinner.vue";
 import skeletonBox from "../../../../components/skeletonBox";
-import { mapGetters } from "vuex";
 export default {
   scrollToTop: true,
   apiLoading: false,
@@ -103,6 +107,7 @@ export default {
       loading: false,
       apiLoading: false,
       deleteLoading: false,
+      niches: []
     };
   },
   methods: {
@@ -115,8 +120,10 @@ export default {
           this.apiLoading = false;
           this.singleJob = data.data;
           this.singleJobMedia = this.singleJob.media;
+          this.niches = JSON.parse(this.singleJob.writing_niches)
         })
         .catch((err) => {
+          console.log(err)
           this.apiLoading = false;
           this.$toast.success("There was an error getting the job");
         });
@@ -150,7 +157,7 @@ export default {
         );
         this.deleteLoading = false;
         this.$toast.success("This job has been deleted.");
-        window.location = "/client/jobs";
+        this.$router.push("/client/jobs") 
       } catch (error) {
         this.deleteLoading = false;
         this.$toast.error("There was an error deleting this job");
@@ -161,22 +168,10 @@ export default {
     this.getSingleJobs();
   },
   computed: {
-    ...mapGetters({
-      singleJob: "client/singleJob",
-    }),
-  },
-  filters: {
-    slicee(data) {
-      let str = data.toString();
-      let res = str.slice(86);
-      return res;
-    },
-    dateSlice(data) {
-      let str = data.toString();
-      let res = str.slice(0, 10);
-      return res;
-    },
-  },
+    publicJobPostLink(){
+      return `${window.location.host}/job/${this.singleJob.public_reference_id}`
+    }
+  }
 };
 </script>
 
